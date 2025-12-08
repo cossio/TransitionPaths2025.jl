@@ -14,7 +14,7 @@ using RestrictedBoltzmannMachines: RBM, Potts, sample_h_from_v, inputs_v_from_h,
 using LinearAlgebra: I
 
 # ╔═╡ bc2d8ac8-818a-421e-a6a9-04361516f2b2
-import PlutoUI, Makie, CairoMakie, TransitionPaths2024
+import PlutoUI, Makie, CairoMakie, TransitionPaths2025
 
 # ╔═╡ 748205d9-ec7c-4c6f-a2c6-ad9d746c0ee5
 import RestrictedBoltzmannMachines as RBMs
@@ -44,7 +44,7 @@ rbm = RBMs.RBM(RBMs.Potts(; θ=zeros(q, L)), RBMs.Binary(; θ=zeros(M)), zeros(q
 mutation_costs = 100I(q);
 
 # ╔═╡ 83ef49bd-79ec-4ff4-8571-95b8791cdf1e
-v_path = TransitionPaths2024.onehot(rand(Int8(1):Int8(q), L, T, B));
+v_path = TransitionPaths2025.onehot(rand(Int8(1):Int8(q), L, T, B));
 
 # ╔═╡ aa933aa7-d2ba-4498-b21d-75dd8ccfa935
 size(v_path) == (q,L,T,B)
@@ -55,7 +55,7 @@ begin
 	nsteps = 1000
 	mut_steps = zeros(Int, T - 1, nsteps)
 	for step = 1:nsteps
-		v_path_1 .= TransitionPaths2024.sample_path(rbm, v_path_1, mutation_costs; nsteps=1)
+		v_path_1 .= TransitionPaths2025.sample_path(rbm, v_path_1, mutation_costs; nsteps=1)
 		mut_steps[:, step] .= dropdims(sum(v_path_1[:,:,2:end,:] .!= v_path_1[:,:,1:end-1,:]; dims=(1,2)); dims=(1,2))
 	end
 end
@@ -89,16 +89,16 @@ mutation_costs_inputs_odd_from_even(v_path, mutation_costs) == total_inputs[:, :
 md"# Test on WW domain"
 
 # ╔═╡ ab576ae0-542a-49ce-b79e-c771c75dc7b8
-TransitionPaths2024.sampled_path_1to1_20240703()
+TransitionPaths2025.sampled_path_1to1_20240703()
 
 # ╔═╡ 25abc77b-0e09-4d09-b97a-9ad9b8b428fb
-my_path = reshape(TransitionPaths2024.onehot(TransitionPaths2024.sampled_path_1to1_20240703()), 21, 31, 19, 1);
+my_path = reshape(TransitionPaths2025.onehot(TransitionPaths2025.sampled_path_1to1_20240703()), 21, 31, 19, 1);
 
 # ╔═╡ 6d1cd5aa-358e-4f89-98f8-73e77a4927e1
 
 
 # ╔═╡ 9eb9c810-1d13-4cfd-9e4b-4b48d867c152
-eugenio_rbm = TransitionPaths2024.Eugenio_RBM_20230419()
+eugenio_rbm = TransitionPaths2025.Eugenio_RBM_20230419()
 
 # ╔═╡ 8035cc81-d2a4-47ba-9107-b2fddbab0d7e
 my_mutation_costs = 20I(q);

@@ -4,23 +4,23 @@ using RestrictedBoltzmannMachines: energy
 using RestrictedBoltzmannMachines: free_energy
 using Test: @test, @testset
 using BioSequences: LongAA
-using TransitionPaths2024: Eugenio_fasta_20230419_path
-using TransitionPaths2024: Eugenio_MSA_20230419
-using TransitionPaths2024: Eugenio_Probed_Sequences_202306
-using TransitionPaths2024: Eugenio_Probed_Sequences_202306_path
-using TransitionPaths2024: Eugenio_RBM_20230419
-using TransitionPaths2024: Eugenio_RBM_20230419
-using TransitionPaths2024: Eugenio_RBM_20230419_loglikelihood
-using TransitionPaths2024: Eugenio_RBM_20230419_path
-using TransitionPaths2024: Eugenio_RBM_20230419_probed_sequences_free_energies_eval_from_python
-using TransitionPaths2024: Eugenio_RBM_logZ_20230419
-using TransitionPaths2024: Eugenio_RBM_specific_20230424
-using TransitionPaths2024: Eugenio_RBM_typeI_20230424_path
-using TransitionPaths2024: Eugenio_RBM_typeII_20230424_path
-using TransitionPaths2024: Eugenio_RBM_typeIV_20230424_path
-using TransitionPaths2024: Exp_20240703_sequences
-using TransitionPaths2024: Literature_sequences_20230424
-using TransitionPaths2024: onehot
+using TransitionPaths2025: Eugenio_fasta_20230419_path
+using TransitionPaths2025: Eugenio_MSA_20230419
+using TransitionPaths2025: Eugenio_Probed_Sequences_202306
+using TransitionPaths2025: Eugenio_Probed_Sequences_202306_path
+using TransitionPaths2025: Eugenio_RBM_20230419
+using TransitionPaths2025: Eugenio_RBM_20230419
+using TransitionPaths2025: Eugenio_RBM_20230419_loglikelihood
+using TransitionPaths2025: Eugenio_RBM_20230419_path
+using TransitionPaths2025: Eugenio_RBM_20230419_probed_sequences_free_energies_eval_from_python
+using TransitionPaths2025: Eugenio_RBM_logZ_20230419
+using TransitionPaths2025: Eugenio_RBM_specific_20230424
+using TransitionPaths2025: Eugenio_RBM_typeI_20230424_path
+using TransitionPaths2025: Eugenio_RBM_typeII_20230424_path
+using TransitionPaths2025: Eugenio_RBM_typeIV_20230424_path
+using TransitionPaths2025: Exp_20240703_sequences
+using TransitionPaths2025: Literature_sequences_20230424
+using TransitionPaths2025: onehot
 
 @test isfile(Eugenio_RBM_20230419_path())
 @test isfile(Eugenio_fasta_20230419_path())

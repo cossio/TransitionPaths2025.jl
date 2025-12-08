@@ -1,7 +1,7 @@
 using Test: @test, @testset, @inferred
 using BioSequences: @aa_str, LongAA
 using LinearAlgebra: I
-using TransitionPaths2024: onehot, potts, AMINO_ACIDS
+using TransitionPaths2025: onehot, potts, AMINO_ACIDS
 
 @testset "onehot" begin
     @test onehot(AMINO_ACIDS) == I

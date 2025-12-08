@@ -1,5 +1,5 @@
 using Test: @test, @testset
-using TransitionPaths2024: Experiments_2307_excel, Exp_202307_results, Probed_Sequences_20231021_path, Exp_202307_sequences
+using TransitionPaths2025: Experiments_2307_excel, Exp_202307_results, Probed_Sequences_20231021_path, Exp_202307_sequences
 
 @testset "2307" begin
     @test isfile(Experiments_2307_excel())

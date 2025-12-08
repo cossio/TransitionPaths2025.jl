@@ -1,4 +1,4 @@
-module TransitionPaths2024
+module TransitionPaths2025
 
 import CairoMakie
 import CSV

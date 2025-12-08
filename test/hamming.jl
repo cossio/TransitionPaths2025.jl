@@ -1,6 +1,6 @@
 using Test: @test, @testset, @inferred
-using TransitionPaths2024: hamming
-using TransitionPaths2024: onehot
+using TransitionPaths2025: hamming
+using TransitionPaths2025: onehot
 using BioSequences: @aa_str, LongAA
 using Random: randstring
 

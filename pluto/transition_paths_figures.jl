@@ -38,7 +38,7 @@ using ProgressLogging: @progress
 md"# Imports"
 
 # ╔═╡ 7ff741cb-ea2d-435a-80fa-9f53391a3117
-import PlutoUI, Makie, CairoMakie, Logomaker, PythonPlot, ColorSchemes, BioStructures, TransitionPaths2024
+import PlutoUI, Makie, CairoMakie, Logomaker, PythonPlot, ColorSchemes, BioStructures, TransitionPaths2025
 
 # ╔═╡ 8febf5c6-92bb-4b91-a022-eb6080c8f2a0
 PlutoUI.TableOfContents()
@@ -50,52 +50,52 @@ md"# Load data"
 thresh_significance = 0.212046695;
 
 # ╔═╡ 6165d60b-bada-4400-b76b-9deb2bd1450e
-all_response_data = TransitionPaths2024.response_data_all_20240703();
+all_response_data = TransitionPaths2025.response_data_all_20240703();
 
 # ╔═╡ cd1ca226-00f6-4eb4-b10e-bb2a390b236d
-Eeff_I = TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2024.onehot(TransitionPaths2024.Exp_20240703_sequences().sequences));
+Eeff_I = TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2025.onehot(TransitionPaths2025.Exp_20240703_sequences().sequences));
 
 # ╔═╡ d93cf7b6-05a0-40d1-8f7b-905f4cd72487
-Eeff_II = TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(TransitionPaths2024.Exp_20240703_sequences().sequences));
+Eeff_II = TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(TransitionPaths2025.Exp_20240703_sequences().sequences));
 
 # ╔═╡ 383e921b-47d6-43ef-86f4-278ec9e0ce29
-Eeff_IV = TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2024.onehot(TransitionPaths2024.Exp_20240703_sequences().sequences));
+Eeff_IV = TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2025.onehot(TransitionPaths2025.Exp_20240703_sequences().sequences));
 
 # ╔═╡ c3ae9f17-68e0-45d1-a44c-ee4135ea44d7
-Eeff_Glob = TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(TransitionPaths2024.Exp_20240703_sequences().sequences));
+Eeff_Glob = TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(TransitionPaths2025.Exp_20240703_sequences().sequences));
 
 # ╔═╡ f07f8761-54e5-41a9-837a-268eb73b5e4e
-response_data_sequences = TransitionPaths2024.Exp_20240703_sequences().sequences[indexin(all_response_data.response_data_WW_names, TransitionPaths2024.Exp_20240703_sequences().names)];
+response_data_sequences = TransitionPaths2025.Exp_20240703_sequences().sequences[indexin(all_response_data.response_data_WW_names, TransitionPaths2025.Exp_20240703_sequences().names)];
 
 # ╔═╡ e3307dc4-638b-4cf8-af1e-b71088e9cedb
-msa_local_rbm_likelihoods = stack(TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(rbm, TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419())) for rbm = (:I, :II, :IV));
+msa_local_rbm_likelihoods = stack(TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(rbm, TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419())) for rbm = (:I, :II, :IV));
 
 # ╔═╡ ae2e577d-dfcb-4bd4-9e5c-41de0ce892a0
 #msa_local_rbm_class_prediction = vec(last.(Tuple.(argmax(msa_local_rbm_likelihoods; dims=2))))
-msa_local_rbm_class_prediction = TransitionPaths2024.Eugenio_MSA_Predicted_Classes_20240715().predicted_class;
+msa_local_rbm_class_prediction = TransitionPaths2025.Eugenio_MSA_Predicted_Classes_20240715().predicted_class;
 
 # ╔═╡ d7959c5e-6c90-4995-9c34-b4de1c6765f1
 _class_scatter_colors = (:cyan, :darkorange, :green); # :I, :II, :IV
 
 # ╔═╡ ed61d8ed-751f-4a0b-96af-e5168fff09bc
-df_20241213 = TransitionPaths2024.load_sequences_file_20241213();
+df_20241213 = TransitionPaths2025.load_sequences_file_20241213();
 
 # ╔═╡ 401dddb8-7acd-47d6-ac95-4e2fdce29361
-df_20241213.aligned_sequences = TransitionPaths2024.Exp_20240703_sequences().sequences[indexin(df_20241213.ww_id, replace(TransitionPaths2024.Exp_20240703_sequences().names, "WW44" => "WW44/147", "WW147" => "WW44/147", "WW148" => "WW148/58", "WW149" => "WW9/149"))];
+df_20241213.aligned_sequences = TransitionPaths2025.Exp_20240703_sequences().sequences[indexin(df_20241213.ww_id, replace(TransitionPaths2025.Exp_20240703_sequences().names, "WW44" => "WW44/147", "WW147" => "WW44/147", "WW148" => "WW148/58", "WW149" => "WW9/149"))];
 
 # ╔═╡ f93754f9-437c-486e-bf3f-1f4d433a19dc
-response_data_sequences_new = TransitionPaths2024.Exp_20240703_sequences().sequences[indexin(df_20241213.ww_id, replace(
-	TransitionPaths2024.Exp_20240703_sequences().names, "WW44" => "WW44/147", "WW147" => "WW44/147", "WW148" => "WW148/58", "WW149" => "WW9/149"
+response_data_sequences_new = TransitionPaths2025.Exp_20240703_sequences().sequences[indexin(df_20241213.ww_id, replace(
+	TransitionPaths2025.Exp_20240703_sequences().names, "WW44" => "WW44/147", "WW147" => "WW44/147", "WW148" => "WW148/58", "WW149" => "WW9/149"
 ))];
 
 # ╔═╡ f5d53e91-81ba-45d1-a92c-99e7813cb04f
-unique(TransitionPaths2024.sampled_path_1to2rep2_20240703())
+unique(TransitionPaths2025.sampled_path_1to2rep2_20240703())
 
 # ╔═╡ 0de36432-13f5-437a-b007-a23b56bed610
 "EMGDWQEVWDENTGCYYYWNTQTNEVTWELP" == "EMGDWQEVWDENTGCYYYWNTQT-NEVTWELP"
 
 # ╔═╡ 7a784b46-a25a-4d0e-8053-8286ec8991a8
-unique(TransitionPaths2024.sampled_path_1to1_20240703())
+unique(TransitionPaths2025.sampled_path_1to1_20240703())
 
 # ╔═╡ 7ccab879-dd94-48fa-84ac-e4b0ce916ae1
 "LPEGWEIRYTRE-GVRYFVDHNTRTTTFKDP" == "LPEGWEIRYTRE-GVRYFVDHNTRTTTFKDP"
@@ -112,20 +112,20 @@ Path 1 $\rightarrow$ 1.
 
 # ╔═╡ 73169a6f-559e-46d3-af29-0e35bd487fb5
 let fig = Makie.Figure()
-	sampled_path = collect(unique(TransitionPaths2024.sampled_path_1to1_20240703()))
-	path_response_data = TransitionPaths2024.response_data_path_1to1_20240703()
+	sampled_path = collect(unique(TransitionPaths2025.sampled_path_1to1_20240703()))
+	path_response_data = TransitionPaths2025.response_data_path_1to1_20240703()
 
 	C1_responses = df_20241213.C1[indexin(path_response_data.ww_names, df_20241213.ww_id)]
 	C2_responses = df_20241213.C2[indexin(path_response_data.ww_names, df_20241213.ww_id)]
 	C1_responses_err = df_20241213.eC1[indexin(path_response_data.ww_names, df_20241213.ww_id)]
 	C2_responses_err = df_20241213.eC2[indexin(path_response_data.ww_names, df_20241213.ww_id)]
-	
-	probed_seqs = TransitionPaths2024.Exp_20240703_sequences().sequences[indexin(path_response_data.ww_names, TransitionPaths2024.Exp_20240703_sequences().names)]
+
+	probed_seqs = TransitionPaths2025.Exp_20240703_sequences().sequences[indexin(path_response_data.ww_names, TransitionPaths2025.Exp_20240703_sequences().names)]
 	probed_seqs_idx::Vector{Int} = indexin(probed_seqs, sampled_path)
 
 	ax = Makie.Axis(fig[1,2][1,1]; width=175, height=75, xgridvisible=false, ygridvisible=false, ylabel=L"\ln P_\mathrm{RBM}(\text{glob.})")
-	Makie.scatterlines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(sampled_path)); color=:black)
-	Makie.scatter!(ax, probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(probed_seqs)); color=:red, markersize=10)
+	Makie.scatterlines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(sampled_path)); color=:black)
+	Makie.scatter!(ax, probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(probed_seqs)); color=:red, markersize=10)
 	Makie.hidexdecorations!(ax)
 
 	ax_I = Makie.Axis(
@@ -136,9 +136,9 @@ let fig = Makie.Figure()
 	# 	fig[1,1][2,1]; width=175, height=75, xgridvisible=false, ygridvisible=false, yaxisposition=:right,
 	# 	ylabel=L"\log P_\mathrm{RBM}(\text{II})", yticklabelcolor=_class_scatter_colors[2], ylabelcolor=_class_scatter_colors[2],
 	# )
-	#Makie.lines!(ax_II, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(sampled_path)); color=_class_scatter_colors[2], linewidth=0.75)
-	Makie.scatterlines!(ax_I, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2024.onehot(sampled_path)); color=:black)
-	Makie.scatter!(ax_I, probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2024.onehot(probed_seqs)); color=:red, markersize=10)
+	#Makie.lines!(ax_II, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(sampled_path)); color=_class_scatter_colors[2], linewidth=0.75)
+	Makie.scatterlines!(ax_I, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2025.onehot(sampled_path)); color=:black)
+	Makie.scatter!(ax_I, probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2025.onehot(probed_seqs)); color=:red, markersize=10)
 	Makie.hidexdecorations!(ax)
 
 	ax = Makie.Axis(fig[1,2][3,1]; width=175, height=75, xgridvisible=false, ygridvisible=false, xlabel="step", ylabel="Norm. resp. I", xticks=1:3:20)
@@ -159,67 +159,67 @@ let fig = Makie.Figure()
 	for (class, color) = zip((:I, :II, :IV), _class_scatter_colors)
 		Makie.scatter!(
 			ax,
-			-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419()))[38, msa_local_rbm_class_prediction .== class],
-			 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419()))[36, msa_local_rbm_class_prediction .== class];
+			-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419()))[38, msa_local_rbm_class_prediction .== class],
+			 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419()))[36, msa_local_rbm_class_prediction .== class];
 			color=(color, 0.5), markersize=4
 		)
 	end
 
 	@show length(sampled_path) length(probed_seqs)
 
-	# Makie.scatterlines!(ax, 
-	# 	-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path[[i for i=1:17 if i ∉ probed_seqs_idx]]))[38, :],
-	# 	 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path[[i for i=1:17 if i ∉ probed_seqs_idx]]))[36, :];
-	# 	markersize=[i ∉ [5, 7, 9, 12, 15] ? 15 : 6 for i = 1:17 if i ∉ probed_seqs_idx], 
+	# Makie.scatterlines!(ax,
+	# 	-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path[[i for i=1:17 if i ∉ probed_seqs_idx]]))[38, :],
+	# 	 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path[[i for i=1:17 if i ∉ probed_seqs_idx]]))[36, :];
+	# 	markersize=[i ∉ [5, 7, 9, 12, 15] ? 15 : 6 for i = 1:17 if i ∉ probed_seqs_idx],
 	# 	color=[i ∉ [5, 7, 9, 12, 15] ? (:gray, 0.5) : :black for i = 1:17 if i ∉ probed_seqs_idx]
 	# )
 
-	Makie.scatterlines!(ax, 
-		-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[38, :],
-		 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[36, :];
+	Makie.scatterlines!(ax,
+		-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[38, :],
+		 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[36, :];
 		color=:black, markersize=10
 	)
 
-	Makie.scatter!(ax, 
-		-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(probed_seqs))[38, :],
-		 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(probed_seqs))[36, :];
+	Makie.scatter!(ax,
+		-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(probed_seqs))[38, :],
+		 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(probed_seqs))[36, :];
 		color=:red, markersize=7
 	)
-	
+
 	Makie.arrows!(ax,
-		-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[38, 1:1] .+ 0.35,
-		 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[36, 1:1] .- 0.35,
+		-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[38, 1:1] .+ 0.35,
+		 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[36, 1:1] .- 0.35,
 		[-0.15], [0.15]; linewidth=2, color=:gray, arrowsize=10
 	)
-	
+
 	Makie.xlims!(ax, -4.5, 2)
 	Makie.ylims!(ax, -7, 3)
 
 	Makie.resize_to_layout!(fig)
-	#Makie.save("/DATA-SSD/cossio/projects/2024/Transition_Paths/TransitionPaths2024.jl/figures/Fig2.pdf", fig)
+	#Makie.save("/DATA-SSD/cossio/projects/2024/Transition_Paths/TransitionPaths2025.jl/figures/Fig2.pdf", fig)
 	fig
 end
 
 # ╔═╡ abe10f1a-c2a3-4596-89d4-80252932e3ca
-Makie.scatterlines(-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(unique(TransitionPaths2024.sampled_path_1to1_20240703())))[38, :])
+Makie.scatterlines(-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(unique(TransitionPaths2025.sampled_path_1to1_20240703())))[38, :])
 
 # ╔═╡ f85a0a90-b33a-4533-ac39-6a497a74f685
-Makie.scatterlines(-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(unique(TransitionPaths2024.sampled_path_1to1_20240703())))[36, :])
+Makie.scatterlines(-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(unique(TransitionPaths2025.sampled_path_1to1_20240703())))[36, :])
 
 # ╔═╡ 02a01dae-ac90-4e93-9351-716f9ec8b4f3
-unique(TransitionPaths2024.sampled_path_1to1_20240703())[8:9]
+unique(TransitionPaths2025.sampled_path_1to1_20240703())[8:9]
 
 # ╔═╡ 81b9f641-4a13-42cc-8d43-c1b2ae00fc2a
 let fig = Makie.Figure()
-	sampled_path = unique(TransitionPaths2024.sampled_path_1to1_20240703())
-	path_response_data = TransitionPaths2024.response_data_path_1to1_20240703()
+	sampled_path = unique(TransitionPaths2025.sampled_path_1to1_20240703())
+	path_response_data = TransitionPaths2025.response_data_path_1to1_20240703()
 
 	C1_responses = df_20241213.C1[indexin(path_response_data.ww_names, df_20241213.ww_id)]
 	C2_responses = df_20241213.C2[indexin(path_response_data.ww_names, df_20241213.ww_id)]
 	C1_responses_err = df_20241213.eC1[indexin(path_response_data.ww_names, df_20241213.ww_id)]
 	C2_responses_err = df_20241213.eC2[indexin(path_response_data.ww_names, df_20241213.ww_id)]
-	
-	probed_seqs = TransitionPaths2024.Exp_20240703_sequences().sequences[indexin(path_response_data.ww_names, TransitionPaths2024.Exp_20240703_sequences().names)]
+
+	probed_seqs = TransitionPaths2025.Exp_20240703_sequences().sequences[indexin(path_response_data.ww_names, TransitionPaths2025.Exp_20240703_sequences().names)]
 	probed_seqs_idx::Vector{Int} = indexin(probed_seqs, sampled_path)
 
 	_dummy_ax = Makie.Axis(fig[2,1:3]; height=10)
@@ -227,16 +227,16 @@ let fig = Makie.Figure()
 	Makie.hidespines!(_dummy_ax)
 
 	ax = Makie.Axis(fig[3,1]; width=200, height=75, xgridvisible=false, ygridvisible=false, xlabel="step", ylabel=L"\ln P_\mathrm{RBM}(\text{glob.})")
-	Makie.scatterlines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(sampled_path)); color=:black)
-	Makie.scatter!(ax, probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(probed_seqs)); color=:red, markersize=10)
+	Makie.scatterlines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(sampled_path)); color=:black)
+	Makie.scatter!(ax, probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(probed_seqs)); color=:red, markersize=10)
 	#Makie.hidexdecorations!(ax)
 
 	ax_I = Makie.Axis(
 		fig[3,2]; width=200, height=75, xgridvisible=false, ygridvisible=false,
 		xlabel="step", ylabel=L"\log P_\mathrm{RBM}(\text{I})", #yticklabelcolor=_class_scatter_colors[1], ylabelcolor=_class_scatter_colors[1]
 	)
-	Makie.scatterlines!(ax_I, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2024.onehot(sampled_path)); color=:black)
-	Makie.scatter!(ax_I, probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2024.onehot(probed_seqs)); color=:red, markersize=10)
+	Makie.scatterlines!(ax_I, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2025.onehot(sampled_path)); color=:black)
+	Makie.scatter!(ax_I, probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2025.onehot(probed_seqs)); color=:red, markersize=10)
 	#Makie.hidexdecorations!(ax)
 
 	ax = Makie.Axis(fig[3,3]; width=200, height=75, xgridvisible=false, ygridvisible=false, xlabel="step", ylabel="Norm. resp. I", xticks=1:3:20)
@@ -252,35 +252,35 @@ let fig = Makie.Figure()
 	for (class, color) = zip((:I, :II, :IV), _class_scatter_colors)
 		Makie.scatter!(
 			ax,
-			-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419()))[38, msa_local_rbm_class_prediction .== class],
-			 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419()))[36, msa_local_rbm_class_prediction .== class];
+			-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419()))[38, msa_local_rbm_class_prediction .== class],
+			 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419()))[36, msa_local_rbm_class_prediction .== class];
 			color=(color, 0.5), markersize=4
 		)
 	end
 
-	Makie.scatterlines!(ax, 
-		-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[38, :],
-		 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[36, :];
+	Makie.scatterlines!(ax,
+		-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[38, :],
+		 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[36, :];
 		color=:black
 	)
 
-	Makie.scatter!(ax, 
-		-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(probed_seqs))[38, :],
-		 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(probed_seqs))[36, :];
+	Makie.scatter!(ax,
+		-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(probed_seqs))[38, :],
+		 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(probed_seqs))[36, :];
 		color=:red, markersize=10
 	)
-	
+
 	Makie.arrows!(ax,
-		-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[38, 1:1] .+ 0.35,
-		 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[36, 1:1] .- 0.35,
+		-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[38, 1:1] .+ 0.35,
+		 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[36, 1:1] .- 0.35,
 		[-0.15], [0.15]; linewidth=2, color=:gray, arrowsize=10
 	)
-	
+
 	Makie.xlims!(ax, -4.5, 2)
 	Makie.ylims!(ax, -7, 3)
 
 	Makie.resize_to_layout!(fig)
-	#Makie.save("/DATA-SSD/cossio/projects/2024/Transition_Paths/TransitionPaths2024.jl/figures/Fig2.pdf", fig)
+	#Makie.save("/DATA-SSD/cossio/projects/2024/Transition_Paths/TransitionPaths2025.jl/figures/Fig2.pdf", fig)
 	fig
 end
 
@@ -289,19 +289,19 @@ md"## Fig. 3. I -> II"
 
 # ╔═╡ 8de38839-0452-413b-ba6f-f09016cb4e39
 let fig = Makie.Figure()
-	path_response_data_new = TransitionPaths2024.artifact_20250531_new_tested_sequences_load()
-	sampled_path = unique(TransitionPaths2024.sampled_path_1to2rep1_20240703())
-	
+	path_response_data_new = TransitionPaths2025.artifact_20250531_new_tested_sequences_load()
+	sampled_path = unique(TransitionPaths2025.sampled_path_1to2rep1_20240703())
+
 	probed_seqs = map(LongAA, path_response_data_new.sequence)
 	@assert probed_seqs ⊆ sampled_path
 	probed_seqs_idx::Vector{Int} = indexin(probed_seqs, sampled_path)
-	
-	shuffled_path_response_data = TransitionPaths2024.response_data_path_1to2rev_20240703()
-	shuffled_path_ww_names = shuffled_path_response_data.ww_names
-	shuffled_path_seqs = TransitionPaths2024.Exp_20240703_sequences().sequences[indexin(shuffled_path_ww_names, TransitionPaths2024.Exp_20240703_sequences().names)]
 
-	path_response_data_old = TransitionPaths2024.response_data_path_1to2rep1_20240703()
-	probed_seqs_old = TransitionPaths2024.Exp_20240703_sequences().sequences[indexin(path_response_data_old.ww_names, TransitionPaths2024.Exp_20240703_sequences().names)]
+	shuffled_path_response_data = TransitionPaths2025.response_data_path_1to2rev_20240703()
+	shuffled_path_ww_names = shuffled_path_response_data.ww_names
+	shuffled_path_seqs = TransitionPaths2025.Exp_20240703_sequences().sequences[indexin(shuffled_path_ww_names, TransitionPaths2025.Exp_20240703_sequences().names)]
+
+	path_response_data_old = TransitionPaths2025.response_data_path_1to2rep1_20240703()
+	probed_seqs_old = TransitionPaths2025.Exp_20240703_sequences().sequences[indexin(path_response_data_old.ww_names, TransitionPaths2025.Exp_20240703_sequences().names)]
 	probed_seqs_idx_for_shuffled::Vector{Int} = indexin(probed_seqs_old, sampled_path)
 
 	C1_responses = path_response_data_new.C1_response
@@ -315,28 +315,28 @@ let fig = Makie.Figure()
 	C2_responses_err_shuffled = df_20241213.eC2[indexin(shuffled_path_ww_names, df_20241213.ww_id)]
 
 	ax = Makie.Axis(fig[1,1][1,1]; width=300, height=120, xgridvisible=false, ygridvisible=false, ylabel=L"\log P_\mathrm{RBM}(\text{global})")
-	Makie.scatterlines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(sampled_path)); color=:black, label="Designed")
-	Makie.scatter!(ax, probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(probed_seqs)); color=:red, markersize=10)
-	Makie.lines!(ax, probed_seqs_idx_for_shuffled, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(shuffled_path_seqs)); color=:brown, linestyle=:dash, label="Shuffled")
-	Makie.scatter!(ax, probed_seqs_idx_for_shuffled, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(shuffled_path_seqs)); color=:brown)
+	Makie.scatterlines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(sampled_path)); color=:black, label="Designed")
+	Makie.scatter!(ax, probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(probed_seqs)); color=:red, markersize=10)
+	Makie.lines!(ax, probed_seqs_idx_for_shuffled, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(shuffled_path_seqs)); color=:brown, linestyle=:dash, label="Shuffled")
+	Makie.scatter!(ax, probed_seqs_idx_for_shuffled, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(shuffled_path_seqs)); color=:brown)
 	Makie.hidexdecorations!(ax)
 	Makie.axislegend(ax; position=:lb, framevisible=false)
 
 	ax = Makie.Axis(fig[1,1][2,1]; width=300, height=120, xgridvisible=false, ygridvisible=false, ylabel=L"\log P_\mathrm{RBM}(\text{I or II})")
-	Makie.lines!(ax,  TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2024.onehot(sampled_path)); color=_class_scatter_colors[1], label="I")
-	Makie.lines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(sampled_path)); color=_class_scatter_colors[2], label="II")
-	Makie.scatter!(ax,  TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2024.onehot(sampled_path)); color=_class_scatter_colors[1])
-	Makie.scatter!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(sampled_path)); color=_class_scatter_colors[2])
-	Makie.scatter!(ax,  probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2024.onehot(probed_seqs)); color=:red, markersize=10)
-	Makie.scatter!(ax, probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(probed_seqs)); color=:red, markersize=10)
-	Makie.lines!(ax,  probed_seqs_idx_for_shuffled, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2024.onehot(shuffled_path_seqs)); color=_class_scatter_colors[1], linestyle=:dash)
-	Makie.lines!(ax, probed_seqs_idx_for_shuffled, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(shuffled_path_seqs)); color=_class_scatter_colors[2], linestyle=:dash)
+	Makie.lines!(ax,  TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2025.onehot(sampled_path)); color=_class_scatter_colors[1], label="I")
+	Makie.lines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(sampled_path)); color=_class_scatter_colors[2], label="II")
+	Makie.scatter!(ax,  TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2025.onehot(sampled_path)); color=_class_scatter_colors[1])
+	Makie.scatter!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(sampled_path)); color=_class_scatter_colors[2])
+	Makie.scatter!(ax,  probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2025.onehot(probed_seqs)); color=:red, markersize=10)
+	Makie.scatter!(ax, probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(probed_seqs)); color=:red, markersize=10)
+	Makie.lines!(ax,  probed_seqs_idx_for_shuffled, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2025.onehot(shuffled_path_seqs)); color=_class_scatter_colors[1], linestyle=:dash)
+	Makie.lines!(ax, probed_seqs_idx_for_shuffled, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(shuffled_path_seqs)); color=_class_scatter_colors[2], linestyle=:dash)
 	Makie.axislegend(ax; position=:lb, framevisible=false)
 
 	# ax = Makie.Axis(fig[1,2][4,1]; width=300, height=30, xgridvisible=false, ygridvisible=false, yscale=log10, xticks=0:5:50)
 	# Makie.hidedecorations!(ax)
 	# Makie.hidespines!(ax)
-	
+
 	ax = Makie.Axis(fig[1,1][5,1]; width=300, height=120, xgridvisible=false, ygridvisible=false, ylabel="I/II rel. resp.", yscale=log10, xticks=0:5:50)
 	Makie.hspan!(ax, 1, 1e6; color=(:cyan, 0.3))
 	Makie.hspan!(ax, 1e-6, 1; color=(:darkorange, 0.3))
@@ -344,37 +344,37 @@ let fig = Makie.Figure()
 	Makie.scatter!(ax, probed_seqs_idx, C1_responses ./ C2_responses; color=:red, markersize=10)
 	Makie.ylims!(ax, 1e-3, 1e3)
 
-	
+
 	ax = Makie.Axis(fig[1,2][1,1], width=200, height=200, xlabel=L"I_{1}", ylabel=L"I_{2}", xgridvisible=false, ygridvisible=false) # h_38 -> h_1, h_36 -> h_2
 	Makie.vlines!(ax, -1; color=:gray, linestyle=:dash, linewidth=1)
 	Makie.hlines!(ax, -3; color=:gray, linestyle=:dash, linewidth=1)
 	for (class, color) = zip((:I, :II, :IV), _class_scatter_colors)
 		Makie.scatter!(
 			ax,
-			-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419()))[38, msa_local_rbm_class_prediction .== class],
-			 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419()))[36, msa_local_rbm_class_prediction .== class];
+			-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419()))[38, msa_local_rbm_class_prediction .== class],
+			 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419()))[36, msa_local_rbm_class_prediction .== class];
 			color=(color, 0.5), markersize=4
 		)
 	end
 
-	Makie.scatterlines!(ax, 
-		-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[38, :],
-		 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[36, :];
+	Makie.scatterlines!(ax,
+		-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[38, :],
+		 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[36, :];
 		color=:black
 	)
 
-	Makie.scatter!(ax, 
-		-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(probed_seqs))[38, :],
-		 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(probed_seqs))[36, :];
+	Makie.scatter!(ax,
+		-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(probed_seqs))[38, :],
+		 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(probed_seqs))[36, :];
 		color=:red, markersize=10
 	)
-	
+
 	Makie.arrows!(ax,
-		-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[38, 1:1] .+ 0.35,
-		 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[36, 1:1] .- 0.35,
+		-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[38, 1:1] .+ 0.35,
+		 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[36, 1:1] .- 0.35,
 		[-0.15], [0.15]; linewidth=2, color=:gray, arrowsize=10
 	)
-	
+
 	Makie.xlims!(ax, -4.5, 2)
 	Makie.ylims!(ax, -7, 3)
 
@@ -403,27 +403,27 @@ let fig = Makie.Figure()
 	Makie.xlims!(ax_inset, -0.5, 7)
 	Makie.ylims!(ax_inset, -0.1, 1.2)
 	Makie.translate!(ax_inset.scene, 0, 0, 10)
-	
+
 	Makie.resize_to_layout!(fig)
-	#Makie.save(Base.homedir() * "/projects/2024/Transition_Paths/TransitionPaths2024.jl/figures/Fig3.pdf", fig)
+	#Makie.save(Base.homedir() * "/projects/2024/Transition_Paths/TransitionPaths2025.jl/figures/Fig3.pdf", fig)
 	fig
 end
 
 # ╔═╡ b55b9ccd-2f0c-4d66-b929-68a17361dee4
 let fig = Makie.Figure()
-	path_response_data_new = TransitionPaths2024.artifact_20250531_new_tested_sequences_load()
-	sampled_path = unique(TransitionPaths2024.sampled_path_1to2rep1_20240703())
-	
+	path_response_data_new = TransitionPaths2025.artifact_20250531_new_tested_sequences_load()
+	sampled_path = unique(TransitionPaths2025.sampled_path_1to2rep1_20240703())
+
 	probed_seqs = map(LongAA, path_response_data_new.sequence)
 	@assert probed_seqs ⊆ sampled_path
 	probed_seqs_idx::Vector{Int} = indexin(probed_seqs, sampled_path)
-	
-	shuffled_path_response_data = TransitionPaths2024.response_data_path_1to2rev_20240703()
-	shuffled_path_ww_names = shuffled_path_response_data.ww_names
-	shuffled_path_seqs = TransitionPaths2024.Exp_20240703_sequences().sequences[indexin(shuffled_path_ww_names, TransitionPaths2024.Exp_20240703_sequences().names)]
 
-	path_response_data_old = TransitionPaths2024.response_data_path_1to2rep1_20240703()
-	probed_seqs_old = TransitionPaths2024.Exp_20240703_sequences().sequences[indexin(path_response_data_old.ww_names, TransitionPaths2024.Exp_20240703_sequences().names)]
+	shuffled_path_response_data = TransitionPaths2025.response_data_path_1to2rev_20240703()
+	shuffled_path_ww_names = shuffled_path_response_data.ww_names
+	shuffled_path_seqs = TransitionPaths2025.Exp_20240703_sequences().sequences[indexin(shuffled_path_ww_names, TransitionPaths2025.Exp_20240703_sequences().names)]
+
+	path_response_data_old = TransitionPaths2025.response_data_path_1to2rep1_20240703()
+	probed_seqs_old = TransitionPaths2025.Exp_20240703_sequences().sequences[indexin(path_response_data_old.ww_names, TransitionPaths2025.Exp_20240703_sequences().names)]
 	probed_seqs_idx_for_shuffled::Vector{Int} = indexin(probed_seqs_old, sampled_path)
 
 	C1_responses = path_response_data_new.C1_response
@@ -460,19 +460,19 @@ tuple.([1,2,3], [5,6,7])
 
 # ╔═╡ 449467a6-8cde-4653-9402-557466ffadba
 let fig = Makie.Figure()
-	path_response_data_new = TransitionPaths2024.artifact_20250531_new_tested_sequences_load()
-	sampled_path = unique(TransitionPaths2024.sampled_path_1to2rep1_20240703())
-	
+	path_response_data_new = TransitionPaths2025.artifact_20250531_new_tested_sequences_load()
+	sampled_path = unique(TransitionPaths2025.sampled_path_1to2rep1_20240703())
+
 	probed_seqs = map(LongAA, path_response_data_new.sequence)
 	@assert probed_seqs ⊆ sampled_path
 	probed_seqs_idx::Vector{Int} = indexin(probed_seqs, sampled_path)
-	
-	shuffled_path_response_data = TransitionPaths2024.response_data_path_1to2rev_20240703()
-	shuffled_path_ww_names = shuffled_path_response_data.ww_names
-	shuffled_path_seqs = TransitionPaths2024.Exp_20240703_sequences().sequences[indexin(shuffled_path_ww_names, TransitionPaths2024.Exp_20240703_sequences().names)]
 
-	path_response_data_old = TransitionPaths2024.response_data_path_1to2rep1_20240703()
-	probed_seqs_old = TransitionPaths2024.Exp_20240703_sequences().sequences[indexin(path_response_data_old.ww_names, TransitionPaths2024.Exp_20240703_sequences().names)]
+	shuffled_path_response_data = TransitionPaths2025.response_data_path_1to2rev_20240703()
+	shuffled_path_ww_names = shuffled_path_response_data.ww_names
+	shuffled_path_seqs = TransitionPaths2025.Exp_20240703_sequences().sequences[indexin(shuffled_path_ww_names, TransitionPaths2025.Exp_20240703_sequences().names)]
+
+	path_response_data_old = TransitionPaths2025.response_data_path_1to2rep1_20240703()
+	probed_seqs_old = TransitionPaths2025.Exp_20240703_sequences().sequences[indexin(path_response_data_old.ww_names, TransitionPaths2025.Exp_20240703_sequences().names)]
 	probed_seqs_idx_for_shuffled::Vector{Int} = indexin(probed_seqs_old, sampled_path)
 
 	C1_responses = path_response_data_new.C1_response
@@ -486,10 +486,10 @@ let fig = Makie.Figure()
 	C2_responses_err_shuffled = df_20241213.eC2[indexin(shuffled_path_ww_names, df_20241213.ww_id)]
 
 	ax = Makie.Axis(fig[1,1][1,1]; width=300, height=120, xgridvisible=false, ygridvisible=false, ylabel=L"\log P_\mathrm{RBM}(\text{global})")
-	Makie.scatterlines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(sampled_path)); color=:black, label="Designed")
-	Makie.scatter!(ax, probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(probed_seqs)); color=:red, markersize=10)
-	Makie.lines!(ax, probed_seqs_idx_for_shuffled, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(shuffled_path_seqs)); color=:brown, linestyle=:dash, label="Shuffled")
-	Makie.scatter!(ax, probed_seqs_idx_for_shuffled, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(shuffled_path_seqs)); color=:brown)
+	Makie.scatterlines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(sampled_path)); color=:black, label="Designed")
+	Makie.scatter!(ax, probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(probed_seqs)); color=:red, markersize=10)
+	Makie.lines!(ax, probed_seqs_idx_for_shuffled, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(shuffled_path_seqs)); color=:brown, linestyle=:dash, label="Shuffled")
+	Makie.scatter!(ax, probed_seqs_idx_for_shuffled, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(shuffled_path_seqs)); color=:brown)
 	Makie.hidexdecorations!(ax)
 	Makie.axislegend(ax; position=:lb, framevisible=false)
 
@@ -501,16 +501,16 @@ let fig = Makie.Figure()
 		fig[1,1][2,1]; width=300, height=120, xgridvisible=false, ygridvisible=false, yaxisposition=:right,
 		ylabel=L"\log P_\mathrm{RBM}(\text{II})", yticklabelcolor=_class_scatter_colors[2], ylabelcolor=_class_scatter_colors[2],
 	)
-	Makie.lines!(ax_I,  TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2024.onehot(sampled_path)); color=_class_scatter_colors[1])
-	Makie.lines!(ax_II, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(sampled_path)); color=_class_scatter_colors[2])
-	Makie.scatter!(ax_I,  TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2024.onehot(sampled_path)); color=_class_scatter_colors[1], label="Designed")
-	Makie.scatter!(ax_II, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(sampled_path)); color=_class_scatter_colors[2])
-	Makie.scatter!(ax_I,  probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2024.onehot(probed_seqs)); color=:red, markersize=10)
-	Makie.scatter!(ax_II, probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(probed_seqs)); color=:red, markersize=10)
-	Makie.lines!(ax_I,  probed_seqs_idx_for_shuffled, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2024.onehot(shuffled_path_seqs)); color=_class_scatter_colors[1], linestyle=:dash)
-	Makie.lines!(ax_II, probed_seqs_idx_for_shuffled, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(shuffled_path_seqs)); color=_class_scatter_colors[2], linestyle=:dash)
-	# Makie.scatter!(ax_I,  probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2024.onehot(shuffled_path_seqs)); color=:brown, label="Shuffled")
-	# Makie.scatter!(ax_II, probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(shuffled_path_seqs)); color=:brown)
+	Makie.lines!(ax_I,  TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2025.onehot(sampled_path)); color=_class_scatter_colors[1])
+	Makie.lines!(ax_II, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(sampled_path)); color=_class_scatter_colors[2])
+	Makie.scatter!(ax_I,  TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2025.onehot(sampled_path)); color=_class_scatter_colors[1], label="Designed")
+	Makie.scatter!(ax_II, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(sampled_path)); color=_class_scatter_colors[2])
+	Makie.scatter!(ax_I,  probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2025.onehot(probed_seqs)); color=:red, markersize=10)
+	Makie.scatter!(ax_II, probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(probed_seqs)); color=:red, markersize=10)
+	Makie.lines!(ax_I,  probed_seqs_idx_for_shuffled, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2025.onehot(shuffled_path_seqs)); color=_class_scatter_colors[1], linestyle=:dash)
+	Makie.lines!(ax_II, probed_seqs_idx_for_shuffled, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(shuffled_path_seqs)); color=_class_scatter_colors[2], linestyle=:dash)
+	# Makie.scatter!(ax_I,  probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2025.onehot(shuffled_path_seqs)); color=:brown, label="Shuffled")
+	# Makie.scatter!(ax_II, probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(shuffled_path_seqs)); color=:brown)
 	Makie.ylims!(ax_I, -130, 0)
 	Makie.ylims!(ax_II, -130, 0)
 	Makie.hidexdecorations!(ax_I)
@@ -520,7 +520,7 @@ let fig = Makie.Figure()
 	# ax = Makie.Axis(fig[1,2][4,1]; width=300, height=30, xgridvisible=false, ygridvisible=false, yscale=log10, xticks=0:5:50)
 	# Makie.hidedecorations!(ax)
 	# Makie.hidespines!(ax)
-	
+
 	ax = Makie.Axis(fig[1,1][5,1]; width=300, height=120, xgridvisible=false, ygridvisible=false, ylabel="I/II rel. resp.", yscale=log10, xticks=0:5:50)
 	Makie.hspan!(ax, 1, 1e6; color=(:cyan, 0.3))
 	Makie.hspan!(ax, 1e-6, 1; color=(:darkorange, 0.3))
@@ -528,37 +528,37 @@ let fig = Makie.Figure()
 	Makie.scatter!(ax, probed_seqs_idx, C1_responses ./ C2_responses; color=:red, markersize=10)
 	Makie.ylims!(ax, 1e-3, 1e3)
 
-	
+
 	ax = Makie.Axis(fig[1,2][1,1], width=200, height=200, xlabel=L"I_{38}", ylabel=L"I_{36}", xgridvisible=false, ygridvisible=false)
 	Makie.vlines!(ax, -1; color=:gray, linestyle=:dash, linewidth=1)
 	Makie.hlines!(ax, -3; color=:gray, linestyle=:dash, linewidth=1)
 	for (class, color) = zip((:I, :II, :IV), _class_scatter_colors)
 		Makie.scatter!(
 			ax,
-			-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419()))[38, msa_local_rbm_class_prediction .== class],
-			 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419()))[36, msa_local_rbm_class_prediction .== class];
+			-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419()))[38, msa_local_rbm_class_prediction .== class],
+			 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419()))[36, msa_local_rbm_class_prediction .== class];
 			color=(color, 0.5), markersize=4
 		)
 	end
 
-	Makie.scatterlines!(ax, 
-		-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[38, :],
-		 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[36, :];
+	Makie.scatterlines!(ax,
+		-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[38, :],
+		 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[36, :];
 		color=:black
 	)
 
-	Makie.scatter!(ax, 
-		-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(probed_seqs))[38, :],
-		 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(probed_seqs))[36, :];
+	Makie.scatter!(ax,
+		-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(probed_seqs))[38, :],
+		 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(probed_seqs))[36, :];
 		color=:red, markersize=10, #marker=:x
 	)
-	
+
 	Makie.arrows!(ax,
-		-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[38, 1:1] .+ 0.35,
-		 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[36, 1:1] .- 0.35,
+		-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[38, 1:1] .+ 0.35,
+		 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[36, 1:1] .- 0.35,
 		[-0.15], [0.15]; linewidth=2, color=:gray, arrowsize=10
 	)
-	
+
 	Makie.xlims!(ax, -4.5, 2)
 	Makie.ylims!(ax, -7, 3)
 
@@ -587,9 +587,9 @@ let fig = Makie.Figure()
 	Makie.xlims!(ax_inset, -0.5, 7)
 	Makie.ylims!(ax_inset, -0.1, 1.2)
 	Makie.translate!(ax_inset.scene, 0, 0, 10)
-	
+
 	Makie.resize_to_layout!(fig)
-	#Makie.save(Base.homedir() * "/projects/2024/Transition_Paths/TransitionPaths2024.jl/figures/Fig3.pdf", fig)
+	#Makie.save(Base.homedir() * "/projects/2024/Transition_Paths/TransitionPaths2025.jl/figures/Fig3.pdf", fig)
 	fig
 end
 
@@ -598,20 +598,20 @@ md"## Fig. 4. I -> IV"
 
 # ╔═╡ 606f2eea-b7f0-47b2-93cc-7fa482f342fe
 let fig = Makie.Figure()
-	sampled_path = unique(TransitionPaths2024.sampled_path_1to4_20240703())
-	path_response_data = TransitionPaths2024.response_data_path_1to4_20240703()
-	probed_seqs = TransitionPaths2024.Exp_20240703_sequences().sequences[indexin(path_response_data.ww_names, TransitionPaths2024.Exp_20240703_sequences().names)]
+	sampled_path = unique(TransitionPaths2025.sampled_path_1to4_20240703())
+	path_response_data = TransitionPaths2025.response_data_path_1to4_20240703()
+	probed_seqs = TransitionPaths2025.Exp_20240703_sequences().sequences[indexin(path_response_data.ww_names, TransitionPaths2025.Exp_20240703_sequences().names)]
 	probed_seqs_idx::Vector{Int} = indexin(probed_seqs, sampled_path)
 
-	shuffled_path_response_data = TransitionPaths2024.response_data_path_1to4rev_20240703()
+	shuffled_path_response_data = TransitionPaths2025.response_data_path_1to4rev_20240703()
 	shuffled_path_ww_names = shuffled_path_response_data.ww_names
-	shuffled_path_seqs = TransitionPaths2024.Exp_20240703_sequences().sequences[indexin(shuffled_path_ww_names, TransitionPaths2024.Exp_20240703_sequences().names)]
+	shuffled_path_seqs = TransitionPaths2025.Exp_20240703_sequences().sequences[indexin(shuffled_path_ww_names, TransitionPaths2025.Exp_20240703_sequences().names)]
 	shuffled_probed_seqs_idx = probed_seqs_idx[[1:6; 9; 11]] # done by hand because there were some sequences added to experiments
 
 	path_response_data_names = replace(path_response_data.ww_names,
 		"WW147" => "WW44/147", "WW148" => "WW148/58", "WW149" => "WW9/149"
 	)
-	
+
 	C1_responses = df_20241213.C1[indexin(path_response_data_names, df_20241213.ww_id)]
 	C4_responses = df_20241213.C4[indexin(path_response_data_names, df_20241213.ww_id)]
 	C1_responses_err = df_20241213.eC1[indexin(path_response_data_names, df_20241213.ww_id)]
@@ -621,40 +621,40 @@ let fig = Makie.Figure()
 	C4_responses_shuffled = df_20241213.C4[indexin(shuffled_path_ww_names, df_20241213.ww_id)]
 	C1_responses_err_shuffled = df_20241213.eC1[indexin(shuffled_path_ww_names, df_20241213.ww_id)]
 	C4_responses_err_shuffled = df_20241213.eC4[indexin(shuffled_path_ww_names, df_20241213.ww_id)]
-	
+
 	rel_response = C1_responses ./ C4_responses
-	
+
 	ax = Makie.Axis(fig[1,1][1,1]; width=300, height=100, xgridvisible=false, ygridvisible=false, ylabel=L"\log P_\mathrm{RBM}(\text{global})")
-	Makie.scatterlines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(sampled_path)); color=:black, label="Designed")
-	Makie.scatter!(ax, probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(probed_seqs)); color=:red, markersize=10)
-	Makie.scatterlines!(ax, shuffled_probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(shuffled_path_seqs)); color=:brown, linestyle=:dash, label="Shuffled")
+	Makie.scatterlines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(sampled_path)); color=:black, label="Designed")
+	Makie.scatter!(ax, probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(probed_seqs)); color=:red, markersize=10)
+	Makie.scatterlines!(ax, shuffled_probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(shuffled_path_seqs)); color=:brown, linestyle=:dash, label="Shuffled")
 	Makie.axislegend(ax; position=:lb, framevisible=false)
 	Makie.hidexdecorations!(ax)
 
 	ax = Makie.Axis(fig[1,1][2,1]; width=300, height=100, xgridvisible=false, ygridvisible=false, ylabel=L"\log P_\mathrm{RBM}(\text{I or IV})")
-	Makie.lines!(ax,  TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2024.onehot(sampled_path)); color=_class_scatter_colors[1], label="I")
-	Makie.lines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2024.onehot(sampled_path)); color=_class_scatter_colors[3], label="IV")
-	Makie.scatter!(ax,  TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2024.onehot(sampled_path)); color=_class_scatter_colors[1])
-	Makie.scatter!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2024.onehot(sampled_path)); color=_class_scatter_colors[3])
-	Makie.scatter!(ax,  probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2024.onehot(probed_seqs)); color=:red, markersize=10)
-	Makie.scatter!(ax, probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2024.onehot(probed_seqs)); color=:red, markersize=10)
-	Makie.lines!(ax,  shuffled_probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2024.onehot(shuffled_path_seqs)); color=_class_scatter_colors[1], linestyle=:dash)
-	Makie.lines!(ax, shuffled_probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2024.onehot(shuffled_path_seqs)); color=_class_scatter_colors[3], linestyle=:dash)
-	# Makie.scatter!(ax_I,  probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2024.onehot(shuffled_path_seqs)); color=:brown, label="Shuffled")
-	# Makie.scatter!(ax_II, probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(shuffled_path_seqs)); color=:brown)
+	Makie.lines!(ax,  TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2025.onehot(sampled_path)); color=_class_scatter_colors[1], label="I")
+	Makie.lines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2025.onehot(sampled_path)); color=_class_scatter_colors[3], label="IV")
+	Makie.scatter!(ax,  TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2025.onehot(sampled_path)); color=_class_scatter_colors[1])
+	Makie.scatter!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2025.onehot(sampled_path)); color=_class_scatter_colors[3])
+	Makie.scatter!(ax,  probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2025.onehot(probed_seqs)); color=:red, markersize=10)
+	Makie.scatter!(ax, probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2025.onehot(probed_seqs)); color=:red, markersize=10)
+	Makie.lines!(ax,  shuffled_probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2025.onehot(shuffled_path_seqs)); color=_class_scatter_colors[1], linestyle=:dash)
+	Makie.lines!(ax, shuffled_probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2025.onehot(shuffled_path_seqs)); color=_class_scatter_colors[3], linestyle=:dash)
+	# Makie.scatter!(ax_I,  probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2025.onehot(shuffled_path_seqs)); color=:brown, label="Shuffled")
+	# Makie.scatter!(ax_II, probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(shuffled_path_seqs)); color=:brown)
 	Makie.axislegend(ax; position=:lb, framevisible=false)
 
 	ax = Makie.Axis(fig[1,1][3,1]; width=300, height=100, xgridvisible=false, ygridvisible=false, ylabel=L"\log P_\mathrm{RBM}(\text{I or II})")
-	Makie.lines!(ax,  TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2024.onehot(sampled_path)); color=_class_scatter_colors[1], label="I")
-	Makie.lines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(sampled_path)); color=_class_scatter_colors[2], label="II")
-	Makie.scatter!(ax,  TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2024.onehot(sampled_path)); color=_class_scatter_colors[1])
-	Makie.scatter!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(sampled_path)); color=_class_scatter_colors[2])
-	Makie.scatter!(ax,  probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2024.onehot(probed_seqs)); color=:red, markersize=10)
-	Makie.scatter!(ax, probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(probed_seqs)); color=:red, markersize=10)
-	Makie.lines!(ax,  shuffled_probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2024.onehot(shuffled_path_seqs)); color=_class_scatter_colors[1], linestyle=:dash)
-	Makie.lines!(ax, shuffled_probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(shuffled_path_seqs)); color=_class_scatter_colors[2], linestyle=:dash)
+	Makie.lines!(ax,  TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2025.onehot(sampled_path)); color=_class_scatter_colors[1], label="I")
+	Makie.lines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(sampled_path)); color=_class_scatter_colors[2], label="II")
+	Makie.scatter!(ax,  TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2025.onehot(sampled_path)); color=_class_scatter_colors[1])
+	Makie.scatter!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(sampled_path)); color=_class_scatter_colors[2])
+	Makie.scatter!(ax,  probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2025.onehot(probed_seqs)); color=:red, markersize=10)
+	Makie.scatter!(ax, probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(probed_seqs)); color=:red, markersize=10)
+	Makie.lines!(ax,  shuffled_probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2025.onehot(shuffled_path_seqs)); color=_class_scatter_colors[1], linestyle=:dash)
+	Makie.lines!(ax, shuffled_probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(shuffled_path_seqs)); color=_class_scatter_colors[2], linestyle=:dash)
 	Makie.axislegend(ax; position=:lc, framevisible=false)
-	
+
 	ax = Makie.Axis(fig[1,1][4,1]; width=300, height=120, xgridvisible=false, ygridvisible=false, ylabel="I/IV rel. resp.", yscale=log10, xticks=0:5:50)
 	Makie.hspan!(ax, 1, 1e6; color=(:cyan, 0.3))
 	Makie.hspan!(ax, 1e-6, 1; color=(:green, 0.3))
@@ -669,30 +669,30 @@ let fig = Makie.Figure()
 	for (class, color) = zip((:I, :II, :IV), _class_scatter_colors)
 		Makie.scatter!(
 			ax,
-			-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419()))[38, msa_local_rbm_class_prediction .== class],
-			 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419()))[36, msa_local_rbm_class_prediction .== class];
+			-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419()))[38, msa_local_rbm_class_prediction .== class],
+			 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419()))[36, msa_local_rbm_class_prediction .== class];
 			color=(color, 0.5), markersize=4
 		)
 	end
 
-	Makie.scatterlines!(ax, 
-		-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[38, :],
-		 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[36, :];
+	Makie.scatterlines!(ax,
+		-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[38, :],
+		 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[36, :];
 		color=:black
 	)
 
-	Makie.scatter!(ax, 
-		-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(probed_seqs))[38, :],
-		 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(probed_seqs))[36, :];
+	Makie.scatter!(ax,
+		-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(probed_seqs))[38, :],
+		 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(probed_seqs))[36, :];
 		color=:red, markersize=10
 	)
-	
+
 	Makie.arrows!(ax,
-		-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[38, 1:1] .+ 0.35,
-		 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[36, 1:1] .- 0.35,
+		-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[38, 1:1] .+ 0.35,
+		 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[36, 1:1] .- 0.35,
 		[-0.15], [0.15]; linewidth=2, color=:gray, arrowsize=10
 	)
-	
+
 	Makie.xlims!(ax, -4.5, 2)
 	Makie.ylims!(ax, -7, 3)
 
@@ -720,29 +720,29 @@ let fig = Makie.Figure()
 	Makie.scatter!(ax_inset, C1_responses_shuffled, C4_responses_shuffled; color=:red)
 	Makie.xlims!(ax_inset, -0.5, 5)
 	Makie.ylims!(ax_inset, -0.2, 2)
-	Makie.translate!(ax_inset.scene, 0, 0, 10)	
+	Makie.translate!(ax_inset.scene, 0, 0, 10)
 
 	Makie.resize_to_layout!(fig)
-#	Makie.save("/Users/jfdcd/projects/2024/Transition_Paths/TransitionPaths2024.jl/figures/Fig4.pdf", fig)
+#	Makie.save("/Users/jfdcd/projects/2024/Transition_Paths/TransitionPaths2025.jl/figures/Fig4.pdf", fig)
 	fig
 end
 
 # ╔═╡ 71f7257d-6998-4833-98c7-5513e5b23b93
 let fig = Makie.Figure()
-	sampled_path = unique(TransitionPaths2024.sampled_path_1to4_20240703())
-	path_response_data = TransitionPaths2024.response_data_path_1to4_20240703()
-	probed_seqs = TransitionPaths2024.Exp_20240703_sequences().sequences[indexin(path_response_data.ww_names, TransitionPaths2024.Exp_20240703_sequences().names)]
+	sampled_path = unique(TransitionPaths2025.sampled_path_1to4_20240703())
+	path_response_data = TransitionPaths2025.response_data_path_1to4_20240703()
+	probed_seqs = TransitionPaths2025.Exp_20240703_sequences().sequences[indexin(path_response_data.ww_names, TransitionPaths2025.Exp_20240703_sequences().names)]
 	probed_seqs_idx::Vector{Int} = indexin(probed_seqs, sampled_path)
 
-	shuffled_path_response_data = TransitionPaths2024.response_data_path_1to4rev_20240703()
+	shuffled_path_response_data = TransitionPaths2025.response_data_path_1to4rev_20240703()
 	shuffled_path_ww_names = shuffled_path_response_data.ww_names
-	shuffled_path_seqs = TransitionPaths2024.Exp_20240703_sequences().sequences[indexin(shuffled_path_ww_names, TransitionPaths2024.Exp_20240703_sequences().names)]
+	shuffled_path_seqs = TransitionPaths2025.Exp_20240703_sequences().sequences[indexin(shuffled_path_ww_names, TransitionPaths2025.Exp_20240703_sequences().names)]
 	shuffled_probed_seqs_idx = probed_seqs_idx[[1:6; 9; 11]] # done by hand because there were some sequences added to experiments
 
 	path_response_data_names = replace(path_response_data.ww_names,
 		"WW147" => "WW44/147", "WW148" => "WW148/58", "WW149" => "WW9/149"
 	)
-	
+
 	C1_responses = df_20241213.C1[indexin(path_response_data_names, df_20241213.ww_id)]
 	C4_responses = df_20241213.C4[indexin(path_response_data_names, df_20241213.ww_id)]
 	C1_responses_err = df_20241213.eC1[indexin(path_response_data_names, df_20241213.ww_id)]
@@ -752,13 +752,13 @@ let fig = Makie.Figure()
 	C4_responses_shuffled = df_20241213.C4[indexin(shuffled_path_ww_names, df_20241213.ww_id)]
 	C1_responses_err_shuffled = df_20241213.eC1[indexin(shuffled_path_ww_names, df_20241213.ww_id)]
 	C4_responses_err_shuffled = df_20241213.eC4[indexin(shuffled_path_ww_names, df_20241213.ww_id)]
-	
+
 	rel_response = C1_responses ./ C4_responses
-	
+
 	ax = Makie.Axis(fig[1,1][1,1]; width=300, height=120, xgridvisible=false, ygridvisible=false, ylabel=L"\log P_\mathrm{RBM}(\text{global})")
-	Makie.scatterlines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(sampled_path)); color=:black, label="Designed")
-	Makie.scatter!(ax, probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(probed_seqs)); color=:red, markersize=10)
-	Makie.scatterlines!(ax, shuffled_probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(shuffled_path_seqs)); color=:brown, linestyle=:dash, label="Shuffled")
+	Makie.scatterlines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(sampled_path)); color=:black, label="Designed")
+	Makie.scatter!(ax, probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(probed_seqs)); color=:red, markersize=10)
+	Makie.scatterlines!(ax, shuffled_probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(shuffled_path_seqs)); color=:brown, linestyle=:dash, label="Shuffled")
 	Makie.axislegend(ax; position=:lb, framevisible=false)
 	Makie.hidexdecorations!(ax)
 
@@ -770,32 +770,32 @@ let fig = Makie.Figure()
 		fig[1,1][2,1]; width=300, height=120, xgridvisible=false, ygridvisible=false, yaxisposition=:right,
 		ylabel=L"\log P_\mathrm{RBM}(\text{IV})", yticklabelcolor=_class_scatter_colors[3], ylabelcolor=_class_scatter_colors[3],
 	)
-	Makie.lines!(ax_I,  TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2024.onehot(sampled_path)); color=_class_scatter_colors[1])
-	Makie.lines!(ax_IV, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(sampled_path)); color=_class_scatter_colors[3])
-	Makie.scatter!(ax_I,  TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2024.onehot(sampled_path)); color=_class_scatter_colors[1], label="Designed")
-	Makie.scatter!(ax_IV, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(sampled_path)); color=_class_scatter_colors[3])
-	Makie.scatter!(ax_I,  probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2024.onehot(probed_seqs)); color=:red, markersize=10)
-	Makie.scatter!(ax_IV, probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(probed_seqs)); color=:red, markersize=10)
-	Makie.lines!(ax_I,  shuffled_probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2024.onehot(shuffled_path_seqs)); color=_class_scatter_colors[1], linestyle=:dash)
-	Makie.lines!(ax_IV, shuffled_probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(shuffled_path_seqs)); color=_class_scatter_colors[3], linestyle=:dash)
-	# Makie.scatter!(ax_I,  probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2024.onehot(shuffled_path_seqs)); color=:brown, label="Shuffled")
-	# Makie.scatter!(ax_II, probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(shuffled_path_seqs)); color=:brown)
+	Makie.lines!(ax_I,  TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2025.onehot(sampled_path)); color=_class_scatter_colors[1])
+	Makie.lines!(ax_IV, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(sampled_path)); color=_class_scatter_colors[3])
+	Makie.scatter!(ax_I,  TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2025.onehot(sampled_path)); color=_class_scatter_colors[1], label="Designed")
+	Makie.scatter!(ax_IV, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(sampled_path)); color=_class_scatter_colors[3])
+	Makie.scatter!(ax_I,  probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2025.onehot(probed_seqs)); color=:red, markersize=10)
+	Makie.scatter!(ax_IV, probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(probed_seqs)); color=:red, markersize=10)
+	Makie.lines!(ax_I,  shuffled_probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2025.onehot(shuffled_path_seqs)); color=_class_scatter_colors[1], linestyle=:dash)
+	Makie.lines!(ax_IV, shuffled_probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(shuffled_path_seqs)); color=_class_scatter_colors[3], linestyle=:dash)
+	# Makie.scatter!(ax_I,  probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2025.onehot(shuffled_path_seqs)); color=:brown, label="Shuffled")
+	# Makie.scatter!(ax_II, probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(shuffled_path_seqs)); color=:brown)
 	Makie.hidexdecorations!(ax_I)
 	Makie.hidexdecorations!(ax_IV)
 	Makie.hidespines!(ax_IV)
 
-	
+
 	# ax = Makie.Axis(fig[1,1][2,1]; width=300, height=100, xgridvisible=false, ygridvisible=false, ylabel=L"\log P_\mathrm{RBM}(\text{I})")
-	# Makie.scatterlines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2024.onehot(sampled_path)); color=:black, label="Designed")
-	# Makie.scatter!(ax, probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2024.onehot(probed_seqs)); color=:red, markersize=10)
-	# Makie.scatterlines!(ax, shuffled_probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2024.onehot(shuffled_path_seqs)); color=:brown, linestyle=:dash, label="Shuffled")
+	# Makie.scatterlines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2025.onehot(sampled_path)); color=:black, label="Designed")
+	# Makie.scatter!(ax, probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2025.onehot(probed_seqs)); color=:red, markersize=10)
+	# Makie.scatterlines!(ax, shuffled_probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2025.onehot(shuffled_path_seqs)); color=:brown, linestyle=:dash, label="Shuffled")
 	# Makie.hidexdecorations!(ax)
 	# Makie.axislegend(ax; position=:lb, framevisible=false)
 
 	# ax = Makie.Axis(fig[1,1][3,1]; width=300, height=100, xgridvisible=false, ygridvisible=false, ylabel=L"\log P_\mathrm{RBM}(\text{IV})")
-	# Makie.scatterlines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(sampled_path)); color=:black)
-	# Makie.scatter!(ax, probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(probed_seqs)); color=:red, markersize=10)
-	# Makie.scatterlines!(ax, shuffled_probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(shuffled_path_seqs)); color=:brown, linestyle=:dash, label="Shuffled")
+	# Makie.scatterlines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(sampled_path)); color=:black)
+	# Makie.scatter!(ax, probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(probed_seqs)); color=:red, markersize=10)
+	# Makie.scatterlines!(ax, shuffled_probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(shuffled_path_seqs)); color=:brown, linestyle=:dash, label="Shuffled")
 	# Makie.hidexdecorations!(ax)
 
 	# ax = Makie.Axis(fig[1,1][4,1]; width=300, height=30, xgridvisible=false, ygridvisible=false, yscale=log10, xticks=0:5:50)
@@ -816,30 +816,30 @@ let fig = Makie.Figure()
 	for (class, color) = zip((:I, :II, :IV), _class_scatter_colors)
 		Makie.scatter!(
 			ax,
-			-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419()))[38, msa_local_rbm_class_prediction .== class],
-			 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419()))[36, msa_local_rbm_class_prediction .== class];
+			-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419()))[38, msa_local_rbm_class_prediction .== class],
+			 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419()))[36, msa_local_rbm_class_prediction .== class];
 			color=(color, 0.5), markersize=4
 		)
 	end
 
-	Makie.scatterlines!(ax, 
-		-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[38, :],
-		 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[36, :];
+	Makie.scatterlines!(ax,
+		-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[38, :],
+		 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[36, :];
 		color=:black
 	)
 
-	Makie.scatter!(ax, 
-		-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(probed_seqs))[38, :],
-		 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(probed_seqs))[36, :];
+	Makie.scatter!(ax,
+		-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(probed_seqs))[38, :],
+		 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(probed_seqs))[36, :];
 		color=:red, markersize=10
 	)
-	
+
 	Makie.arrows!(ax,
-		-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[38, 1:1] .+ 0.35,
-		 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[36, 1:1] .- 0.35,
+		-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[38, 1:1] .+ 0.35,
+		 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[36, 1:1] .- 0.35,
 		[-0.15], [0.15]; linewidth=2, color=:gray, arrowsize=10
 	)
-	
+
 	Makie.xlims!(ax, -4.5, 2)
 	Makie.ylims!(ax, -7, 3)
 
@@ -867,10 +867,10 @@ let fig = Makie.Figure()
 	Makie.scatter!(ax_inset, C1_responses_shuffled, C4_responses_shuffled; color=:red)
 	Makie.xlims!(ax_inset, -0.5, 5)
 	Makie.ylims!(ax_inset, -0.2, 2)
-	Makie.translate!(ax_inset.scene, 0, 0, 10)	
+	Makie.translate!(ax_inset.scene, 0, 0, 10)
 
 	Makie.resize_to_layout!(fig)
-	#Makie.save("/DATA-SSD/cossio/projects/2024/Transition_Paths/TransitionPaths2024.jl/figures/Fig4.pdf", fig)
+	#Makie.save("/DATA-SSD/cossio/projects/2024/Transition_Paths/TransitionPaths2025.jl/figures/Fig4.pdf", fig)
 	fig
 end
 
@@ -878,46 +878,46 @@ end
 md"## Fig. 5. Correlations"
 
 # ╔═╡ e5fb8b94-2b1a-4544-88e1-3636bd4798aa
-findall(TransitionPaths2024.artifact_20250531_new_tested_sequences_load().seq_name .∈ Ref(["Seq84", "Seq85", "Seq86", "Seq87"]))
+findall(TransitionPaths2025.artifact_20250531_new_tested_sequences_load().seq_name .∈ Ref(["Seq84", "Seq85", "Seq86", "Seq87"]))
 
 # ╔═╡ 0ae8f8b8-225d-4022-8971-4fb187c726d3
-TransitionPaths2024.artifact_20250531_new_tested_sequences_load().sequence[6:9] ∩ map(string, response_data_sequences_new)
+TransitionPaths2025.artifact_20250531_new_tested_sequences_load().sequence[6:9] ∩ map(string, response_data_sequences_new)
 
 # ╔═╡ 0ebe69bb-00c4-4381-ab36-770b27ae356e
-TransitionPaths2024.artifact_20250531_new_tested_sequences_load().sequence
+TransitionPaths2025.artifact_20250531_new_tested_sequences_load().sequence
 
 # ╔═╡ d4216956-091a-4780-94ca-6077ee29a1e6
-	# path_response_data_new = TransitionPaths2024.artifact_20250531_new_tested_sequences_load()
-	# sampled_path = unique(TransitionPaths2024.sampled_path_1to2rep1_20240703())
-	
+	# path_response_data_new = TransitionPaths2025.artifact_20250531_new_tested_sequences_load()
+	# sampled_path = unique(TransitionPaths2025.sampled_path_1to2rep1_20240703())
+
 	# probed_seqs = map(LongAA, path_response_data_new.sequence)
 	# @assert probed_seqs ⊆ sampled_path
 	# probed_seqs_idx::Vector{Int} = indexin(probed_seqs, sampled_path)
-	
-	# shuffled_path_response_data = TransitionPaths2024.response_data_path_1to2rev_20240703()
-	# shuffled_path_ww_names = shuffled_path_response_data.ww_names
-	# shuffled_path_seqs = TransitionPaths2024.Exp_20240703_sequences().sequences[indexin(shuffled_path_ww_names, TransitionPaths2024.Exp_20240703_sequences().names)]
 
-	# path_response_data_old = TransitionPaths2024.response_data_path_1to2rep1_20240703()
-	# probed_seqs_old = TransitionPaths2024.Exp_20240703_sequences().sequences[indexin(path_response_data.ww_names, TransitionPaths2024.Exp_20240703_sequences().names)]
+	# shuffled_path_response_data = TransitionPaths2025.response_data_path_1to2rev_20240703()
+	# shuffled_path_ww_names = shuffled_path_response_data.ww_names
+	# shuffled_path_seqs = TransitionPaths2025.Exp_20240703_sequences().sequences[indexin(shuffled_path_ww_names, TransitionPaths2025.Exp_20240703_sequences().names)]
+
+	# path_response_data_old = TransitionPaths2025.response_data_path_1to2rep1_20240703()
+	# probed_seqs_old = TransitionPaths2025.Exp_20240703_sequences().sequences[indexin(path_response_data.ww_names, TransitionPaths2025.Exp_20240703_sequences().names)]
 	# probed_seqs_idx_for_shuffled::Vector{Int} = indexin(probed_seqs_old, sampled_path)
 
 
 # ╔═╡ bb6e6dc0-9e56-4c5f-80b6-89637573b4eb
 let fig = Makie.Figure()
 	# add new tested sequences part of Path I -> II
-	response_data_sequences_new_new = [response_data_sequences_new; LongAA.(TransitionPaths2024.artifact_20250531_new_tested_sequences_load().sequence[6:9])]
-	
+	response_data_sequences_new_new = [response_data_sequences_new; LongAA.(TransitionPaths2025.artifact_20250531_new_tested_sequences_load().sequence[6:9])]
+
 	_sz = 150
 
-	pred_class = TransitionPaths2024.Eugenio_Predict_Class_from_Inputs_20240715(TransitionPaths2024.onehot(response_data_sequences_new_new))
-	likelihood_I  = TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2024.onehot(response_data_sequences_new_new))
-	likelihood_II = TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(response_data_sequences_new_new))
-	likelihood_IV = TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2024.onehot(response_data_sequences_new_new))
-	response_I  = [ismissing(r) || r ≤ 0 ? NaN : r for r = [df_20241213.C1; TransitionPaths2024.artifact_20250531_new_tested_sequences_load().C1_response[6:9]]]
-	response_II = [ismissing(r) || r ≤ 0 ? NaN : r for r = [df_20241213.C2; TransitionPaths2024.artifact_20250531_new_tested_sequences_load().C2_response[6:9]]]
-	response_IV = [ismissing(r) || r ≤ 0 ? NaN : r for r = [df_20241213.C4; TransitionPaths2024.artifact_20250531_new_tested_sequences_load().C4_response[6:9]]]
-	
+	pred_class = TransitionPaths2025.Eugenio_Predict_Class_from_Inputs_20240715(TransitionPaths2025.onehot(response_data_sequences_new_new))
+	likelihood_I  = TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2025.onehot(response_data_sequences_new_new))
+	likelihood_II = TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(response_data_sequences_new_new))
+	likelihood_IV = TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2025.onehot(response_data_sequences_new_new))
+	response_I  = [ismissing(r) || r ≤ 0 ? NaN : r for r = [df_20241213.C1; TransitionPaths2025.artifact_20250531_new_tested_sequences_load().C1_response[6:9]]]
+	response_II = [ismissing(r) || r ≤ 0 ? NaN : r for r = [df_20241213.C2; TransitionPaths2025.artifact_20250531_new_tested_sequences_load().C2_response[6:9]]]
+	response_IV = [ismissing(r) || r ≤ 0 ? NaN : r for r = [df_20241213.C4; TransitionPaths2025.artifact_20250531_new_tested_sequences_load().C4_response[6:9]]]
+
 	ax_I  = Makie.Axis(fig[1,1][1,1], width=_sz, height=_sz, xlabel=L"\ln P_\mathrm{rbm}(\text{local I})",  ylabel="Class I. norm. resp.",  yscale=log10, xgridvisible=false, ygridvisible=false, xticks=-100:50:0)
 	ax_II = Makie.Axis(fig[1,1][1,2], width=_sz, height=_sz, xlabel=L"\ln P_\mathrm{rbm}(\text{local II})", ylabel="Class II. norm. resp.", yscale=log10, xgridvisible=false, ygridvisible=false, xticks=-80:20:0)
 	ax_IV = Makie.Axis(fig[1,1][1,3], width=_sz, height=_sz, xlabel=L"\ln P_\mathrm{rbm}(\text{local IV})", ylabel="Class IV. norm. resp.", yscale=log10, xgridvisible=false, ygridvisible=false, xticks=-100:25:0)
@@ -934,42 +934,42 @@ let fig = Makie.Figure()
 
 	# Correlations barplot
 	responses = Dict(
-		:I => [df_20241213.C1; TransitionPaths2024.artifact_20250531_new_tested_sequences_load().C1_response[6:9]],
-		:II => [df_20241213.C2; TransitionPaths2024.artifact_20250531_new_tested_sequences_load().C2_response[6:9]],
-		:IV => [df_20241213.C4; TransitionPaths2024.artifact_20250531_new_tested_sequences_load().C4_response[6:9]]
+		:I => [df_20241213.C1; TransitionPaths2025.artifact_20250531_new_tested_sequences_load().C1_response[6:9]],
+		:II => [df_20241213.C2; TransitionPaths2025.artifact_20250531_new_tested_sequences_load().C2_response[6:9]],
+		:IV => [df_20241213.C4; TransitionPaths2025.artifact_20250531_new_tested_sequences_load().C4_response[6:9]]
 	)
 
 	cat = [i for (i, target) = enumerate((:I, :II, :IV)) for (j, rbm) = enumerate((:global, :I, :II, :IV))]
 	grp = [j for (i, target) = enumerate((:I, :II, :IV)) for (j, rbm) = enumerate((:global, :I, :II, :IV))]
-				
+
 	# correlations = [
-	# 	nancor(TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(rbm, TransitionPaths2024.onehot(response_data_sequences_new)), replace(responses[target], missing => NaN))
+	# 	nancor(TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(rbm, TransitionPaths2025.onehot(response_data_sequences_new)), replace(responses[target], missing => NaN))
 	# 	for target = (:I, :II, :IV) for rbm = (:global, :I, :II, :IV)
 	# ]
 
 	response_data_sequences_new_uniq = unique(response_data_sequences_new_new)
 	responses_uniq = Dict(target => last.(unique(first, zip(response_data_sequences_new_new, responses[target]))) for target = (:I, :II, :IV))
-	
+
 	correlations = [
 		nancor(
-			TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(rbm, TransitionPaths2024.onehot(response_data_sequences_new_new)),
+			TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(rbm, TransitionPaths2025.onehot(response_data_sequences_new_new)),
 			[log(ifelse(ismissing(r) || isnan(r) || r ≤ 0, NaN, r)) for r = responses[target]]
 			#log.(max.(replace(responses[target], missing => NaN), 1e-10))
 		)
 		for target = (:I, :II, :IV) for rbm = (:global, :I, :II, :IV)
 	]
-			
+
 	correlations_uniq = [
 		nancor(
-			TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(rbm, TransitionPaths2024.onehot(response_data_sequences_new_uniq)),
+			TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(rbm, TransitionPaths2025.onehot(response_data_sequences_new_uniq)),
 			[log(ifelse(ismissing(r) || isnan(r) || r ≤ 0, NaN, r)) for r = responses_uniq[target]]
 		)
 		for target = (:I, :II, :IV) for rbm = (:global, :I, :II, :IV)
 	]
 
-	
+
 	colors = [:gray, :cyan, :orange, :green]
-		
+
 	ax = Makie.Axis(fig[2,1][1,2], width=200, height=_sz, xticks=(1:3, ["I", "II", "IV"]), ylabel="Exp. resp. corr.", xgridvisible=false, ygridvisible=false)
 	Makie.barplot!(ax, cat, correlations_uniq; dodge=grp, color=colors[grp], dodge_gap=0.05, width=0.9)
 	Makie.hlines!(ax, 0.0; color=:black, linestyle=:dash)
@@ -979,24 +979,24 @@ let fig = Makie.Figure()
 	elements = [Makie.PolyElement(; polycolor = colors[j]) for j = 1:4]
 	Makie.Legend(fig[2,1][1,3], elements, labels; framevisible=false)
 
-	# response_data_v2_sequences = TransitionPaths2024.Exp_20240703_sequences().sequences[
-	# 	indexin(TransitionPaths2024.response_data_all_v2_20240708().name, TransitionPaths2024.Exp_20240703_sequences().names)
+	# response_data_v2_sequences = TransitionPaths2025.Exp_20240703_sequences().sequences[
+	# 	indexin(TransitionPaths2025.response_data_all_v2_20240708().name, TransitionPaths2025.Exp_20240703_sequences().names)
 	# ]
-	# rbm_log_likelihoods_v2 = TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(response_data_v2_sequences))
-	
+	# rbm_log_likelihoods_v2 = TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(response_data_v2_sequences))
+
 	ax = Makie.Axis(fig[2,1][1,1], width=250, height=_sz, xlabel=L"P_{\mathrm{RBM}}(\text{glob.})", ylabel="Frequency", xgridvisible=false, ygridvisible=false)
 	bins = -90:10:10
-	Makie.hist!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419())); normalization=:pdf, bins=-90:2:10, color=(:green, 0.3), label="MSA")
-	# Makie.stephist!(ax, rbm_log_likelihoods_v2[TransitionPaths2024.response_data_all_v2_20240708().type .== "Natural"], color=:green, label="Natural", normalization=:pdf, bins=-90:5:10, linewidth=4)
-	# Makie.stephist!(ax, rbm_log_likelihoods_v2[TransitionPaths2024.response_data_all_v2_20240708().type .== "Designed"], color=:blue, label="Designed", normalization=:pdf, bins=-90:5:10, linewidth=4)
-	# Makie.stephist!(ax, rbm_log_likelihoods_v2[TransitionPaths2024.response_data_all_v2_20240708().type .== "Shuffled"], color=:red, label="Shuffled", normalization=:pdf, bins=-90:5:10, linewidth=4)
-	Makie.stephist!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(unique(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"]))); color=:green, label="Natural", normalization=:pdf, bins, linewidth=4)
-	Makie.stephist!(ax, 
-		TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(
+	Makie.hist!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419())); normalization=:pdf, bins=-90:2:10, color=(:green, 0.3), label="MSA")
+	# Makie.stephist!(ax, rbm_log_likelihoods_v2[TransitionPaths2025.response_data_all_v2_20240708().type .== "Natural"], color=:green, label="Natural", normalization=:pdf, bins=-90:5:10, linewidth=4)
+	# Makie.stephist!(ax, rbm_log_likelihoods_v2[TransitionPaths2025.response_data_all_v2_20240708().type .== "Designed"], color=:blue, label="Designed", normalization=:pdf, bins=-90:5:10, linewidth=4)
+	# Makie.stephist!(ax, rbm_log_likelihoods_v2[TransitionPaths2025.response_data_all_v2_20240708().type .== "Shuffled"], color=:red, label="Shuffled", normalization=:pdf, bins=-90:5:10, linewidth=4)
+	Makie.stephist!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(unique(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"]))); color=:green, label="Natural", normalization=:pdf, bins, linewidth=4)
+	Makie.stephist!(ax,
+		TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(
 			unique(df_20241213.aligned_sequences[df_20241213.group .∈ Ref(("1st", "2nd", "3rd", "4th") .* "_batch")])));
 		color=:blue, label="Designed", normalization=:pdf, bins, linewidth=4)
-	Makie.stephist!(ax, 
-		TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(
+	Makie.stephist!(ax,
+		TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(
 			unique(df_20241213.aligned_sequences[df_20241213.group .== "Scrambled_paths"])));
 		color=:red, label="Shuffled", normalization=:pdf, bins, linewidth=2, linestyle=(:dash, 1.2))
 	Makie.xlims!(ax, -90, 0)
@@ -1004,7 +1004,7 @@ let fig = Makie.Figure()
 	Makie.axislegend(ax; position=:lt, framevisible=false)
 
 	Makie.resize_to_layout!(fig)
-	#Makie.save(homedir() * "/projects/2024/Transition_Paths/TransitionPaths2024.jl/figures/Fig5.pdf", fig)
+	#Makie.save(homedir() * "/projects/2024/Transition_Paths/TransitionPaths2025.jl/figures/Fig5.pdf", fig)
 	fig
 end
 
@@ -1012,14 +1012,14 @@ end
 let fig = Makie.Figure()
 	_sz = 150
 
-	pred_class = TransitionPaths2024.Eugenio_Predict_Class_from_Inputs_20240715(TransitionPaths2024.onehot(response_data_sequences_new))
-	likelihood_I  = TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2024.onehot(response_data_sequences_new))
-	likelihood_II = TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(response_data_sequences_new))
-	likelihood_IV = TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2024.onehot(response_data_sequences_new))
+	pred_class = TransitionPaths2025.Eugenio_Predict_Class_from_Inputs_20240715(TransitionPaths2025.onehot(response_data_sequences_new))
+	likelihood_I  = TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2025.onehot(response_data_sequences_new))
+	likelihood_II = TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(response_data_sequences_new))
+	likelihood_IV = TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2025.onehot(response_data_sequences_new))
 	response_I  = [ismissing(r) || r ≤ 0 ? NaN : r for r = df_20241213.C1]
 	response_II = [ismissing(r) || r ≤ 0 ? NaN : r for r = df_20241213.C2]
 	response_IV = [ismissing(r) || r ≤ 0 ? NaN : r for r = df_20241213.C4]
-	
+
 	ax_I  = Makie.Axis(fig[1,1][1,1], width=_sz, height=_sz, xlabel=L"\ln P_\mathrm{rbm}(\text{local I})",  ylabel="Class I. norm. resp.",  yscale=log10, xgridvisible=false, ygridvisible=false, xticks=-100:50:0)
 	ax_II = Makie.Axis(fig[1,1][1,2], width=_sz, height=_sz, xlabel=L"\ln P_\mathrm{rbm}(\text{local II})", ylabel="Class II. norm. resp.", yscale=log10, xgridvisible=false, ygridvisible=false, xticks=-80:20:0)
 	ax_IV = Makie.Axis(fig[1,1][1,3], width=_sz, height=_sz, xlabel=L"\ln P_\mathrm{rbm}(\text{local IV})", ylabel="Class IV. norm. resp.", yscale=log10, xgridvisible=false, ygridvisible=false, xticks=-100:25:0)
@@ -1039,35 +1039,35 @@ let fig = Makie.Figure()
 
 	cat = [i for (i, target) = enumerate((:I, :II, :IV)) for (j, rbm) = enumerate((:global, :I, :II, :IV))]
 	grp = [j for (i, target) = enumerate((:I, :II, :IV)) for (j, rbm) = enumerate((:global, :I, :II, :IV))]
-				
+
 	# correlations = [
-	# 	nancor(TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(rbm, TransitionPaths2024.onehot(response_data_sequences_new)), replace(responses[target], missing => NaN))
+	# 	nancor(TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(rbm, TransitionPaths2025.onehot(response_data_sequences_new)), replace(responses[target], missing => NaN))
 	# 	for target = (:I, :II, :IV) for rbm = (:global, :I, :II, :IV)
 	# ]
 
 	response_data_sequences_new_uniq = unique(response_data_sequences_new)
 	responses_uniq = Dict(target => last.(unique(first, zip(response_data_sequences_new, responses[target]))) for target = (:I, :II, :IV))
-	
+
 	correlations = [
 		nancor(
-			TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(rbm, TransitionPaths2024.onehot(response_data_sequences_new)),
+			TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(rbm, TransitionPaths2025.onehot(response_data_sequences_new)),
 			[log(ifelse(ismissing(r) || isnan(r) || r ≤ 0, NaN, r)) for r = responses[target]]
 			#log.(max.(replace(responses[target], missing => NaN), 1e-10))
 		)
 		for target = (:I, :II, :IV) for rbm = (:global, :I, :II, :IV)
 	]
-			
+
 	correlations_uniq = [
 		nancor(
-			TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(rbm, TransitionPaths2024.onehot(response_data_sequences_new_uniq)),
+			TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(rbm, TransitionPaths2025.onehot(response_data_sequences_new_uniq)),
 			[log(ifelse(ismissing(r) || isnan(r) || r ≤ 0, NaN, r)) for r = responses_uniq[target]]
 		)
 		for target = (:I, :II, :IV) for rbm = (:global, :I, :II, :IV)
 	]
 
-	
+
 	colors = [:gray, :cyan, :orange, :green]
-		
+
 	ax = Makie.Axis(fig[2,1][1,2], width=200, height=_sz, xticks=(1:3, ["I", "II", "IV"]), ylabel="Exp. resp. corr.", xgridvisible=false, ygridvisible=false)
 	Makie.barplot!(ax, cat, correlations_uniq; dodge=grp, color=colors[grp], dodge_gap=0.05, width=0.9)
 	Makie.hlines!(ax, 0.0; color=:black, linestyle=:dash)
@@ -1077,24 +1077,24 @@ let fig = Makie.Figure()
 	elements = [Makie.PolyElement(; polycolor = colors[j]) for j = 1:4]
 	Makie.Legend(fig[2,1][1,3], elements, labels; framevisible=false)
 
-	# response_data_v2_sequences = TransitionPaths2024.Exp_20240703_sequences().sequences[
-	# 	indexin(TransitionPaths2024.response_data_all_v2_20240708().name, TransitionPaths2024.Exp_20240703_sequences().names)
+	# response_data_v2_sequences = TransitionPaths2025.Exp_20240703_sequences().sequences[
+	# 	indexin(TransitionPaths2025.response_data_all_v2_20240708().name, TransitionPaths2025.Exp_20240703_sequences().names)
 	# ]
-	# rbm_log_likelihoods_v2 = TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(response_data_v2_sequences))
-	
+	# rbm_log_likelihoods_v2 = TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(response_data_v2_sequences))
+
 	ax = Makie.Axis(fig[2,1][1,1], width=250, height=_sz, xlabel=L"P_{\mathrm{RBM}}(\text{glob.})", ylabel="Frequency", xgridvisible=false, ygridvisible=false)
 	bins = -90:10:10
-	Makie.hist!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419())); normalization=:pdf, bins=-90:2:10, color=(:green, 0.3), label="MSA")
-	# Makie.stephist!(ax, rbm_log_likelihoods_v2[TransitionPaths2024.response_data_all_v2_20240708().type .== "Natural"], color=:green, label="Natural", normalization=:pdf, bins=-90:5:10, linewidth=4)
-	# Makie.stephist!(ax, rbm_log_likelihoods_v2[TransitionPaths2024.response_data_all_v2_20240708().type .== "Designed"], color=:blue, label="Designed", normalization=:pdf, bins=-90:5:10, linewidth=4)
-	# Makie.stephist!(ax, rbm_log_likelihoods_v2[TransitionPaths2024.response_data_all_v2_20240708().type .== "Shuffled"], color=:red, label="Shuffled", normalization=:pdf, bins=-90:5:10, linewidth=4)
-	Makie.stephist!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(unique(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"]))); color=:green, label="Natural", normalization=:pdf, bins, linewidth=4)
-	Makie.stephist!(ax, 
-		TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(
+	Makie.hist!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419())); normalization=:pdf, bins=-90:2:10, color=(:green, 0.3), label="MSA")
+	# Makie.stephist!(ax, rbm_log_likelihoods_v2[TransitionPaths2025.response_data_all_v2_20240708().type .== "Natural"], color=:green, label="Natural", normalization=:pdf, bins=-90:5:10, linewidth=4)
+	# Makie.stephist!(ax, rbm_log_likelihoods_v2[TransitionPaths2025.response_data_all_v2_20240708().type .== "Designed"], color=:blue, label="Designed", normalization=:pdf, bins=-90:5:10, linewidth=4)
+	# Makie.stephist!(ax, rbm_log_likelihoods_v2[TransitionPaths2025.response_data_all_v2_20240708().type .== "Shuffled"], color=:red, label="Shuffled", normalization=:pdf, bins=-90:5:10, linewidth=4)
+	Makie.stephist!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(unique(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"]))); color=:green, label="Natural", normalization=:pdf, bins, linewidth=4)
+	Makie.stephist!(ax,
+		TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(
 			unique(df_20241213.aligned_sequences[df_20241213.group .∈ Ref(("1st", "2nd", "3rd", "4th") .* "_batch")])));
 		color=:blue, label="Designed", normalization=:pdf, bins, linewidth=4)
-	Makie.stephist!(ax, 
-		TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(
+	Makie.stephist!(ax,
+		TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(
 			unique(df_20241213.aligned_sequences[df_20241213.group .== "Scrambled_paths"])));
 		color=:red, label="Shuffled", normalization=:pdf, bins, linewidth=2, linestyle=(:dash, 1.2))
 	Makie.xlims!(ax, -90, 0)
@@ -1102,7 +1102,7 @@ let fig = Makie.Figure()
 	Makie.axislegend(ax; position=:lt, framevisible=false)
 
 	Makie.resize_to_layout!(fig)
-	#Makie.save("/DATA-SSD/cossio/projects/2024/Transition_Paths/TransitionPaths2024.jl/figures/Fig5.pdf", fig)
+	#Makie.save("/DATA-SSD/cossio/projects/2024/Transition_Paths/TransitionPaths2025.jl/figures/Fig5.pdf", fig)
 	fig
 end
 
@@ -1113,14 +1113,14 @@ md"### with Spearman"
 let fig = Makie.Figure()
 	_sz = 150
 
-	pred_class = TransitionPaths2024.Eugenio_Predict_Class_from_Inputs_20240715(TransitionPaths2024.onehot(response_data_sequences_new))
-	likelihood_I  = TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2024.onehot(response_data_sequences_new))
-	likelihood_II = TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(response_data_sequences_new))
-	likelihood_IV = TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2024.onehot(response_data_sequences_new))
+	pred_class = TransitionPaths2025.Eugenio_Predict_Class_from_Inputs_20240715(TransitionPaths2025.onehot(response_data_sequences_new))
+	likelihood_I  = TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2025.onehot(response_data_sequences_new))
+	likelihood_II = TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(response_data_sequences_new))
+	likelihood_IV = TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2025.onehot(response_data_sequences_new))
 	response_I  = [ismissing(r) || r ≤ 0 ? NaN : r for r = df_20241213.C1]
 	response_II = [ismissing(r) || r ≤ 0 ? NaN : r for r = df_20241213.C2]
 	response_IV = [ismissing(r) || r ≤ 0 ? NaN : r for r = df_20241213.C4]
-	
+
 	ax_I  = Makie.Axis(fig[1,1][1,1], width=_sz, height=_sz, xlabel=L"\ln P_\mathrm{rbm}(\text{local I})",  ylabel="Class I. norm. resp.",  yscale=log10, xgridvisible=false, ygridvisible=false, xticks=-100:50:0)
 	ax_II = Makie.Axis(fig[1,1][1,2], width=_sz, height=_sz, xlabel=L"\ln P_\mathrm{rbm}(\text{local II})", ylabel="Class II. norm. resp.", yscale=log10, xgridvisible=false, ygridvisible=false, xticks=-80:20:0)
 	ax_IV = Makie.Axis(fig[1,1][1,3], width=_sz, height=_sz, xlabel=L"\ln P_\mathrm{rbm}(\text{local IV})", ylabel="Class IV. norm. resp.", yscale=log10, xgridvisible=false, ygridvisible=false, xticks=-100:25:0)
@@ -1140,9 +1140,9 @@ let fig = Makie.Figure()
 
 	cat = [i for (i, target) = enumerate((:I, :II, :IV)) for (j, rbm) = enumerate((:global, :I, :II, :IV))]
 	grp = [j for (i, target) = enumerate((:I, :II, :IV)) for (j, rbm) = enumerate((:global, :I, :II, :IV))]
-				
+
 	# correlations = [
-	# 	nancor(TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(rbm, TransitionPaths2024.onehot(response_data_sequences_new)), replace(responses[target], missing => NaN))
+	# 	nancor(TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(rbm, TransitionPaths2025.onehot(response_data_sequences_new)), replace(responses[target], missing => NaN))
 	# 	for target = (:I, :II, :IV) for rbm = (:global, :I, :II, :IV)
 	# ]
 
@@ -1150,21 +1150,21 @@ let fig = Makie.Figure()
 	responses_uniq = Dict(target => last.(unique(first, zip(response_data_sequences_new, responses[target]))) for target = (:I, :II, :IV))
 
 	__idx = Dict((target, rbm) => intersect(
-		findall(isfinite, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(rbm, TransitionPaths2024.onehot(response_data_sequences_new_uniq))),
+		findall(isfinite, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(rbm, TransitionPaths2025.onehot(response_data_sequences_new_uniq))),
 		findall(isfinite, [log(ifelse(ismissing(r) || isnan(r) || r ≤ 0, NaN, r)) for r = responses_uniq[target]])
 	) for target = (:I, :II, :IV) for rbm = (:global, :I, :II, :IV))
-	
+
 	correlations_uniq = [
 		corspearman(
-			TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(rbm, TransitionPaths2024.onehot(response_data_sequences_new_uniq))[__idx[target, rbm]],
+			TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(rbm, TransitionPaths2025.onehot(response_data_sequences_new_uniq))[__idx[target, rbm]],
 			[log(ifelse(ismissing(r) || isnan(r) || r ≤ 0, NaN, r)) for r = responses_uniq[target]][__idx[target, rbm]]
 		)
 		for target = (:I, :II, :IV) for rbm = (:global, :I, :II, :IV)
 	]
 
-	
+
 	colors = [:gray, :cyan, :orange, :green]
-		
+
 	ax = Makie.Axis(fig[2,1][1,2], width=200, height=_sz, xticks=(1:3, ["I", "II", "IV"]), ylabel="Exp. resp. corr.", xgridvisible=false, ygridvisible=false)
 	Makie.barplot!(ax, cat, correlations_uniq; dodge=grp, color=colors[grp], dodge_gap=0.05, width=0.9)
 	Makie.hlines!(ax, 0.0; color=:black, linestyle=:dash)
@@ -1174,24 +1174,24 @@ let fig = Makie.Figure()
 	elements = [Makie.PolyElement(; polycolor = colors[j]) for j = 1:4]
 	Makie.Legend(fig[2,1][1,3], elements, labels; framevisible=false)
 
-	# response_data_v2_sequences = TransitionPaths2024.Exp_20240703_sequences().sequences[
-	# 	indexin(TransitionPaths2024.response_data_all_v2_20240708().name, TransitionPaths2024.Exp_20240703_sequences().names)
+	# response_data_v2_sequences = TransitionPaths2025.Exp_20240703_sequences().sequences[
+	# 	indexin(TransitionPaths2025.response_data_all_v2_20240708().name, TransitionPaths2025.Exp_20240703_sequences().names)
 	# ]
-	# rbm_log_likelihoods_v2 = TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(response_data_v2_sequences))
-	
+	# rbm_log_likelihoods_v2 = TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(response_data_v2_sequences))
+
 	ax = Makie.Axis(fig[2,1][1,1], width=250, height=_sz, xlabel=L"P_{\mathrm{RBM}}(\text{glob.})", ylabel="Frequency", xgridvisible=false, ygridvisible=false)
 	bins = -90:10:10
-	Makie.hist!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419())); normalization=:pdf, bins=-90:2:10, color=(:green, 0.3), label="MSA")
-	# Makie.stephist!(ax, rbm_log_likelihoods_v2[TransitionPaths2024.response_data_all_v2_20240708().type .== "Natural"], color=:green, label="Natural", normalization=:pdf, bins=-90:5:10, linewidth=4)
-	# Makie.stephist!(ax, rbm_log_likelihoods_v2[TransitionPaths2024.response_data_all_v2_20240708().type .== "Designed"], color=:blue, label="Designed", normalization=:pdf, bins=-90:5:10, linewidth=4)
-	# Makie.stephist!(ax, rbm_log_likelihoods_v2[TransitionPaths2024.response_data_all_v2_20240708().type .== "Shuffled"], color=:red, label="Shuffled", normalization=:pdf, bins=-90:5:10, linewidth=4)
-	Makie.stephist!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(unique(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"]))); color=:green, label="Natural", normalization=:pdf, bins, linewidth=4)
-	Makie.stephist!(ax, 
-		TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(
+	Makie.hist!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419())); normalization=:pdf, bins=-90:2:10, color=(:green, 0.3), label="MSA")
+	# Makie.stephist!(ax, rbm_log_likelihoods_v2[TransitionPaths2025.response_data_all_v2_20240708().type .== "Natural"], color=:green, label="Natural", normalization=:pdf, bins=-90:5:10, linewidth=4)
+	# Makie.stephist!(ax, rbm_log_likelihoods_v2[TransitionPaths2025.response_data_all_v2_20240708().type .== "Designed"], color=:blue, label="Designed", normalization=:pdf, bins=-90:5:10, linewidth=4)
+	# Makie.stephist!(ax, rbm_log_likelihoods_v2[TransitionPaths2025.response_data_all_v2_20240708().type .== "Shuffled"], color=:red, label="Shuffled", normalization=:pdf, bins=-90:5:10, linewidth=4)
+	Makie.stephist!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(unique(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"]))); color=:green, label="Natural", normalization=:pdf, bins, linewidth=4)
+	Makie.stephist!(ax,
+		TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(
 			unique(df_20241213.aligned_sequences[df_20241213.group .∈ Ref(("1st", "2nd", "3rd", "4th") .* "_batch")])));
 		color=:blue, label="Designed", normalization=:pdf, bins, linewidth=4)
-	Makie.stephist!(ax, 
-		TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(
+	Makie.stephist!(ax,
+		TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(
 			unique(df_20241213.aligned_sequences[df_20241213.group .== "Scrambled_paths"])));
 		color=:red, label="Shuffled", normalization=:pdf, bins, linewidth=2, linestyle=(:dash, 1.2))
 	Makie.xlims!(ax, -90, 0)
@@ -1199,7 +1199,7 @@ let fig = Makie.Figure()
 	Makie.axislegend(ax; position=:lt, framevisible=false)
 
 	Makie.resize_to_layout!(fig)
-	#Makie.save("/DATA-SSD/cossio/projects/2024/Transition_Paths/TransitionPaths2024.jl/figures/Fig5.pdf", fig)
+	#Makie.save("/DATA-SSD/cossio/projects/2024/Transition_Paths/TransitionPaths2025.jl/figures/Fig5.pdf", fig)
 	fig
 end
 
@@ -1217,7 +1217,7 @@ md"## Supp. I -> IV batch 1"
 
 # ╔═╡ 76b90e10-3325-49f8-95c0-9d48a2cbdbb7
 let fig = Makie.Figure()
-	sampled_path = unique(TransitionPaths2024.sampled_path_1to4batch1_20240703())
+	sampled_path = unique(TransitionPaths2025.sampled_path_1to4batch1_20240703())
 	probed_seq_ids = ["Seq01", "Seq28", "Seq29", "Seq30", "Seq31", "Seq32", "Seq33", "Seq34", "Seq35", "Seq27"]
 	probed_seqs = df_20241213.aligned_sequences[indexin(probed_seq_ids, df_20241213.seq_id)]
 	probed_seqs_idx::Vector{Int} = indexin(probed_seqs, sampled_path)
@@ -1228,10 +1228,10 @@ let fig = Makie.Figure()
 	C4_responses_err = df_20241213.eC4[indexin(probed_seq_ids, df_20241213.seq_id)]
 	rel_response = C1_responses ./ C4_responses
 	@show rel_response
-	
+
 	ax = Makie.Axis(fig[1,1][1,1]; width=300, height=120, xgridvisible=false, ygridvisible=false, ylabel=L"\log P_\mathrm{RBM}(\text{global})")
-	Makie.scatterlines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(sampled_path)); color=:black, label="Designed")
-	Makie.scatter!(ax, probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(probed_seqs)); color=:red, markersize=10)
+	Makie.scatterlines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(sampled_path)); color=:black, label="Designed")
+	Makie.scatter!(ax, probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(probed_seqs)); color=:red, markersize=10)
 	Makie.hidexdecorations!(ax)
 
 	ax_I = Makie.Axis(
@@ -1242,12 +1242,12 @@ let fig = Makie.Figure()
 		fig[1,1][2,1]; width=300, height=120, xgridvisible=false, ygridvisible=false, yaxisposition=:right,
 		ylabel=L"\log P_\mathrm{RBM}(\text{IV})", yticklabelcolor=_class_scatter_colors[3], ylabelcolor=_class_scatter_colors[3],
 	)
-	Makie.lines!(ax_I,  TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2024.onehot(sampled_path)); color=_class_scatter_colors[1])
-	Makie.lines!(ax_IV, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2024.onehot(sampled_path)); color=_class_scatter_colors[3])
-	Makie.scatter!(ax_I,  TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2024.onehot(sampled_path)); color=_class_scatter_colors[1], label="Designed")
-	Makie.scatter!(ax_IV, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2024.onehot(sampled_path)); color=_class_scatter_colors[3])
-	Makie.scatter!(ax_I,  probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2024.onehot(probed_seqs)); color=:red, markersize=10)
-	Makie.scatter!(ax_IV, probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2024.onehot(probed_seqs)); color=:red, markersize=10)
+	Makie.lines!(ax_I,  TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2025.onehot(sampled_path)); color=_class_scatter_colors[1])
+	Makie.lines!(ax_IV, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2025.onehot(sampled_path)); color=_class_scatter_colors[3])
+	Makie.scatter!(ax_I,  TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2025.onehot(sampled_path)); color=_class_scatter_colors[1], label="Designed")
+	Makie.scatter!(ax_IV, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2025.onehot(sampled_path)); color=_class_scatter_colors[3])
+	Makie.scatter!(ax_I,  probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2025.onehot(probed_seqs)); color=:red, markersize=10)
+	Makie.scatter!(ax_IV, probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2025.onehot(probed_seqs)); color=:red, markersize=10)
 	Makie.hidexdecorations!(ax_I)
 	Makie.hidexdecorations!(ax_IV)
 	Makie.hidespines!(ax_IV)
@@ -1265,30 +1265,30 @@ let fig = Makie.Figure()
 	for (class, color) = zip((:I, :II, :IV), _class_scatter_colors)
 		Makie.scatter!(
 			ax,
-			-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419()))[38, msa_local_rbm_class_prediction .== class],
-			 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419()))[36, msa_local_rbm_class_prediction .== class];
+			-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419()))[38, msa_local_rbm_class_prediction .== class],
+			 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419()))[36, msa_local_rbm_class_prediction .== class];
 			color=(color, 0.5), markersize=4
 		)
 	end
 
-	Makie.scatterlines!(ax, 
-		-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[38, :],
-		 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[36, :];
+	Makie.scatterlines!(ax,
+		-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[38, :],
+		 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[36, :];
 		color=:black
 	)
 
-	Makie.scatter!(ax, 
-		-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(probed_seqs))[38, :],
-		 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(probed_seqs))[36, :];
+	Makie.scatter!(ax,
+		-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(probed_seqs))[38, :],
+		 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(probed_seqs))[36, :];
 		color=:red, markersize=10
 	)
-	
+
 	Makie.arrows!(ax,
-		-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[38, 1:1] .+ 0.35,
-		 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[36, 1:1] .- 0.35,
+		-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[38, 1:1] .+ 0.35,
+		 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[36, 1:1] .- 0.35,
 		[-0.15], [0.15]; linewidth=2, color=:gray, arrowsize=10
 	)
-	
+
 	Makie.xlims!(ax, -4.5, 2)
 	Makie.ylims!(ax, -7, 3)
 
@@ -1313,7 +1313,7 @@ md"## Supp. I -> IV batch 2"
 
 # ╔═╡ d0cc1b76-9705-47ff-8c08-3402531002f2
 let fig = Makie.Figure()
-	sampled_path = unique(TransitionPaths2024.sampled_path_1to4batch2_20240703())
+	sampled_path = unique(TransitionPaths2025.sampled_path_1to4batch2_20240703())
 	probed_seq_ids = ["Seq11", "Seq43", "Seq44", "Seq45", "Seq46", "Seq47", "Seq34", "Seq35", "Seq48", "Seq27"]
 	probed_seqs = df_20241213.aligned_sequences[indexin(probed_seq_ids, df_20241213.seq_id)]
 	probed_seqs_idx::Vector{Int} = indexin(probed_seqs, sampled_path)
@@ -1324,10 +1324,10 @@ let fig = Makie.Figure()
 	C4_responses_err = df_20241213.eC4[indexin(probed_seq_ids, df_20241213.seq_id)]
 	rel_response = C1_responses ./ C4_responses
 	@show rel_response
-	
+
 	ax = Makie.Axis(fig[1,1][1,1]; width=300, height=120, xgridvisible=false, ygridvisible=false, ylabel=L"\log P_\mathrm{RBM}(\text{global})")
-	Makie.scatterlines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(sampled_path)); color=:black, label="Designed")
-	Makie.scatter!(ax, probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(probed_seqs)); color=:red, markersize=10)
+	Makie.scatterlines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(sampled_path)); color=:black, label="Designed")
+	Makie.scatter!(ax, probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(probed_seqs)); color=:red, markersize=10)
 	Makie.hidexdecorations!(ax)
 
 	ax_I = Makie.Axis(
@@ -1338,12 +1338,12 @@ let fig = Makie.Figure()
 		fig[1,1][2,1]; width=300, height=120, xgridvisible=false, ygridvisible=false, yaxisposition=:right,
 		ylabel=L"\log P_\mathrm{RBM}(\text{IV})", yticklabelcolor=_class_scatter_colors[3], ylabelcolor=_class_scatter_colors[3],
 	)
-	Makie.lines!(ax_I,  TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2024.onehot(sampled_path)); color=_class_scatter_colors[1])
-	Makie.lines!(ax_IV, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2024.onehot(sampled_path)); color=_class_scatter_colors[3])
-	Makie.scatter!(ax_I,  TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2024.onehot(sampled_path)); color=_class_scatter_colors[1], label="Designed")
-	Makie.scatter!(ax_IV, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2024.onehot(sampled_path)); color=_class_scatter_colors[3])
-	Makie.scatter!(ax_I,  probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2024.onehot(probed_seqs)); color=:red, markersize=10)
-	Makie.scatter!(ax_IV, probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2024.onehot(probed_seqs)); color=:red, markersize=10)
+	Makie.lines!(ax_I,  TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2025.onehot(sampled_path)); color=_class_scatter_colors[1])
+	Makie.lines!(ax_IV, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2025.onehot(sampled_path)); color=_class_scatter_colors[3])
+	Makie.scatter!(ax_I,  TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2025.onehot(sampled_path)); color=_class_scatter_colors[1], label="Designed")
+	Makie.scatter!(ax_IV, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2025.onehot(sampled_path)); color=_class_scatter_colors[3])
+	Makie.scatter!(ax_I,  probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2025.onehot(probed_seqs)); color=:red, markersize=10)
+	Makie.scatter!(ax_IV, probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2025.onehot(probed_seqs)); color=:red, markersize=10)
 	Makie.hidexdecorations!(ax_I)
 	Makie.hidexdecorations!(ax_IV)
 	Makie.hidespines!(ax_IV)
@@ -1361,30 +1361,30 @@ let fig = Makie.Figure()
 	for (class, color) = zip((:I, :II, :IV), _class_scatter_colors)
 		Makie.scatter!(
 			ax,
-			-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419()))[38, msa_local_rbm_class_prediction .== class],
-			 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419()))[36, msa_local_rbm_class_prediction .== class];
+			-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419()))[38, msa_local_rbm_class_prediction .== class],
+			 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419()))[36, msa_local_rbm_class_prediction .== class];
 			color=(color, 0.5), markersize=4
 		)
 	end
 
-	Makie.scatterlines!(ax, 
-		-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[38, :],
-		 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[36, :];
+	Makie.scatterlines!(ax,
+		-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[38, :],
+		 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[36, :];
 		color=:black
 	)
 
-	Makie.scatter!(ax, 
-		-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(probed_seqs))[38, :],
-		 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(probed_seqs))[36, :];
+	Makie.scatter!(ax,
+		-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(probed_seqs))[38, :],
+		 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(probed_seqs))[36, :];
 		color=:red, markersize=10
 	)
-	
+
 	Makie.arrows!(ax,
-		-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[38, 1:1] .+ 0.35,
-		 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[36, 1:1] .- 0.35,
+		-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[38, 1:1] .+ 0.35,
+		 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[36, 1:1] .- 0.35,
 		[-0.15], [0.15]; linewidth=2, color=:gray, arrowsize=10
 	)
-	
+
 	Makie.xlims!(ax, -4.5, 2)
 	Makie.ylims!(ax, -7, 3)
 
@@ -1409,7 +1409,7 @@ md"## Supp. I -> IV direct (Batch 3)"
 
 # ╔═╡ 9734267d-e44f-4f1d-9c7b-3464ed5a2677
 let fig = Makie.Figure()
-	sampled_path = unique(TransitionPaths2024.sampled_path_1to4direct_20240703())
+	sampled_path = unique(TransitionPaths2025.sampled_path_1to4direct_20240703())
 	probed_seq_ids = ["Seq02", "Seq55", "Seq56", "Seq57", "Seq58", "Seq53", "Seq35", "Seq48", "Seq27"]
 	probed_seqs = df_20241213.aligned_sequences[indexin(probed_seq_ids, df_20241213.seq_id)]
 	probed_seqs_idx::Vector{Int} = indexin(probed_seqs, sampled_path)
@@ -1419,10 +1419,10 @@ let fig = Makie.Figure()
 	C1_responses_err = df_20241213.eC1[indexin(probed_seq_ids, df_20241213.seq_id)]
 	C4_responses_err = df_20241213.eC4[indexin(probed_seq_ids, df_20241213.seq_id)]
 	rel_response = C1_responses ./ C4_responses
-	
+
 	ax = Makie.Axis(fig[1,1][1,1]; width=300, height=120, xgridvisible=false, ygridvisible=false, ylabel=L"\log P_\mathrm{RBM}(\text{global})")
-	Makie.scatterlines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(sampled_path)); color=:black, label="Designed")
-	Makie.scatter!(ax, probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(probed_seqs)); color=:red, markersize=10)
+	Makie.scatterlines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(sampled_path)); color=:black, label="Designed")
+	Makie.scatter!(ax, probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(probed_seqs)); color=:red, markersize=10)
 	Makie.hidexdecorations!(ax)
 
 	ax_I = Makie.Axis(
@@ -1433,12 +1433,12 @@ let fig = Makie.Figure()
 		fig[1,1][2,1]; width=300, height=120, xgridvisible=false, ygridvisible=false, yaxisposition=:right,
 		ylabel=L"\log P_\mathrm{RBM}(\text{IV})", yticklabelcolor=_class_scatter_colors[3], ylabelcolor=_class_scatter_colors[3],
 	)
-	Makie.lines!(ax_I,  TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2024.onehot(sampled_path)); color=_class_scatter_colors[1])
-	Makie.lines!(ax_IV, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2024.onehot(sampled_path)); color=_class_scatter_colors[3])
-	Makie.scatter!(ax_I,  TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2024.onehot(sampled_path)); color=_class_scatter_colors[1], label="Designed")
-	Makie.scatter!(ax_IV, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2024.onehot(sampled_path)); color=_class_scatter_colors[3])
-	Makie.scatter!(ax_I,  probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2024.onehot(probed_seqs)); color=:red, markersize=10)
-	Makie.scatter!(ax_IV, probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2024.onehot(probed_seqs)); color=:red, markersize=10)
+	Makie.lines!(ax_I,  TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2025.onehot(sampled_path)); color=_class_scatter_colors[1])
+	Makie.lines!(ax_IV, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2025.onehot(sampled_path)); color=_class_scatter_colors[3])
+	Makie.scatter!(ax_I,  TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2025.onehot(sampled_path)); color=_class_scatter_colors[1], label="Designed")
+	Makie.scatter!(ax_IV, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2025.onehot(sampled_path)); color=_class_scatter_colors[3])
+	Makie.scatter!(ax_I,  probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2025.onehot(probed_seqs)); color=:red, markersize=10)
+	Makie.scatter!(ax_IV, probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2025.onehot(probed_seqs)); color=:red, markersize=10)
 	Makie.hidexdecorations!(ax_I)
 	Makie.hidexdecorations!(ax_IV)
 	Makie.hidespines!(ax_IV)
@@ -1456,30 +1456,30 @@ let fig = Makie.Figure()
 	for (class, color) = zip((:I, :II, :IV), _class_scatter_colors)
 		Makie.scatter!(
 			ax,
-			-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419()))[38, msa_local_rbm_class_prediction .== class],
-			 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419()))[36, msa_local_rbm_class_prediction .== class];
+			-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419()))[38, msa_local_rbm_class_prediction .== class],
+			 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419()))[36, msa_local_rbm_class_prediction .== class];
 			color=(color, 0.5), markersize=4
 		)
 	end
 
-	Makie.scatterlines!(ax, 
-		-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[38, :],
-		 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[36, :];
+	Makie.scatterlines!(ax,
+		-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[38, :],
+		 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[36, :];
 		color=:black
 	)
 
-	Makie.scatter!(ax, 
-		-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(probed_seqs))[38, :],
-		 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(probed_seqs))[36, :];
+	Makie.scatter!(ax,
+		-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(probed_seqs))[38, :],
+		 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(probed_seqs))[36, :];
 		color=:red, markersize=10
 	)
-	
+
 	Makie.arrows!(ax,
-		-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[38, 1:1] .+ 0.35,
-		 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[36, 1:1] .- 0.35,
+		-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[38, 1:1] .+ 0.35,
+		 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[36, 1:1] .- 0.35,
 		[-0.15], [0.15]; linewidth=2, color=:gray, arrowsize=10
 	)
-	
+
 	Makie.xlims!(ax, -4.5, 2)
 	Makie.ylims!(ax, -7, 3)
 
@@ -1504,7 +1504,7 @@ md"## Supp. I -> II (Batch 4)"
 
 # ╔═╡ 3e59d567-6300-4e01-a3c9-7226acd6174d
 let fig = Makie.Figure()
-	sampled_path = unique(TransitionPaths2024.sampled_path_1to2rep2_20240703())
+	sampled_path = unique(TransitionPaths2025.sampled_path_1to2rep2_20240703())
 	probed_seq_ids = ["Seq02", "Seq59", "Seq65", "Seq66", "Seq67", "Seq68", "Seq69", "Seq64"]
 	probed_seqs = df_20241213.aligned_sequences[indexin(probed_seq_ids, df_20241213.seq_id)]
 	probed_seqs_idx::Vector{Int} = indexin(probed_seqs, sampled_path)
@@ -1514,10 +1514,10 @@ let fig = Makie.Figure()
 	C1_responses_err = df_20241213.eC1[indexin(probed_seq_ids, df_20241213.seq_id)]
 	C2_responses_err = df_20241213.eC2[indexin(probed_seq_ids, df_20241213.seq_id)]
 	rel_response = C1_responses ./ C2_responses
-	
+
 	ax = Makie.Axis(fig[1,1][1,1]; width=300, height=120, xgridvisible=false, ygridvisible=false, ylabel=L"\log P_\mathrm{RBM}(\text{global})")
-	Makie.scatterlines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(sampled_path)); color=:black, label="Designed")
-	Makie.scatter!(ax, probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(probed_seqs)); color=:red, markersize=10)
+	Makie.scatterlines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(sampled_path)); color=:black, label="Designed")
+	Makie.scatter!(ax, probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(probed_seqs)); color=:red, markersize=10)
 	Makie.hidexdecorations!(ax)
 
 	ax_I = Makie.Axis(
@@ -1528,12 +1528,12 @@ let fig = Makie.Figure()
 		fig[1,1][2,1]; width=300, height=120, xgridvisible=false, ygridvisible=false, yaxisposition=:right,
 		ylabel=L"\log P_\mathrm{RBM}(\text{II})", yticklabelcolor=_class_scatter_colors[2], ylabelcolor=_class_scatter_colors[2],
 	)
-	Makie.lines!(ax_I,  TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2024.onehot(sampled_path)); color=_class_scatter_colors[1])
-	Makie.lines!(ax_II, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(sampled_path)); color=_class_scatter_colors[2])
-	Makie.scatter!(ax_I,  TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2024.onehot(sampled_path)); color=_class_scatter_colors[1], label="Designed")
-	Makie.scatter!(ax_II, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(sampled_path)); color=_class_scatter_colors[2])
-	Makie.scatter!(ax_I,  probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2024.onehot(probed_seqs)); color=:red, markersize=10)
-	Makie.scatter!(ax_II, probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(probed_seqs)); color=:red, markersize=10)
+	Makie.lines!(ax_I,  TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2025.onehot(sampled_path)); color=_class_scatter_colors[1])
+	Makie.lines!(ax_II, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(sampled_path)); color=_class_scatter_colors[2])
+	Makie.scatter!(ax_I,  TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2025.onehot(sampled_path)); color=_class_scatter_colors[1], label="Designed")
+	Makie.scatter!(ax_II, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(sampled_path)); color=_class_scatter_colors[2])
+	Makie.scatter!(ax_I,  probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2025.onehot(probed_seqs)); color=:red, markersize=10)
+	Makie.scatter!(ax_II, probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(probed_seqs)); color=:red, markersize=10)
 	Makie.hidexdecorations!(ax_I)
 	Makie.hidexdecorations!(ax_II)
 	Makie.hidespines!(ax_II)
@@ -1551,30 +1551,30 @@ let fig = Makie.Figure()
 	for (class, color) = zip((:I, :II, :IV), _class_scatter_colors)
 		Makie.scatter!(
 			ax,
-			-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419()))[38, msa_local_rbm_class_prediction .== class],
-			 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419()))[36, msa_local_rbm_class_prediction .== class];
+			-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419()))[38, msa_local_rbm_class_prediction .== class],
+			 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419()))[36, msa_local_rbm_class_prediction .== class];
 			color=(color, 0.5), markersize=4
 		)
 	end
 
-	Makie.scatterlines!(ax, 
-		-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[38, :],
-		 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[36, :];
+	Makie.scatterlines!(ax,
+		-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[38, :],
+		 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[36, :];
 		color=:black
 	)
 
-	Makie.scatter!(ax, 
-		-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(probed_seqs))[38, :],
-		 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(probed_seqs))[36, :];
+	Makie.scatter!(ax,
+		-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(probed_seqs))[38, :],
+		 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(probed_seqs))[36, :];
 		color=:red, markersize=10
 	)
-	
+
 	Makie.arrows2d!(ax,
-		-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[38, 1:1] .+ 0.4,
-		 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[36, 1:1] .- 0.4,
+		-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[38, 1:1] .+ 0.4,
+		 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[36, 1:1] .- 0.4,
 		[-0.3], [0.3]; color=:gray, tipwidth=20, shaftwidth=6
 	)
-	
+
 	Makie.xlims!(ax, -4.5, 2)
 	Makie.ylims!(ax, -7, 3)
 
@@ -1600,20 +1600,20 @@ md"## Suppl. path I->I"
 # ╔═╡ ef668901-d457-42fe-bcb9-0dd53bf04e28
 let fig = Makie.Figure()
 
-	sampled_path = unique(TransitionPaths2024.sampled_path_1to1_20240703())
-	path_response_data = TransitionPaths2024.response_data_path_1to1_20240703()
+	sampled_path = unique(TransitionPaths2025.sampled_path_1to1_20240703())
+	path_response_data = TransitionPaths2025.response_data_path_1to1_20240703()
 
 	C1_responses = df_20241213.C1[indexin(path_response_data.ww_names, df_20241213.ww_id)]
 	C2_responses = df_20241213.C2[indexin(path_response_data.ww_names, df_20241213.ww_id)]
 	C1_responses_err = df_20241213.eC1[indexin(path_response_data.ww_names, df_20241213.ww_id)]
 	C2_responses_err = df_20241213.eC2[indexin(path_response_data.ww_names, df_20241213.ww_id)]
-	
-	probed_seqs = TransitionPaths2024.Exp_20240703_sequences().sequences[indexin(path_response_data.ww_names, TransitionPaths2024.Exp_20240703_sequences().names)]
+
+	probed_seqs = TransitionPaths2025.Exp_20240703_sequences().sequences[indexin(path_response_data.ww_names, TransitionPaths2025.Exp_20240703_sequences().names)]
 	probed_seqs_idx::Vector{Int} = indexin(probed_seqs, sampled_path)
 
 	ax = Makie.Axis(fig[1,1][1,1]; width=175, height=75, xgridvisible=false, ygridvisible=false, ylabel=L"\ln P_\mathrm{RBM}(\text{glob.})")
-	Makie.scatterlines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(sampled_path)); color=:black)
-	Makie.scatter!(ax, probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(probed_seqs)); color=:red, markersize=10)
+	Makie.scatterlines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(sampled_path)); color=:black)
+	Makie.scatter!(ax, probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(probed_seqs)); color=:red, markersize=10)
 	Makie.hidexdecorations!(ax)
 
 	ax_I = Makie.Axis(
@@ -1624,9 +1624,9 @@ let fig = Makie.Figure()
 		fig[1,1][2,1]; width=175, height=75, xgridvisible=false, ygridvisible=false, yaxisposition=:right,
 		ylabel=L"\log P_\mathrm{RBM}(\text{II})", yticklabelcolor=_class_scatter_colors[2], ylabelcolor=_class_scatter_colors[2],
 	)
-	Makie.lines!(ax_II, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(sampled_path)); color=_class_scatter_colors[2], linewidth=0.75)
-	Makie.scatterlines!(ax_I, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2024.onehot(sampled_path)); color=_class_scatter_colors[1])
-	Makie.scatter!(ax_I, probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2024.onehot(probed_seqs)); color=:red, markersize=10)
+	Makie.lines!(ax_II, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(sampled_path)); color=_class_scatter_colors[2], linewidth=0.75)
+	Makie.scatterlines!(ax_I, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2025.onehot(sampled_path)); color=_class_scatter_colors[1])
+	Makie.scatter!(ax_I, probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2025.onehot(probed_seqs)); color=:red, markersize=10)
 	Makie.hidexdecorations!(ax)
 
 	ax = Makie.Axis(fig[1,1][3,1]; width=175, height=75, xgridvisible=false, ygridvisible=false, xlabel="step", ylabel="Norm. resp. I", xticks=1:3:20)
@@ -1647,35 +1647,35 @@ let fig = Makie.Figure()
 	for (class, color) = zip((:I, :II, :IV), _class_scatter_colors)
 		Makie.scatter!(
 			ax,
-			-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419()))[38, msa_local_rbm_class_prediction .== class],
-			 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419()))[36, msa_local_rbm_class_prediction .== class];
+			-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419()))[38, msa_local_rbm_class_prediction .== class],
+			 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419()))[36, msa_local_rbm_class_prediction .== class];
 			color=(color, 0.5), markersize=4
 		)
 	end
 
-	Makie.scatterlines!(ax, 
-		-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[38, :],
-		 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[36, :];
+	Makie.scatterlines!(ax,
+		-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[38, :],
+		 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[36, :];
 		color=:black
 	)
 
-	Makie.scatter!(ax, 
-		-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(probed_seqs))[38, :],
-		 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(probed_seqs))[36, :];
+	Makie.scatter!(ax,
+		-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(probed_seqs))[38, :],
+		 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(probed_seqs))[36, :];
 		color=:red, markersize=10
 	)
-	
+
 	Makie.arrows2d!(ax,
-		-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[38, 1:1] .+ 0.35,
-		 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[36, 1:1] .- 0.35,
+		-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[38, 1:1] .+ 0.35,
+		 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[36, 1:1] .- 0.35,
 		[-0.2], [0.2]; color=:gray, tipwidth=20, shaftwidth=6
 	)
-	
+
 	Makie.xlims!(ax, -4.5, 2)
 	Makie.ylims!(ax, -7, 3)
 
 	Makie.resize_to_layout!(fig)
-	#Makie.save("/DATA-SSD/cossio/projects/2024/Transition_Paths/TransitionPaths2024.jl/figures/Fig2.pdf", fig)
+	#Makie.save("/DATA-SSD/cossio/projects/2024/Transition_Paths/TransitionPaths2025.jl/figures/Fig2.pdf", fig)
 	fig
 end
 
@@ -1683,13 +1683,13 @@ end
 md"## Paths alignment figures"
 
 # ╔═╡ 38d65a29-446d-4e04-b876-b039baa00369
-TransitionPaths2024.aligned_path_plot(map(string, TransitionPaths2024.sampled_path_1to1_20240703()))
+TransitionPaths2025.aligned_path_plot(map(string, TransitionPaths2025.sampled_path_1to1_20240703()))
 
 # ╔═╡ 340db97a-f8e3-4523-8101-d9cf6bfb549d
-TransitionPaths2024.aligned_path_plot(map(string, TransitionPaths2024.sampled_path_1to2rep1_20240703()))
+TransitionPaths2025.aligned_path_plot(map(string, TransitionPaths2025.sampled_path_1to2rep1_20240703()))
 
 # ╔═╡ 735b7450-6722-46e8-a1b9-3b963d4324e2
-TransitionPaths2024.aligned_path_plot(map(string, TransitionPaths2024.sampled_path_1to4_20240703()))
+TransitionPaths2025.aligned_path_plot(map(string, TransitionPaths2025.sampled_path_1to4_20240703()))
 
 # ╔═╡ 3a544f67-efe6-47c3-b522-d7f3a2049b58
 md"## Distance histograms"
@@ -1720,7 +1720,7 @@ function sample_rbm(rbm)
 end
 
 # ╔═╡ 54cab97b-82b1-4c07-b480-f2477c4a8ce9
-equilibrated_samples_from_rbm_global_free_energy, equilibrated_samples_from_rbm_global = sample_rbm(TransitionPaths2024.Eugenio_RBM_20230419(:global));
+equilibrated_samples_from_rbm_global_free_energy, equilibrated_samples_from_rbm_global = sample_rbm(TransitionPaths2025.Eugenio_RBM_20230419(:global));
 
 # ╔═╡ f70aa4f9-2b77-48f3-95a3-ee9e0a4054d5
 let fig = Makie.Figure()
@@ -1731,26 +1731,26 @@ let fig = Makie.Figure()
 end
 
 # ╔═╡ ba030665-6baf-4fd1-8847-8df4fa81887b
-all_sampled_path_unique_sequences = TransitionPaths2024.onehot(unique([
-	TransitionPaths2024.sampled_path_1to1_20240703();
-	TransitionPaths2024.sampled_path_1to2rep1_20240703();
-	TransitionPaths2024.sampled_path_1to4_20240703()
+all_sampled_path_unique_sequences = TransitionPaths2025.onehot(unique([
+	TransitionPaths2025.sampled_path_1to1_20240703();
+	TransitionPaths2025.sampled_path_1to2rep1_20240703();
+	TransitionPaths2025.sampled_path_1to4_20240703()
 ]));
 
 # ╔═╡ d29bbfc0-d0b7-4188-84b5-24e76ea96b4b
 path_natural_extremeties = [
-	TransitionPaths2024.sampled_path_1to1_20240703()[[1,end]];
-	TransitionPaths2024.sampled_path_1to2rep1_20240703()[[1,end]];
-	TransitionPaths2024.sampled_path_1to4_20240703()[[1,end]];
+	TransitionPaths2025.sampled_path_1to1_20240703()[[1,end]];
+	TransitionPaths2025.sampled_path_1to2rep1_20240703()[[1,end]];
+	TransitionPaths2025.sampled_path_1to4_20240703()[[1,end]];
 ];
 
 # ╔═╡ f38bfcd8-c5fb-4b66-8a36-779c3ee41981
 natural_to_eq_path_samples_distances = hamming(
-	TransitionPaths2024.onehot(setdiff(TransitionPaths2024.Eugenio_MSA_20230419(), path_natural_extremeties)), all_sampled_path_unique_sequences
+	TransitionPaths2025.onehot(setdiff(TransitionPaths2025.Eugenio_MSA_20230419(), path_natural_extremeties)), all_sampled_path_unique_sequences
 );
 
 # ╔═╡ 4ac68e13-6137-45e0-a118-c36f14794318
-natural_to_eq_samples_distances = hamming(TransitionPaths2024.onehot(unique(TransitionPaths2024.Eugenio_MSA_20230419())), equilibrated_samples_from_rbm_global);
+natural_to_eq_samples_distances = hamming(TransitionPaths2025.onehot(unique(TransitionPaths2025.Eugenio_MSA_20230419())), equilibrated_samples_from_rbm_global);
 
 # ╔═╡ e3744752-d14d-4385-b39a-06fd0a6b25e6
 let fig = Makie.Figure()
@@ -1766,23 +1766,23 @@ end
 md"# Sequene logos"
 
 # ╔═╡ ab5b254b-43f9-474f-8496-8d708e9d2e82
-TransitionPaths2024.seqlogo_entropic(dropdims(mean(TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419()); dims=3); dims=3)).fig
+TransitionPaths2025.seqlogo_entropic(dropdims(mean(TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419()); dims=3); dims=3)).fig
 
 # ╔═╡ 3b596356-3652-42c8-9dcc-1e744225e2bb
-TransitionPaths2024.seqlogo_entropic(dropdims(mean(TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419()[msa_local_rbm_class_prediction .== :I]); dims=3); dims=3)).fig
+TransitionPaths2025.seqlogo_entropic(dropdims(mean(TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419()[msa_local_rbm_class_prediction .== :I]); dims=3); dims=3)).fig
 
 # ╔═╡ c55755eb-8fdf-4cdb-9159-2f5fd3ca8dc9
-TransitionPaths2024.seqlogo_entropic(dropdims(mean(TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419()[msa_local_rbm_class_prediction .== :II]); dims=3); dims=3)).fig
+TransitionPaths2025.seqlogo_entropic(dropdims(mean(TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419()[msa_local_rbm_class_prediction .== :II]); dims=3); dims=3)).fig
 
 # ╔═╡ 2e808e48-8167-451b-a175-535d194292a1
-TransitionPaths2024.seqlogo_entropic(dropdims(mean(TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419()[msa_local_rbm_class_prediction .== :IV]); dims=3); dims=3)).fig
+TransitionPaths2025.seqlogo_entropic(dropdims(mean(TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419()[msa_local_rbm_class_prediction .== :IV]); dims=3); dims=3)).fig
 
 # ╔═╡ df92a6e3-f2ea-4bde-a6b5-e620632ecc26
 md"## Weights determining specificity"
 
 # ╔═╡ 6c0cf19b-79e3-4456-aa25-6d3acbc720bb
 begin
-	#color_scheme = TransitionPaths2024.sequence_logo_color_scheme()
+	#color_scheme = TransitionPaths2025.sequence_logo_color_scheme()
 	AAs = collect("ACDEFGHIKLMNPQRSTVWY⊟")
 	color_scheme = Logomaker.color_scheme(
         'C' => "green",
@@ -1794,25 +1794,25 @@ begin
         (a => "grey" for a = ('A', 'P', 'G'))...,
         '⊟' => "black"
     )
-	
+
 	fig, ax = PythonPlot.subplots(2, 1, figsize=[6,3])
-	
-	logo = Logomaker.Logo(-Float64.(TransitionPaths2024.Eugenio_RBM_20230419(:global).w[:,:,38]), AAs; ax=ax[0], color_scheme, flip_below=false)
+
+	logo = Logomaker.Logo(-Float64.(TransitionPaths2025.Eugenio_RBM_20230419(:global).w[:,:,38]), AAs; ax=ax[0], color_scheme, flip_below=false)
 	logo.ax.set_ylabel("W h.u. #38")
 	#logo.ax.set_xlabel("site")
 
-	logo = Logomaker.Logo(+Float64.(TransitionPaths2024.Eugenio_RBM_20230419(:global).w[:,:,36]), AAs; ax=ax[1], color_scheme, flip_below=false)
+	logo = Logomaker.Logo(+Float64.(TransitionPaths2025.Eugenio_RBM_20230419(:global).w[:,:,36]), AAs; ax=ax[1], color_scheme, flip_below=false)
 	logo.ax.set_ylabel("W h.u. #36")
 	logo.ax.set_xlabel("site")
 
 	fig.tight_layout()
-	
+
 	fig
 end
 
 # ╔═╡ 46bf2dc8-1fd8-4a07-8318-ebfd7146f608
 let fig = Makie.Figure()
-	w2 = sum(abs2, TransitionPaths2024.Eugenio_RBM_20230419(:global).w[:,:,38]; dims=1)
+	w2 = sum(abs2, TransitionPaths2025.Eugenio_RBM_20230419(:global).w[:,:,38]; dims=1)
 	ax = Makie.Axis(fig[1,1]; width=600, height=10)
 	Makie.heatmap!(ax, w2'; colormap=:tempo)
 	Makie.hidedecorations!(ax)
@@ -1823,11 +1823,11 @@ end
 
 # ╔═╡ 1b6ea41a-c1fc-4270-84b7-c8bc35546898
 let fig = Makie.Figure()
-	w2 = sum(abs2, TransitionPaths2024.Eugenio_RBM_20230419(:global).w[:,:,36]; dims=1)
+	w2 = sum(abs2, TransitionPaths2025.Eugenio_RBM_20230419(:global).w[:,:,36]; dims=1)
 	ax = Makie.Axis(fig[1,1]; width=600, height=10)
 	Makie.heatmap!(ax, w2'; colormap=:tempo)
 	Makie.hidedecorations!(ax)
-	Makie.hidespines!(ax)	
+	Makie.hidespines!(ax)
 	Makie.resize_to_layout!(fig)
 	fig
 end
@@ -1842,13 +1842,13 @@ let fig = Makie.Figure()
 	height = 100
 	ylabel = "frequency"
 	ax = Makie.Axis(fig[1,1]; width, height, xgridvisible=false, ygridvisible=false, ylabel, title="Full MSA")
-	Makie.hist!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419())); normalization=:pdf, bins)
+	Makie.hist!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419())); normalization=:pdf, bins)
 	ax = Makie.Axis(fig[2,1]; width, height, xgridvisible=false, ygridvisible=false, ylabel, title="Class I")
-	Makie.hist!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419()[msa_local_rbm_class_prediction .== :I])); normalization=:pdf, bins)
+	Makie.hist!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419()[msa_local_rbm_class_prediction .== :I])); normalization=:pdf, bins)
 	ax = Makie.Axis(fig[3,1]; width, height, xgridvisible=false, ygridvisible=false, ylabel, title="Class II")
-	Makie.hist!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419()[msa_local_rbm_class_prediction .== :II])); normalization=:pdf, bins)
+	Makie.hist!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419()[msa_local_rbm_class_prediction .== :II])); normalization=:pdf, bins)
 	ax = Makie.Axis(fig[4,1]; width, height, xgridvisible=false, ygridvisible=false, ylabel, title="Class IV", xlabel=L"\log(P_\mathrm{rbm}(\text{global}))")
-	Makie.hist!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419()[msa_local_rbm_class_prediction .== :IV])); normalization=:pdf, bins)
+	Makie.hist!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419()[msa_local_rbm_class_prediction .== :IV])); normalization=:pdf, bins)
 	Makie.resize_to_layout!(fig)
 	fig
 end
@@ -1902,7 +1902,7 @@ full_seq_1i8g = LongAA(pdb_1i8g['B'])
 
 # ╔═╡ c20b9b9e-45b9-47a2-8d99-4cecec1452eb
 aln_seq_1ywi_with_inserts, aln_seq_2ltw_with_inserts, aln_seq_1i8g_with_inserts = map([full_seq_1ywi, full_seq_2ltw, full_seq_1i8g]) do seq
-	return only(TransitionPaths2024.align_to_PF00397([seq]; remove_inserts=false))
+	return only(TransitionPaths2025.align_to_PF00397([seq]; remove_inserts=false))
 end
 
 # ╔═╡ f1180d4d-da49-44a4-b8f2-4f5a83a5c425
@@ -1932,8 +1932,8 @@ pdb_contact_distance_threshold = 8 # in Angstroms
 # ╔═╡ 8837f58a-73b8-4e6e-b0a7-c7b8faba94be
 begin
 	# APC-corrected contact map
-	Cmap = TransitionPaths2024.effective_contacts(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419()))
-	
+	Cmap = TransitionPaths2025.effective_contacts(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419()))
+
 	# zero-out diagonal
 	for i in axes(Cmap, 1)
 	    Cmap[i,i] = 0
@@ -1946,7 +1946,7 @@ let fig = Makie.Figure()
 
 	ax = Makie.Axis(fig[1,1], yreversed=true, width=400, height=400, xticks=0:5:size(Cmap,1), yticks=0:5:size(Cmap,2), xlabel="sequence position", ylabel="sequence position")
 	#hm = Makie.heatmap!(ax, abs.(plotted_matrix), colormap=["white", "white", "gray", "dimgray", "black", "black"])
-	
+
 	plotted_matrix = [i < j ? Cmap[i,j] : NaN for i = axes(Cmap, 1), j = axes(Cmap, 2)]
 	hm = Makie.heatmap!(ax, plotted_matrix; colormap=:balance)
 	Makie.hidespines!(ax, :t, :r)
@@ -1961,16 +1961,16 @@ end
 # ╔═╡ c9794e23-393e-4ea5-9e67-41ab7442470a
 let fig = Makie.Figure()
 	pdb_map = [iszero(i) || iszero(j) ? NaN : dist_map_2ltw[i,j] for i = aln_map_2ltw, j = aln_map_2ltw] .< pdb_contact_distance_threshold
-	
+
 	ax = Makie.Axis(fig[1,1], yreversed=true, width=400, height=400, xticks=0:5:size(Cmap,1), yticks=0:5:size(Cmap,2), xlabel="sequence position", ylabel="sequence position")
 	#hm = Makie.heatmap!(ax, abs.(plotted_matrix), colormap=["white", "white", "gray", "dimgray", "black", "black"])
-	
+
 	plotted_matrix = [i < j ? NaN : pdb_map[i,j] for i = axes(Cmap, 1), j = axes(Cmap, 2)]
 	hm = Makie.heatmap!(ax, plotted_matrix; colormap=:greens)
-	
+
 	plotted_matrix = [i < j ? Cmap[i,j] : NaN for i = axes(Cmap, 1), j = axes(Cmap, 2)]
 	hm = Makie.heatmap!(ax, plotted_matrix; colormap=:balance)
-	
+
 	Makie.hidespines!(ax, :t, :r)
 	Makie.Colorbar(fig[1,2], hm, height=200, label="Epistasis score")
 	Makie.resize_to_layout!(fig)
@@ -1981,16 +1981,16 @@ end
 let fig = Makie.Figure()
 	pdb_map = [iszero(i) || iszero(j) ? NaN : dist_map_1i8g[i,j] for i = aln_map_1i8g, j = aln_map_1i8g] .< pdb_contact_distance_thre shold
 
-	
+
 	ax = Makie.Axis(fig[1,1], yreversed=true, width=400, height=400, xticks=0:5:size(Cmap,1), yticks=0:5:size(Cmap,2), xlabel="sequence position", ylabel="sequence position")
 	#hm = Makie.heatmap!(ax, abs.(plotted_matrix), colormap=["white", "white", "gray", "dimgray", "black", "black"])
-	
+
 	plotted_matrix = [i < j ? NaN : pdb_map[i,j] for i = axes(Cmap, 1), j = axes(Cmap, 2)]
 	hm = Makie.heatmap!(ax, plotted_matrix; colormap=:greens)
-	
+
 	plotted_matrix = [i < j ? Cmap[i,j] : NaN for i = axes(Cmap, 1), j = axes(Cmap, 2)]
 	hm = Makie.heatmap!(ax, plotted_matrix; colormap=:balance)
-	
+
 	Makie.hidespines!(ax, :t, :r)
 	Makie.Colorbar(fig[1,2], hm, height=200, label="Epistasis score")
 	Makie.resize_to_layout!(fig)
@@ -2008,36 +2008,36 @@ let fig = Makie.Figure()
 	for (class, color) = zip((:I, :II, :IV), _class_scatter_colors)
 		Makie.scatter!(
 			ax,
-			-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419()))[38, msa_local_rbm_class_prediction .== class],
-			 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419()))[36, msa_local_rbm_class_prediction .== class];
+			-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419()))[38, msa_local_rbm_class_prediction .== class],
+			 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419()))[36, msa_local_rbm_class_prediction .== class];
 			color=(color, 0.5), markersize=4
 		)
 	end
 	Makie.xlims!(ax, -4.5, 2)
 	Makie.ylims!(ax, -7, 3)
 
-	response_data_v2_sequences = TransitionPaths2024.Exp_20240703_sequences().sequences[
-		indexin(TransitionPaths2024.response_data_all_v2_20240708().name, TransitionPaths2024.Exp_20240703_sequences().names)
+	response_data_v2_sequences = TransitionPaths2025.Exp_20240703_sequences().sequences[
+		indexin(TransitionPaths2025.response_data_all_v2_20240708().name, TransitionPaths2025.Exp_20240703_sequences().names)
 	]
 
 	Makie.scatter!(
 		ax,
-		-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"]))[38, 1:11],
-		 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"]))[36, 1:11];
+		-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"]))[38, 1:11],
+		 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"]))[36, 1:11];
 		color=:blue, markersize=20, marker=:cross, label="I"
 	)
 
 	Makie.scatter!(
 		ax,
-		-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"]))[38, 12:26],
-		 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"]))[36, 12:26];
+		-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"]))[38, 12:26],
+		 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"]))[36, 12:26];
 		color=:red, markersize=20, marker=:cross, label="II"
 	)
 
 	Makie.scatter!(
 		ax,
-		-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"]))[38, 27:27],
-		 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"]))[36, 27:27];
+		-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"]))[38, 27:27],
+		 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"]))[36, 27:27];
 		color=:black, markersize=20, marker=:cross, label="IV"
 	)
 
@@ -2045,33 +2045,33 @@ let fig = Makie.Figure()
 
 
 	_ylim = (-190, 10)
-	
+
 	ax = Makie.Axis(fig[1,2], width=400, height=70, xgridvisible=false, ygridvisible=false)
-	Makie.scatter!(ax, 1:11, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][1:11])), color=:blue, label="I", marker=:cross, markersize=10)
-	Makie.scatter!(ax, 12:26, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][12:26])), color=:red, label="II", marker=:cross, markersize=10)
-	Makie.scatter!(ax, 27:27, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][27:27])), color=:black, label="IV", marker=:cross, markersize=10)
+	Makie.scatter!(ax, 1:11, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][1:11])), color=:blue, label="I", marker=:cross, markersize=10)
+	Makie.scatter!(ax, 12:26, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][12:26])), color=:red, label="II", marker=:cross, markersize=10)
+	Makie.scatter!(ax, 27:27, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][27:27])), color=:black, label="IV", marker=:cross, markersize=10)
 	Makie.ylims!(ax, -100, 0)
 	#Makie.axislegend(ax; framevisible=false, position=:lb)
 
 	ax = Makie.Axis(fig[2,2], width=400, height=150, xgridvisible=false, ygridvisible=false)
-	Makie.lines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2024.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"])), color=:cyan, linewidth=4)
-	Makie.scatter!(ax, 1:11, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2024.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][1:11])), color=:blue, marker=:cross, markersize=10)
-	Makie.scatter!(ax, 12:26, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2024.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][12:26])), color=:red, marker=:cross, markersize=10)
-	Makie.scatter!(ax, 27:27, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2024.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][27:27])), color=:black, marker=:cross, markersize=10)
+	Makie.lines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2025.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"])), color=:cyan, linewidth=4)
+	Makie.scatter!(ax, 1:11, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2025.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][1:11])), color=:blue, marker=:cross, markersize=10)
+	Makie.scatter!(ax, 12:26, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2025.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][12:26])), color=:red, marker=:cross, markersize=10)
+	Makie.scatter!(ax, 27:27, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2025.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][27:27])), color=:black, marker=:cross, markersize=10)
 	Makie.ylims!(ax, _ylim...)
-	
+
 	#ax = Makie.Axis(fig[3,1], width=500, height=75, xgridvisible=false, ygridvisible=false)
-	Makie.lines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"])), color=:orange, linewidth=4)
-	Makie.scatter!(ax, 1:11, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][1:11])), color=:blue, marker=:cross, markersize=10)
-	Makie.scatter!(ax, 12:26, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][12:26])), color=:red, marker=:cross, markersize=10)
-	Makie.scatter!(ax, 27:27, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][27:27])), color=:black, marker=:cross, markersize=10)
+	Makie.lines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"])), color=:orange, linewidth=4)
+	Makie.scatter!(ax, 1:11, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][1:11])), color=:blue, marker=:cross, markersize=10)
+	Makie.scatter!(ax, 12:26, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][12:26])), color=:red, marker=:cross, markersize=10)
+	Makie.scatter!(ax, 27:27, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][27:27])), color=:black, marker=:cross, markersize=10)
 	Makie.ylims!(ax, _ylim...)
-	
+
 	#ax = Makie.Axis(fig[4,1], width=500, height=75, xgridvisible=false, ygridvisible=false)
-	Makie.lines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2024.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"])), color=:green, linewidth=4)
-	Makie.scatter!(ax, 1:11, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2024.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][1:11])), color=:blue, marker=:cross, markersize=10)
-	Makie.scatter!(ax, 12:26, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2024.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][12:26])), color=:red, marker=:cross, markersize=10)
-	Makie.scatter!(ax, 27:27, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2024.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][27:27])), color=:black, marker=:cross, markersize=10)
+	Makie.lines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2025.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"])), color=:green, linewidth=4)
+	Makie.scatter!(ax, 1:11, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2025.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][1:11])), color=:blue, marker=:cross, markersize=10)
+	Makie.scatter!(ax, 12:26, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2025.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][12:26])), color=:red, marker=:cross, markersize=10)
+	Makie.scatter!(ax, 27:27, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2025.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][27:27])), color=:black, marker=:cross, markersize=10)
 	Makie.ylims!(ax, _ylim...)
 
 	Makie.resize_to_layout!(fig)
@@ -2081,54 +2081,54 @@ end
 # ╔═╡ 2a23e69c-0169-4e54-9f95-da5fbf97a657
 let fig = Makie.Figure()
 	_ylim = (-190, 10)
-	
+
 	ax = Makie.Axis(fig[1,1], width=500, height=75, xgridvisible=false, ygridvisible=false)
-	Makie.scatter!(ax, 1:11, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][1:11])), color=:blue, label="I", marker=:cross, markersize=10)
-	Makie.scatter!(ax, 12:26, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][12:26])), color=:red, label="II", marker=:cross, markersize=10)
-	Makie.scatter!(ax, 27:27, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][27:27])), color=:black, label="IV", marker=:cross, markersize=10)
+	Makie.scatter!(ax, 1:11, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][1:11])), color=:blue, label="I", marker=:cross, markersize=10)
+	Makie.scatter!(ax, 12:26, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][12:26])), color=:red, label="II", marker=:cross, markersize=10)
+	Makie.scatter!(ax, 27:27, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][27:27])), color=:black, label="IV", marker=:cross, markersize=10)
 	Makie.ylims!(ax, -100, 0)
 	#Makie.axislegend(ax; framevisible=false, position=:lb)
 
 	ax = Makie.Axis(fig[2,1], width=500, height=200, xgridvisible=false, ygridvisible=false)
-	Makie.lines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2024.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"])), color=:cyan, linewidth=4)
-	Makie.scatter!(ax, 1:11, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2024.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][1:11])), color=:blue, marker=:cross, markersize=10)
-	Makie.scatter!(ax, 12:26, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2024.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][12:26])), color=:red, marker=:cross, markersize=10)
-	Makie.scatter!(ax, 27:27, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2024.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][27:27])), color=:black, marker=:cross, markersize=10)
+	Makie.lines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2025.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"])), color=:cyan, linewidth=4)
+	Makie.scatter!(ax, 1:11, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2025.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][1:11])), color=:blue, marker=:cross, markersize=10)
+	Makie.scatter!(ax, 12:26, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2025.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][12:26])), color=:red, marker=:cross, markersize=10)
+	Makie.scatter!(ax, 27:27, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2025.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][27:27])), color=:black, marker=:cross, markersize=10)
 	Makie.ylims!(ax, _ylim...)
-	
+
 	#ax = Makie.Axis(fig[3,1], width=500, height=75, xgridvisible=false, ygridvisible=false)
-	Makie.lines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"])), color=:orange, linewidth=4)
-	Makie.scatter!(ax, 1:11, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][1:11])), color=:blue, marker=:cross, markersize=10)
-	Makie.scatter!(ax, 12:26, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][12:26])), color=:red, marker=:cross, markersize=10)
-	Makie.scatter!(ax, 27:27, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][27:27])), color=:black, marker=:cross, markersize=10)
+	Makie.lines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"])), color=:orange, linewidth=4)
+	Makie.scatter!(ax, 1:11, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][1:11])), color=:blue, marker=:cross, markersize=10)
+	Makie.scatter!(ax, 12:26, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][12:26])), color=:red, marker=:cross, markersize=10)
+	Makie.scatter!(ax, 27:27, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][27:27])), color=:black, marker=:cross, markersize=10)
 	Makie.ylims!(ax, _ylim...)
-	
+
 	#ax = Makie.Axis(fig[4,1], width=500, height=75, xgridvisible=false, ygridvisible=false)
-	Makie.lines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2024.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"])), color=:green, linewidth=4)
-	Makie.scatter!(ax, 1:11, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2024.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][1:11])), color=:blue, marker=:cross, markersize=10)
-	Makie.scatter!(ax, 12:26, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2024.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][12:26])), color=:red, marker=:cross, markersize=10)
-	Makie.scatter!(ax, 27:27, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2024.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][27:27])), color=:black, marker=:cross, markersize=10)
+	Makie.lines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2025.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"])), color=:green, linewidth=4)
+	Makie.scatter!(ax, 1:11, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2025.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][1:11])), color=:blue, marker=:cross, markersize=10)
+	Makie.scatter!(ax, 12:26, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2025.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][12:26])), color=:red, marker=:cross, markersize=10)
+	Makie.scatter!(ax, 27:27, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2025.onehot(df_20241213.aligned_sequences[df_20241213.group .== "Wild-types"][27:27])), color=:black, marker=:cross, markersize=10)
 	Makie.ylims!(ax, _ylim...)
-	
+
 	Makie.resize_to_layout!(fig)
 	fig
 end
 
 # ╔═╡ 24493642-3e88-4312-ad51-4345ef6aafd8
 let fig = Makie.Figure()
-	sampled_path = unique(TransitionPaths2024.sampled_path_1to1_20240703())
+	sampled_path = unique(TransitionPaths2025.sampled_path_1to1_20240703())
 
 	ax = Makie.Axis(fig[1,2][1,1]; width=250, height=75, xgridvisible=false, ygridvisible=false, ylabel=L"\ln P_\mathrm{RBM}(\text{glob.})")
-	Makie.scatterlines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(sampled_path)); color=:black)
+	Makie.scatterlines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(sampled_path)); color=:black)
 	Makie.hidexdecorations!(ax)
 
 	ax = Makie.Axis(
 		fig[1,2][2,1]; width=250, height=75, xgridvisible=false, ygridvisible=false,
 		ylabel=L"\log P_\mathrm{RBM}(\text{loc.})", #yticklabelcolor=_class_scatter_colors[1], ylabelcolor=_class_scatter_colors[1]
 	)
-	Makie.scatterlines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2024.onehot(sampled_path)); color=:cyan)
-	Makie.scatterlines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(sampled_path)); color=:orange)
-	Makie.scatterlines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2024.onehot(sampled_path)); color=:green)
+	Makie.scatterlines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2025.onehot(sampled_path)); color=:cyan)
+	Makie.scatterlines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(sampled_path)); color=:orange)
+	Makie.scatterlines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2025.onehot(sampled_path)); color=:green)
 	Makie.hidexdecorations!(ax)
 
 
@@ -2138,52 +2138,52 @@ let fig = Makie.Figure()
 	for (class, color) = zip((:I, :II, :IV), _class_scatter_colors)
 		Makie.scatter!(
 			ax,
-			-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419()))[38, msa_local_rbm_class_prediction .== class],
-			 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419()))[36, msa_local_rbm_class_prediction .== class];
+			-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419()))[38, msa_local_rbm_class_prediction .== class],
+			 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419()))[36, msa_local_rbm_class_prediction .== class];
 			color=(color, 0.5), markersize=4
 		)
 	end
 
-	Makie.scatterlines!(ax, 
-		-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[38, :],
-		 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[36, :];
+	Makie.scatterlines!(ax,
+		-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[38, :],
+		 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[36, :];
 		color=:black
 	)
 
 	Makie.arrows!(ax,
-		-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[38, 1:1] .+ 0.35,
-		 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[36, 1:1] .- 0.35,
+		-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[38, 1:1] .+ 0.35,
+		 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[36, 1:1] .- 0.35,
 		[-0.15], [0.15]; linewidth=2, color=:gray, arrowsize=10
 	)
-	
+
 	Makie.xlims!(ax, -4.5, 2)
 	Makie.ylims!(ax, -7, 3)
 
 	Makie.resize_to_layout!(fig)
-	#Makie.save("/DATA-SSD/cossio/projects/2024/Transition_Paths/TransitionPaths2024.jl/figures/Fig2.pdf", fig)
+	#Makie.save("/DATA-SSD/cossio/projects/2024/Transition_Paths/TransitionPaths2025.jl/figures/Fig2.pdf", fig)
 	fig
 end
 
 # ╔═╡ 2fecd867-e4d7-4267-b12e-52fc02cea62d
 let fig = Makie.Figure()
-	sampled_path_1 = unique(TransitionPaths2024.sampled_path_1to2rep1_20240703())
-	sampled_path_2 = unique(TransitionPaths2024.sampled_path_1to2rep2_20240703())
+	sampled_path_1 = unique(TransitionPaths2025.sampled_path_1to2rep1_20240703())
+	sampled_path_2 = unique(TransitionPaths2025.sampled_path_1to2rep2_20240703())
 
 	ax = Makie.Axis(fig[1,2][1,1]; width=250, height=75, xgridvisible=false, ygridvisible=false, ylabel=L"\ln P_\mathrm{RBM}(\text{glob.})")
-	Makie.lines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(sampled_path_1)); color=:black)
-	Makie.lines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(sampled_path_2)); color=:black, linestyle=:dash)
+	Makie.lines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(sampled_path_1)); color=:black)
+	Makie.lines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(sampled_path_2)); color=:black, linestyle=:dash)
 	Makie.hidexdecorations!(ax)
 
 	ax = Makie.Axis(
 		fig[1,2][2,1]; width=250, height=75, xgridvisible=false, ygridvisible=false,
 		ylabel=L"\log P_\mathrm{RBM}(\text{loc.})", #yticklabelcolor=_class_scatter_colors[1], ylabelcolor=_class_scatter_colors[1]
 	)
-	Makie.lines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2024.onehot(sampled_path_1)); color=:cyan)
-	Makie.lines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2024.onehot(sampled_path_2)); color=:cyan, linestyle=:dash)
-	Makie.lines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(sampled_path_1)); color=:orange)
-	Makie.lines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(sampled_path_2)); color=:orange, linestyle=:dash)
-	Makie.lines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2024.onehot(sampled_path_1)); color=:green)
-	Makie.lines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2024.onehot(sampled_path_2)); color=:green, linestyle=:dash)
+	Makie.lines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2025.onehot(sampled_path_1)); color=:cyan)
+	Makie.lines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2025.onehot(sampled_path_2)); color=:cyan, linestyle=:dash)
+	Makie.lines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(sampled_path_1)); color=:orange)
+	Makie.lines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(sampled_path_2)); color=:orange, linestyle=:dash)
+	Makie.lines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2025.onehot(sampled_path_1)); color=:green)
+	Makie.lines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2025.onehot(sampled_path_2)); color=:green, linestyle=:dash)
 	Makie.hidexdecorations!(ax)
 
 	ax = Makie.Axis(fig[1,1], width=200, height=200, xlabel=L"I_{1}", ylabel=L"I_{2}", xgridvisible=false, ygridvisible=false) # h_38 -> h_1, h_36 -> h_2
@@ -2192,43 +2192,43 @@ let fig = Makie.Figure()
 	for (class, color) = zip((:I, :II, :IV), _class_scatter_colors)
 		Makie.scatter!(
 			ax,
-			-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419()))[38, msa_local_rbm_class_prediction .== class],
-			 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419()))[36, msa_local_rbm_class_prediction .== class];
+			-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419()))[38, msa_local_rbm_class_prediction .== class],
+			 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419()))[36, msa_local_rbm_class_prediction .== class];
 			color=(color, 0.5), markersize=4
 		)
 	end
 
-	Makie.lines!(ax, 
-		-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path_1))[38, :],
-		 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path_1))[36, :];
+	Makie.lines!(ax,
+		-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path_1))[38, :],
+		 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path_1))[36, :];
 		color=:black, linewidth=2
 	)
-	Makie.lines!(ax, 
-		-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path_2))[38, :],
-		 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path_2))[36, :];
+	Makie.lines!(ax,
+		-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path_2))[38, :],
+		 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path_2))[36, :];
 		color=:black, linestyle=:dash, linewidth=2
 	)
-		
+
 	Makie.xlims!(ax, -4.5, 2)
 	Makie.ylims!(ax, -7, 3)
 
 	Makie.resize_to_layout!(fig)
-	#Makie.save("/DATA-SSD/cossio/projects/2024/Transition_Paths/TransitionPaths2024.jl/figures/Fig2.pdf", fig)
+	#Makie.save("/DATA-SSD/cossio/projects/2024/Transition_Paths/TransitionPaths2025.jl/figures/Fig2.pdf", fig)
 	fig
 end
 
 # ╔═╡ ef351be2-07bb-4f2a-9d0e-80518788c890
 let fig = Makie.Figure()
-	sampled_path_main = unique(TransitionPaths2024.sampled_path_1to4_20240703())
-	sampled_path_batch1 = unique(TransitionPaths2024.sampled_path_1to4batch1_20240703())
-	sampled_path_batch2 = unique(TransitionPaths2024.sampled_path_1to4batch2_20240703())
-	sampled_path_direct = unique(TransitionPaths2024.sampled_path_1to4direct_20240703())
+	sampled_path_main = unique(TransitionPaths2025.sampled_path_1to4_20240703())
+	sampled_path_batch1 = unique(TransitionPaths2025.sampled_path_1to4batch1_20240703())
+	sampled_path_batch2 = unique(TransitionPaths2025.sampled_path_1to4batch2_20240703())
+	sampled_path_direct = unique(TransitionPaths2025.sampled_path_1to4direct_20240703())
 
 	ax = Makie.Axis(fig[1,2][1,1]; width=250, height=75, xgridvisible=false, ygridvisible=false, ylabel=L"\ln P_\mathrm{RBM}(\text{glob.})")
-	Makie.lines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(sampled_path_main)); color=:black)
-	Makie.lines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(sampled_path_direct)); color=:black, linestyle=:dash)
-	Makie.lines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(sampled_path_batch1)); color=:black, linestyle=:dot)
-	Makie.lines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(sampled_path_batch2)); color=:black, linestyle=:dashdot)
+	Makie.lines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(sampled_path_main)); color=:black)
+	Makie.lines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(sampled_path_direct)); color=:black, linestyle=:dash)
+	Makie.lines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(sampled_path_batch1)); color=:black, linestyle=:dot)
+	Makie.lines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(sampled_path_batch2)); color=:black, linestyle=:dashdot)
 	Makie.hidexdecorations!(ax)
 
 	ax = Makie.Axis(
@@ -2236,10 +2236,10 @@ let fig = Makie.Figure()
 		ylabel=L"\log P_\mathrm{RBM}(\text{loc.})", #yticklabelcolor=_class_scatter_colors[1], ylabelcolor=_class_scatter_colors[1]
 	)
 	for (model, color) = zip((:I, :II, :IV), (:cyan, :orange, :green))
-		Makie.lines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(model, TransitionPaths2024.onehot(sampled_path_main)); color)
-		Makie.lines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(model, TransitionPaths2024.onehot(sampled_path_direct)); color, linestyle=:dash)
-		Makie.lines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(model, TransitionPaths2024.onehot(sampled_path_batch1)); color, linestyle=:dot)
-		Makie.lines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(model, TransitionPaths2024.onehot(sampled_path_batch2)); color, linestyle=:dashdot)
+		Makie.lines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(model, TransitionPaths2025.onehot(sampled_path_main)); color)
+		Makie.lines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(model, TransitionPaths2025.onehot(sampled_path_direct)); color, linestyle=:dash)
+		Makie.lines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(model, TransitionPaths2025.onehot(sampled_path_batch1)); color, linestyle=:dot)
+		Makie.lines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(model, TransitionPaths2025.onehot(sampled_path_batch2)); color, linestyle=:dashdot)
 	end
 	Makie.hidexdecorations!(ax)
 
@@ -2249,25 +2249,25 @@ let fig = Makie.Figure()
 	for (class, color) = zip((:I, :II, :IV), _class_scatter_colors)
 		Makie.scatter!(
 			ax,
-			-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419()))[38, msa_local_rbm_class_prediction .== class],
-			 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419()))[36, msa_local_rbm_class_prediction .== class];
+			-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419()))[38, msa_local_rbm_class_prediction .== class],
+			 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419()))[36, msa_local_rbm_class_prediction .== class];
 			color=(color, 0.5), markersize=4
 		)
 	end
 
 	for path = (sampled_path_main, sampled_path_direct, sampled_path_batch1, sampled_path_batch2)
-		Makie.lines!(ax, 
-			-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(path))[38, :],
-			 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(path))[36, :];
+		Makie.lines!(ax,
+			-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(path))[38, :],
+			 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(path))[36, :];
 			color=:black, linewidth=1
 		)
 	end
-		
+
 	Makie.xlims!(ax, -4.5, 2)
 	Makie.ylims!(ax, -7, 3)
 
 	Makie.resize_to_layout!(fig)
-	#Makie.save("/DATA-SSD/cossio/projects/2024/Transition_Paths/TransitionPaths2024.jl/figures/Fig2.pdf", fig)
+	#Makie.save("/DATA-SSD/cossio/projects/2024/Transition_Paths/TransitionPaths2025.jl/figures/Fig2.pdf", fig)
 	fig
 end
 
@@ -2280,16 +2280,16 @@ md"# RBM IV and epistasis"
 single_site_mutation_costs_per_rbm = Dict(
 	rbm => [
 		begin
-			seqs = TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419())
-			
+			seqs = TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419())
+
 			seqs[:,i,:] .= 0
 			seqs[a,i,:] .= 1
-			ll0 = TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I, seqs)
-	
+			ll0 = TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I, seqs)
+
 			seqs[:,i,:] .= 0
 			seqs[b,i,:] .= 1
-			ll1 = TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I, seqs)
-			
+			ll1 = TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I, seqs)
+
 			mean(ll1 - ll0)
 		end for a = 1:21, b = 1:21, i = 1:31
 	]
@@ -2309,10 +2309,10 @@ single_site_mutation_costs_per_rbm_mean = Dict(
 #=╠═╡
 let fig = Makie.Figure()
 	for (n, rbm) = enumerate((:global, :I, :II, :IV))
-		seqs = TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419())
-		lls_full = TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(rbm, seqs)
+		seqs = TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419())
+		lls_full = TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(rbm, seqs)
 		lls_inde = vec(single_site_mutation_costs_per_rbm_mean[rbm])' * reshape(seqs, :, size(seqs)[end])
-	
+
 		ax = Makie.Axis(fig[1,n]; with=300, height=300)
 		Makie.scatter!(ax, lls_full .- mean(lls_full), lls_inde .- mean(lls_inde))
 	end
@@ -2326,16 +2326,16 @@ end
 #=╠═╡
 single_site_IV_mutation_costs = [
 	begin
-		seqs = TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419())
-		
+		seqs = TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419())
+
 		seqs[:,i,:] .= 0
 		seqs[a,i,:] .= 1
-		ll0 = TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:IV, seqs)
+		ll0 = TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:IV, seqs)
 
 		seqs[:,i,:] .= 0
 		seqs[b,i,:] .= 1
-		ll1 = TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:IV, seqs)
-		
+		ll1 = TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:IV, seqs)
+
 		mean(ll1 - ll0)
 	end for a = 1:21, b = 1:21, i = 1:31
 ]
@@ -2350,13 +2350,13 @@ dropdims(mean(single_site_IV_mutation_costs; dims=1); dims=1)
 let fig = Makie.Figure()
 	for (n, rbm) = enumerate((:global, :I, :II, :IV))
 		# APC-corrected contact map
-		Cmap = TransitionPaths2024.effective_contacts(TransitionPaths2024.Eugenio_RBM_20230419(rbm), TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419()))
-		
+		Cmap = TransitionPaths2025.effective_contacts(TransitionPaths2025.Eugenio_RBM_20230419(rbm), TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419()))
+
 		# zero-out diagonal
 		for i in axes(Cmap, 1)
 		    Cmap[i,i] = 0
 		end
-	
+
 		plotted_matrix = copy(Cmap)
 		for i = axes(plotted_matrix, 1), j = axes(plotted_matrix, 2)
 		    if i < j
@@ -2365,7 +2365,7 @@ let fig = Makie.Figure()
 		        plotted_matrix[i,j] = 0
 		    end
 		end
-	
+
 		ax = Makie.Axis(fig[1,n]; yreversed=true, title=string(rbm), width=175, height=175, xticks=0:10:size(Cmap,1), yticks=0:10:size(Cmap,2), xlabel="sequence position", ylabel="sequence position")
 		#hm = Makie.heatmap!(ax, abs.(plotted_matrix), colormap=["white", "white", "gray", "dimgray", "black", "black"])
 		hm = Makie.heatmap!(ax, plotted_matrix; colormap=:balance, colorrange=(-1.5,5))
@@ -2379,13 +2379,13 @@ let fig = Makie.Figure()
 	epistasis_norms = [
 		begin
 			# APC-corrected contact map
-			Cmap = TransitionPaths2024.effective_contacts(TransitionPaths2024.Eugenio_RBM_20230419(rbm), TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419()))
-			
+			Cmap = TransitionPaths2025.effective_contacts(TransitionPaths2025.Eugenio_RBM_20230419(rbm), TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419()))
+
 			# zero-out diagonal
 			for i in axes(Cmap, 1)
 			    Cmap[i,i] = 0
 			end
-	
+
 			norm(Cmap)
 		end for rbm = (:global, :I, :II, :IV)
 	]
@@ -2403,10 +2403,10 @@ end
 md"# Send paths to PG"
 
 # ╔═╡ 00ecfd29-ca78-41d1-95e2-d0ba3bd601fc
-TransitionPaths2024.sampled_path_1to1_20240703()
+TransitionPaths2025.sampled_path_1to1_20240703()
 
 # ╔═╡ 28c5e03b-b8fa-4896-983f-8a2c5f639ba9
-TransitionPaths2024.sampled_path_1to2rep1_20240703()
+TransitionPaths2025.sampled_path_1to2rep1_20240703()
 
 # ╔═╡ 343cee63-9ebc-4f07-ac33-c8b23e47ff70
 md"# Trash"
@@ -2415,14 +2415,14 @@ md"# Trash"
 let fig = Makie.Figure()
 	_sz = 200
 
-	pred_class = TransitionPaths2024.Eugenio_Predict_Class_from_Inputs_20240715(TransitionPaths2024.onehot(response_data_sequences))
-	likelihood_I  = TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2024.onehot(response_data_sequences))
-	likelihood_II = TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(response_data_sequences))
-	likelihood_IV = TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2024.onehot(response_data_sequences))
+	pred_class = TransitionPaths2025.Eugenio_Predict_Class_from_Inputs_20240715(TransitionPaths2025.onehot(response_data_sequences))
+	likelihood_I  = TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I,  TransitionPaths2025.onehot(response_data_sequences))
+	likelihood_II = TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(response_data_sequences))
+	likelihood_IV = TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2025.onehot(response_data_sequences))
 	response_I  = [r ≤ 0 ? NaN : r for r = all_response_data.response_data_C1]
 	response_II = [r ≤ 0 ? NaN : r for r = all_response_data.response_data_C2]
 	response_IV = [r ≤ 0 ? NaN : r for r = all_response_data.response_data_C4]
-	
+
 	ax_I  = Makie.Axis(fig[1,1][1,1], width=_sz, height=_sz, xlabel=L"\log(P_\mathrm{rbm}(\text{local I}))",  ylabel="Class I. normalized response",  yscale=log10, xgridvisible=false, ygridvisible=false)
 	ax_II = Makie.Axis(fig[1,1][1,2], width=_sz, height=_sz, xlabel=L"\log(P_\mathrm{rbm}(\text{local II}))", ylabel="Class II. normalized response", yscale=log10, xgridvisible=false, ygridvisible=false)
 	ax_IV = Makie.Axis(fig[1,1][1,3], width=_sz, height=_sz, xlabel=L"\log(P_\mathrm{rbm}(\text{local IV}))", ylabel="Class IV. normalized response", yscale=log10, xgridvisible=false, ygridvisible=false)
@@ -2446,14 +2446,14 @@ let fig = Makie.Figure()
 
 	cat = [i for (i, target) = enumerate((:I, :II, :IV)) for (j, rbm) = enumerate((:global, :I, :II, :IV))]
 	grp = [j for (i, target) = enumerate((:I, :II, :IV)) for (j, rbm) = enumerate((:global, :I, :II, :IV))]
-				
+
 	correlations = [
-		cor(TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(rbm, TransitionPaths2024.onehot(response_data_sequences)), responses[target])
+		cor(TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(rbm, TransitionPaths2025.onehot(response_data_sequences)), responses[target])
 		for target = (:I, :II, :IV) for rbm = (:global, :I, :II, :IV)
 	]
 
 	colors = [:gray, :cyan, :orange, :green]
-		
+
 	ax = Makie.Axis(fig[2,1][1,2], width=250, height=_sz, xticks=(1:3, ["I", "II", "IV"]), ylabel="Experimental response corr.", xgridvisible=false, ygridvisible=false)
 	Makie.barplot!(ax, cat, correlations; dodge=grp, color=colors[grp], dodge_gap=0.05, width=0.9)
 	Makie.hlines!(ax, 0.0; color=:black, linestyle=:dash)
@@ -2463,46 +2463,46 @@ let fig = Makie.Figure()
 	elements = [Makie.PolyElement(; polycolor = colors[j]) for j = 1:4]
 	Makie.Legend(fig[2,1][1,3], elements, labels; framed=false)
 
-	response_data_v2_sequences = TransitionPaths2024.Exp_20240703_sequences().sequences[
-		indexin(TransitionPaths2024.response_data_all_v2_20240708().name, TransitionPaths2024.Exp_20240703_sequences().names)
+	response_data_v2_sequences = TransitionPaths2025.Exp_20240703_sequences().sequences[
+		indexin(TransitionPaths2025.response_data_all_v2_20240708().name, TransitionPaths2025.Exp_20240703_sequences().names)
 	]
-	rbm_log_likelihoods_v2 = TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(response_data_v2_sequences))
-	
+	rbm_log_likelihoods_v2 = TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(response_data_v2_sequences))
+
 	ax = Makie.Axis(fig[2,1][1,1], width=300, height=_sz, xlabel=L"P_{\mathrm{RBM}}(\text{global})", ylabel="Frequency", xgridvisible=false, ygridvisible=false)
-	Makie.hist!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419())); normalization=:pdf, bins=-90:5:10, color=(:green, 0.3), label="MSA")
-	Makie.stephist!(ax, rbm_log_likelihoods_v2[TransitionPaths2024.response_data_all_v2_20240708().type .== "Natural"], color=:green, label="Natural", normalization=:pdf, bins=-90:5:10, linewidth=4)
-	Makie.stephist!(ax, rbm_log_likelihoods_v2[TransitionPaths2024.response_data_all_v2_20240708().type .== "Designed"], color=:blue, label="Designed", normalization=:pdf, bins=-90:5:10, linewidth=4)
-	Makie.stephist!(ax, rbm_log_likelihoods_v2[TransitionPaths2024.response_data_all_v2_20240708().type .== "Shuffled"], color=:red, label="Shuffled", normalization=:pdf, bins=-90:5:10, linewidth=4)
+	Makie.hist!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419())); normalization=:pdf, bins=-90:5:10, color=(:green, 0.3), label="MSA")
+	Makie.stephist!(ax, rbm_log_likelihoods_v2[TransitionPaths2025.response_data_all_v2_20240708().type .== "Natural"], color=:green, label="Natural", normalization=:pdf, bins=-90:5:10, linewidth=4)
+	Makie.stephist!(ax, rbm_log_likelihoods_v2[TransitionPaths2025.response_data_all_v2_20240708().type .== "Designed"], color=:blue, label="Designed", normalization=:pdf, bins=-90:5:10, linewidth=4)
+	Makie.stephist!(ax, rbm_log_likelihoods_v2[TransitionPaths2025.response_data_all_v2_20240708().type .== "Shuffled"], color=:red, label="Shuffled", normalization=:pdf, bins=-90:5:10, linewidth=4)
 	Makie.xlims!(ax, -90, 0)
 	Makie.ylims!(ax, 0, 0.1)
 	Makie.axislegend(ax; position=:lt, framevisible=false)
 
 	Makie.resize_to_layout!(fig)
-	#Makie.save("/DATA-SSD/cossio/projects/2024/Transition_Paths/TransitionPaths2024.jl/figures/Fig5.pdf", fig)
+	#Makie.save("/DATA-SSD/cossio/projects/2024/Transition_Paths/TransitionPaths2025.jl/figures/Fig5.pdf", fig)
 	fig
 end
 
 # ╔═╡ 971044ac-8df4-4fec-8d4a-5cf20ab2ece1
 let fig = Makie.Figure()
 	_sz = 200
-	
+
 	ax = Makie.Axis(fig[1,1], width=_sz, height=_sz, xlabel=L"\log(P_\mathrm{rbm}(\text{local I}))", ylabel="Class I. normalized response", yscale=log10, xgridvisible=false, ygridvisible=false)
-	Makie.scatter!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2024.onehot(response_data_sequences)), [r ≤ 0 ? NaN : r for r = all_response_data.response_data_C1]; color=:black)
+	Makie.scatter!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2025.onehot(response_data_sequences)), [r ≤ 0 ? NaN : r for r = all_response_data.response_data_C1]; color=:black)
 
 	ax = Makie.Axis(fig[1,2], width=_sz, height=_sz, xlabel=L"\log(P_\mathrm{rbm}(\text{local II}))", ylabel="Class II. normalized response", yscale=log10, xgridvisible=false, ygridvisible=false)
-	Makie.scatter!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(response_data_sequences)), [r ≤ 0 ? NaN : r for r = all_response_data.response_data_C2]; color=:black)
-	
+	Makie.scatter!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(response_data_sequences)), [r ≤ 0 ? NaN : r for r = all_response_data.response_data_C2]; color=:black)
+
 	ax = Makie.Axis(fig[1,3], width=_sz, height=_sz, xlabel=L"\log(P_\mathrm{rbm}(\text{local IV}))", ylabel="Class IV. normalized response", yscale=log10, xgridvisible=false, ygridvisible=false)
-	Makie.scatter!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2024.onehot(response_data_sequences)), [r ≤ 0 ? NaN : r for r = all_response_data.response_data_C4]; color=:black)
+	Makie.scatter!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:IV, TransitionPaths2025.onehot(response_data_sequences)), [r ≤ 0 ? NaN : r for r = all_response_data.response_data_C4]; color=:black)
 
 	ax = Makie.Axis(fig[2,1], width=_sz, height=_sz, xlabel=L"\log(P_\mathrm{rbm}(\text{Global}))", ylabel="Class I. normalized response", yscale=log10, xgridvisible=false, ygridvisible=false)
-	Makie.scatter!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(response_data_sequences)), [r ≤ 0 ? NaN : r for r = all_response_data.response_data_C1]; color=:black)
+	Makie.scatter!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(response_data_sequences)), [r ≤ 0 ? NaN : r for r = all_response_data.response_data_C1]; color=:black)
 
 	ax = Makie.Axis(fig[2,2], width=_sz, height=_sz, xlabel=L"\log(P_\mathrm{rbm}(\text{Global}))", ylabel="Class II. normalized response", yscale=log10, xgridvisible=false, ygridvisible=false)
-	Makie.scatter!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(response_data_sequences)), [r ≤ 0 ? NaN : r for r = all_response_data.response_data_C2]; color=:black)
-	
+	Makie.scatter!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(response_data_sequences)), [r ≤ 0 ? NaN : r for r = all_response_data.response_data_C2]; color=:black)
+
 	ax = Makie.Axis(fig[2,3], width=_sz, height=_sz, xlabel=L"\log(P_\mathrm{rbm}(\text{Global}))", ylabel="Class IV. normalized response", yscale=log10, xgridvisible=false, ygridvisible=false)
-	Makie.scatter!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(response_data_sequences)), [r ≤ 0 ? NaN : r for r = all_response_data.response_data_C4]; color=:black)
+	Makie.scatter!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(response_data_sequences)), [r ≤ 0 ? NaN : r for r = all_response_data.response_data_C4]; color=:black)
 
 	# Correlations barplot
 	responses = Dict(
@@ -2513,22 +2513,22 @@ let fig = Makie.Figure()
 
 	cat = [i for (i, target) = enumerate((:I, :II, :IV)) for (j, rbm) = enumerate((:global, :I, :II, :IV))]
 	grp = [j for (i, target) = enumerate((:I, :II, :IV)) for (j, rbm) = enumerate((:global, :I, :II, :IV))]
-	
+
 	# correlations = [
 	# 	cor(
-	# 		TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(rbm, TransitionPaths2024.onehot(response_data_sequences))[findall(>(0), responses[target])], 
+	# 		TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(rbm, TransitionPaths2025.onehot(response_data_sequences))[findall(>(0), responses[target])],
 	# 		log.(filter(>(0), responses[target]))
 	# 	)
 	# 	for target = (:I, :II, :IV) for rbm = (:global, :I, :II, :IV)
 	# ]
-			
+
 	correlations = [
-		cor(TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(rbm, TransitionPaths2024.onehot(response_data_sequences)), responses[target])
+		cor(TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(rbm, TransitionPaths2025.onehot(response_data_sequences)), responses[target])
 		for target = (:I, :II, :IV) for rbm = (:global, :I, :II, :IV)
 	]
 
 	colors = [:gray, :cyan, :orange, :green]
-		
+
 	ax = Makie.Axis(fig[1,4], width=300, height=_sz, xticks=(1:3, ["I", "II", "IV"]), ylabel="Experimental response corr.", xgridvisible=false, ygridvisible=false)
 	Makie.barplot!(ax, cat, correlations; dodge=grp, color=colors[grp], dodge_gap=0.05, width=0.9)
 	Makie.hlines!(ax, 0.0; color=:black, linestyle=:dash)
@@ -2538,23 +2538,23 @@ let fig = Makie.Figure()
 	elements = [Makie.PolyElement(; polycolor = colors[j]) for j = 1:4]
 	Makie.Legend(fig[1,5], elements, labels; framed=false)
 
-	
-	response_data_v2_sequences = TransitionPaths2024.Exp_20240703_sequences().sequences[
-		indexin(TransitionPaths2024.response_data_all_v2_20240708().name, TransitionPaths2024.Exp_20240703_sequences().names)
+
+	response_data_v2_sequences = TransitionPaths2025.Exp_20240703_sequences().sequences[
+		indexin(TransitionPaths2025.response_data_all_v2_20240708().name, TransitionPaths2025.Exp_20240703_sequences().names)
 	]
-	rbm_log_likelihoods_v2 = TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(response_data_v2_sequences))
-	
+	rbm_log_likelihoods_v2 = TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(response_data_v2_sequences))
+
 	ax = Makie.Axis(fig[2,4], width=300, height=_sz, xlabel=L"P_{\mathrm{RBM}}(\text{global})", ylabel="Frequency", xgridvisible=false, ygridvisible=false)
-	Makie.hist!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419())); normalization=:pdf, bins=-90:5:10, color=(:green, 0.3), label="MSA")
-	Makie.stephist!(ax, rbm_log_likelihoods_v2[TransitionPaths2024.response_data_all_v2_20240708().type .== "Natural"], color=:green, label="Natural", normalization=:pdf, bins=-90:5:10, linewidth=4)
-	Makie.stephist!(ax, rbm_log_likelihoods_v2[TransitionPaths2024.response_data_all_v2_20240708().type .== "Designed"], color=:blue, label="Designed", normalization=:pdf, bins=-90:5:10, linewidth=4)
-	Makie.stephist!(ax, rbm_log_likelihoods_v2[TransitionPaths2024.response_data_all_v2_20240708().type .== "Shuffled"], color=:red, label="Shuffled", normalization=:pdf, bins=-90:5:10, linewidth=4)
+	Makie.hist!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419())); normalization=:pdf, bins=-90:5:10, color=(:green, 0.3), label="MSA")
+	Makie.stephist!(ax, rbm_log_likelihoods_v2[TransitionPaths2025.response_data_all_v2_20240708().type .== "Natural"], color=:green, label="Natural", normalization=:pdf, bins=-90:5:10, linewidth=4)
+	Makie.stephist!(ax, rbm_log_likelihoods_v2[TransitionPaths2025.response_data_all_v2_20240708().type .== "Designed"], color=:blue, label="Designed", normalization=:pdf, bins=-90:5:10, linewidth=4)
+	Makie.stephist!(ax, rbm_log_likelihoods_v2[TransitionPaths2025.response_data_all_v2_20240708().type .== "Shuffled"], color=:red, label="Shuffled", normalization=:pdf, bins=-90:5:10, linewidth=4)
 	Makie.xlims!(ax, -90, 0)
 	Makie.ylims!(ax, 0, 0.1)
 	Makie.axislegend(ax; position=:lt, framevisible=false)
 
 	Makie.resize_to_layout!(fig)
-	#Makie.save("/DATA-SSD/cossio/projects/2024/Transition_Paths/TransitionPaths2024.jl/figures/Fig5.pdf", fig)
+	#Makie.save("/DATA-SSD/cossio/projects/2024/Transition_Paths/TransitionPaths2025.jl/figures/Fig5.pdf", fig)
 	fig
 end
 
@@ -2569,35 +2569,35 @@ let fig = Makie.Figure()
 	for (class, color) = zip((:I, :II, :IV), _class_scatter_colors)
 		Makie.scatter!(
 			ax,
-			-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419()))[38, msa_local_rbm_class_prediction .== class],
-			 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419()))[36, msa_local_rbm_class_prediction .== class];
+			-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419()))[38, msa_local_rbm_class_prediction .== class],
+			 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419()))[36, msa_local_rbm_class_prediction .== class];
 			color=(color, 0.5), markersize=4
 		)
 	end
 
-	sampled_path = unique(TransitionPaths2024.sampled_path_1to2rep2_20240703())
-	path_response_data = TransitionPaths2024.response_data_path_1to2rep2_20240703()
-	probed_seqs = TransitionPaths2024.Exp_20240703_sequences().sequences[indexin(path_response_data.ww_names, TransitionPaths2024.Exp_20240703_sequences().names)]
+	sampled_path = unique(TransitionPaths2025.sampled_path_1to2rep2_20240703())
+	path_response_data = TransitionPaths2025.response_data_path_1to2rep2_20240703()
+	probed_seqs = TransitionPaths2025.Exp_20240703_sequences().sequences[indexin(path_response_data.ww_names, TransitionPaths2025.Exp_20240703_sequences().names)]
 	probed_seqs_idx::Vector{Int} = indexin(probed_seqs, sampled_path)
-	
-	Makie.scatterlines!(ax, 
-		-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[38, :],
-		 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[36, :];
+
+	Makie.scatterlines!(ax,
+		-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[38, :],
+		 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[36, :];
 		color=:black
 	)
 
-	Makie.scatter!(ax, 
-		-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(probed_seqs))[38, :],
-		 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(probed_seqs))[36, :];
+	Makie.scatter!(ax,
+		-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(probed_seqs))[38, :],
+		 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(probed_seqs))[36, :];
 		color=:red, markersize=10
 	)
-	
+
 	Makie.arrows!(ax,
-		-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[38, 1:1] .+ 0.35,
-		 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[36, 1:1] .- 0.35,
+		-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[38, 1:1] .+ 0.35,
+		 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[36, 1:1] .- 0.35,
 		[-0.15], [0.15]; linewidth=2, color=:gray, arrowsize=10
 	)
-	
+
 	Makie.xlims!(ax, -4.5, 2)
 	Makie.ylims!(ax, -7, 3)
 
@@ -2614,25 +2614,25 @@ let fig = Makie.Figure()
 	Makie.ylims!(ax, -0.1, 3)
 
 	ax = Makie.Axis(fig[1,2][1,1]; width=300, height=100, xgridvisible=false, ygridvisible=false, ylabel=L"\log P_\mathrm{RBM}(\text{global})")
-	Makie.scatterlines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(sampled_path)); color=:black)
-	Makie.scatter!(ax, probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(probed_seqs)); color=:red, markersize=10, label="Designed")
+	Makie.scatterlines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(sampled_path)); color=:black)
+	Makie.scatter!(ax, probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(probed_seqs)); color=:red, markersize=10, label="Designed")
 	Makie.hidexdecorations!(ax)
 
 	ax = Makie.Axis(fig[1,2][2,1]; width=300, height=100, xgridvisible=false, ygridvisible=false, ylabel=L"\log P_\mathrm{RBM}(\text{I})")
-	Makie.scatterlines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2024.onehot(sampled_path)); color=:black, label="Designed")
-	Makie.scatter!(ax, probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2024.onehot(probed_seqs)); color=:red, markersize=10)
+	Makie.scatterlines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2025.onehot(sampled_path)); color=:black, label="Designed")
+	Makie.scatter!(ax, probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2025.onehot(probed_seqs)); color=:red, markersize=10)
 	Makie.hidexdecorations!(ax)
 	Makie.axislegend(ax; position=:lb, framevisible=false)
 
 	ax = Makie.Axis(fig[1,2][3,1]; width=300, height=100, xgridvisible=false, ygridvisible=false, ylabel=L"\log P_\mathrm{RBM}(\text{II})")
-	Makie.scatterlines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(sampled_path)); color=:black)
-	Makie.scatter!(ax, probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(probed_seqs)); color=:red, markersize=10)
+	Makie.scatterlines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(sampled_path)); color=:black)
+	Makie.scatter!(ax, probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(probed_seqs)); color=:red, markersize=10)
 	Makie.hidexdecorations!(ax)
 
 	ax = Makie.Axis(fig[1,2][4,1]; width=300, height=30, xgridvisible=false, ygridvisible=false, yscale=log10, xticks=0:5:50)
 	Makie.hidedecorations!(ax)
 	Makie.hidespines!(ax)
-	
+
 	ax = Makie.Axis(fig[1,2][5,1]; width=300, height=100, xgridvisible=false, ygridvisible=false, ylabel="I/II rel. resp.", yscale=log10, xticks=0:5:50)
 	Makie.hspan!(ax, 1, 1e6; color=(:cyan, 0.3))
 	Makie.hspan!(ax, 1e-6, 1; color=(:darkorange, 0.3))
@@ -2641,7 +2641,7 @@ let fig = Makie.Figure()
 	Makie.ylims!(ax, 1e-3, 1e3)
 
 	Makie.resize_to_layout!(fig)
-	#Makie.save("/DATA-SSD/cossio/projects/2024/Transition_Paths/TransitionPaths2024.jl/figures/SI_Fig_1.pdf", fig)
+	#Makie.save("/DATA-SSD/cossio/projects/2024/Transition_Paths/TransitionPaths2025.jl/figures/SI_Fig_1.pdf", fig)
 	fig
 end
 
@@ -2656,35 +2656,35 @@ let fig = Makie.Figure()
 	for (class, color) = zip((:I, :II, :IV), _class_scatter_colors)
 		Makie.scatter!(
 			ax,
-			-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419()))[38, msa_local_rbm_class_prediction .== class],
-			 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(TransitionPaths2024.Eugenio_MSA_20230419()))[36, msa_local_rbm_class_prediction .== class];
+			-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419()))[38, msa_local_rbm_class_prediction .== class],
+			 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(TransitionPaths2025.Eugenio_MSA_20230419()))[36, msa_local_rbm_class_prediction .== class];
 			color=(color, 0.5), markersize=4
 		)
 	end
 
-	sampled_path = unique(TransitionPaths2024.sampled_path_1to4direct_20240703())
-	path_response_data = TransitionPaths2024.response_data_path_1to4direct_20240703()
-	probed_seqs = TransitionPaths2024.Exp_20240703_sequences().sequences[indexin(path_response_data.ww_names, TransitionPaths2024.Exp_20240703_sequences().names)]
+	sampled_path = unique(TransitionPaths2025.sampled_path_1to4direct_20240703())
+	path_response_data = TransitionPaths2025.response_data_path_1to4direct_20240703()
+	probed_seqs = TransitionPaths2025.Exp_20240703_sequences().sequences[indexin(path_response_data.ww_names, TransitionPaths2025.Exp_20240703_sequences().names)]
 	probed_seqs_idx::Vector{Int} = indexin(probed_seqs, sampled_path)
 
-	Makie.scatterlines!(ax, 
-		-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[38, :],
-		 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[36, :];
+	Makie.scatterlines!(ax,
+		-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[38, :],
+		 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[36, :];
 		color=:black
 	)
 
-	Makie.scatter!(ax, 
-		-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(probed_seqs))[38, :],
-		 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(probed_seqs))[36, :];
+	Makie.scatter!(ax,
+		-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(probed_seqs))[38, :],
+		 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(probed_seqs))[36, :];
 		color=:red, markersize=10
 	)
-	
+
 	Makie.arrows!(ax,
-		-inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[38, 1:1] .+ 0.35,
-		 inputs_h_from_v(TransitionPaths2024.Eugenio_RBM_20230419(:global), TransitionPaths2024.onehot(sampled_path))[36, 1:1] .- 0.35,
+		-inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[38, 1:1] .+ 0.35,
+		 inputs_h_from_v(TransitionPaths2025.Eugenio_RBM_20230419(:global), TransitionPaths2025.onehot(sampled_path))[36, 1:1] .- 0.35,
 		[-0.15], [0.15]; linewidth=2, color=:gray, arrowsize=10
 	)
-	
+
 	Makie.xlims!(ax, -4.5, 2)
 	Makie.ylims!(ax, -7, 3)
 
@@ -2701,19 +2701,19 @@ let fig = Makie.Figure()
 	Makie.ylims!(ax, -0.25, 2)
 
 	ax = Makie.Axis(fig[1,2][1,1]; width=300, height=100, xgridvisible=false, ygridvisible=false, ylabel=L"\log P_\mathrm{RBM}(\text{global})")
-	Makie.scatterlines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(sampled_path)); color=:black)
-	Makie.scatter!(ax, probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2024.onehot(probed_seqs)); color=:red, markersize=10, label="Designed")
+	Makie.scatterlines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(sampled_path)); color=:black)
+	Makie.scatter!(ax, probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:global, TransitionPaths2025.onehot(probed_seqs)); color=:red, markersize=10, label="Designed")
 	Makie.hidexdecorations!(ax)
 
 	ax = Makie.Axis(fig[1,2][2,1]; width=300, height=100, xgridvisible=false, ygridvisible=false, ylabel=L"\log P_\mathrm{RBM}(\text{I})")
-	Makie.scatterlines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2024.onehot(sampled_path)); color=:black, label="Designed")
-	Makie.scatter!(ax, probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2024.onehot(probed_seqs)); color=:red, markersize=10)
+	Makie.scatterlines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2025.onehot(sampled_path)); color=:black, label="Designed")
+	Makie.scatter!(ax, probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:I, TransitionPaths2025.onehot(probed_seqs)); color=:red, markersize=10)
 	Makie.hidexdecorations!(ax)
 	Makie.axislegend(ax; position=:lb, framevisible=false)
 
 	ax = Makie.Axis(fig[1,2][3,1]; width=300, height=100, xgridvisible=false, ygridvisible=false, ylabel=L"\log P_\mathrm{RBM}(\text{IV})")
-	Makie.scatterlines!(ax, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(sampled_path)); color=:black)
-	Makie.scatter!(ax, probed_seqs_idx, TransitionPaths2024.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2024.onehot(probed_seqs)); color=:red, markersize=10)
+	Makie.scatterlines!(ax, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(sampled_path)); color=:black)
+	Makie.scatter!(ax, probed_seqs_idx, TransitionPaths2025.Eugenio_RBM_20230419_loglikelihood(:II, TransitionPaths2025.onehot(probed_seqs)); color=:red, markersize=10)
 	Makie.hidexdecorations!(ax)
 
 	rel_response = path_response_data.C1_response ./ path_response_data.C4_response
@@ -2730,7 +2730,7 @@ let fig = Makie.Figure()
 	Makie.ylims!(ax, 1e-3, 5e3)
 
 	Makie.resize_to_layout!(fig)
-	#Makie.save("/DATA-SSD/cossio/projects/2024/Transition_Paths/TransitionPaths2024.jl/figures/SI_Fig_2.pdf", fig)
+	#Makie.save("/DATA-SSD/cossio/projects/2024/Transition_Paths/TransitionPaths2025.jl/figures/SI_Fig_2.pdf", fig)
 	fig
 end
 

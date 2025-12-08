@@ -1,5 +1,5 @@
-using TransitionPaths2024: PF00397_msa_full
-using TransitionPaths2024: PF00397_msa_seed
+using TransitionPaths2025: PF00397_msa_full
+using TransitionPaths2025: PF00397_msa_seed
 using BioSequences: @aa_str
 using BioSequences: LongAA
 using Test: @test
