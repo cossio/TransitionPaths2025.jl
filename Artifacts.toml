@@ -1,0 +1,127 @@
+[20230419_PF00397]
+git-tree-sha1 = "52be92f912172cecaad07537ee5db25b1501bbe2"
+lazy = true
+
+    [[20230419_PF00397.download]]
+    sha256 = "f545005ed5057a8d5ed312cdca35ac1ed294ca9ac72e127e671f52c1813dac9a"
+    url = "https://gist.github.com/cossio/74ef66a10003fc574971c6d3497853d3/raw/52be92f912172cecaad07537ee5db25b1501bbe2.tar.gz"
+
+[20230419_Eugenio]
+git-tree-sha1 = "338b8abdb5932e77e18857aafe9f25c99ee13b03"
+lazy = true
+
+    [[20230419_Eugenio.download]]
+    sha256 = "2c7778a315efe41a8ab09ed82276a8ebedf12776a23be7b6bedb85a68fd1b6e1"
+    url = "https://gist.github.com/cossio/a8b72ecb74df1fec58daccd8ec51421a/raw/338b8abdb5932e77e18857aafe9f25c99ee13b03.tar.gz"
+
+[20230424_Eugenio_Specific_RBMs]
+git-tree-sha1 = "910a954d764db7099255860b00be672acf4613bd"
+lazy = true
+
+    [[20230424_Eugenio_Specific_RBMs.download]]
+    sha256 = "34a9993e350092840a2843e49a96a36909403fffd89cd0b92420321d6e09cd41"
+    url = "https://gist.github.com/cossio/71339094230b6eb60d02affba2ed50d4/raw/910a954d764db7099255860b00be672acf4613bd.tar.gz"
+
+[Eugenio_20230424_Tested_sequences_from_literature]
+git-tree-sha1 = "3f85ce7026bc5ad10a2597aa9f0f9acd645f2a0e"
+lazy = true
+
+    [[Eugenio_20230424_Tested_sequences_from_literature.download]]
+    sha256 = "d383a758229ba79d89c3c7f6a3ab59f67a2e1e13836e2f6eeb8f9233c356ce61"
+    url = "https://gist.github.com/cossio/7750d84ed9e599fa8f8a845b6665094a/raw/3f85ce7026bc5ad10a2597aa9f0f9acd645f2a0e.tar.gz"
+
+[20230425_WW_Hu_2004]
+git-tree-sha1 = "7c0ef1865c57740f0e308539bc913147d2eba5f4"
+lazy = true
+
+    [[20230425_WW_Hu_2004.download]]
+    sha256 = "3259acb898bf0d36a892658dae1b44cfb8643242c1c8afc0726c68a4b2048afc"
+    url = "https://gist.github.com/cossio/aa175ae61254c6beb73c810acba6ac95/raw/7c0ef1865c57740f0e308539bc913147d2eba5f4.tar.gz"
+
+[Eugenio_Probed_Sequences_202306]
+git-tree-sha1 = "f0dfe84c6f20c46718b253e282c23ebf22ce778c"
+lazy = true
+
+    [[Eugenio_Probed_Sequences_202306.download]]
+    sha256 = "864439c9c6ee360cf322fc1d74d19f650aadc4773abfe211c41166ca1a3a81e5"
+    url = "https://gist.github.com/cossio/70565ae54a6568d770480781041db17b/raw/f0dfe84c6f20c46718b253e282c23ebf22ce778c.tar.gz"
+
+[Experiments_2307]
+git-tree-sha1 = "ea2b603b9f5f9e85217b5e602d0963a02b541b1c"
+lazy = true
+
+    [[Experiments_2307.download]]
+    sha256 = "7cb9b8e928a0edd752db0ab31f032729889fdcc4d56ae5fe915d08f4ffbf88a3"
+    url = "https://gist.github.com/cossio/7e1c7a6cdc930cbc2b5dfe23a612efbf/raw/ea2b603b9f5f9e85217b5e602d0963a02b541b1c.tar.gz"
+
+[Probed_Sequences_20231021]
+git-tree-sha1 = "6ce727ee8856a1b83d19b9abece1403d7e8c51c7"
+lazy = true
+
+    [[Probed_Sequences_20231021.download]]
+    sha256 = "fe5a8e69ed07ddb2d1a445fd12602bdf03e8d3bf87c2f5ec8779c882483edbce"
+    url = "https://gist.github.com/cossio/8210d48e623810c6325f84a69d41b731/raw/6ce727ee8856a1b83d19b9abece1403d7e8c51c7.tar.gz"
+
+[Aligned_Probed_Sequences_20240703]
+git-tree-sha1 = "da2b69ee1b69965f0deb8b502e287ccd218f2011"
+lazy = true
+
+    [[Aligned_Probed_Sequences_20240703.download]]
+    sha256 = "3f9b3dfc16d4afa5ad760dc8018463d028eef05e5ebf97a6a110cf360d8eeaa2"
+    url = "https://gist.github.com/cossio/bc51d7af76e8f628c1145eaef4c95eb0/raw/da2b69ee1b69965f0deb8b502e287ccd218f2011.tar.gz"
+
+[Experimental_Responses_20240703]
+git-tree-sha1 = "973ec2efec9a95211fe13b4836a90843deea318f"
+lazy = true
+
+    [[Experimental_Responses_20240703.download]]
+    sha256 = "33accfe08edfdfa9d6f23653f3b7f1a05f1aac3dc57f970881186e2d2025a927"
+    url = "https://gist.github.com/cossio/68bc35684d15cf510511041c87b3ef2b/raw/973ec2efec9a95211fe13b4836a90843deea318f.tar.gz"
+
+[Probed_Sequences_Eeff_from_Python_20240703]
+git-tree-sha1 = "5f6628110cae19be846f5827fa9c349f145ddbf6"
+lazy = true
+
+    [[Probed_Sequences_Eeff_from_Python_20240703.download]]
+    sha256 = "c5b470bc12c6cb11a49eedbc1e91b2a04d2511a850eef32df9ff6eb9e21f2149"
+    url = "https://gist.github.com/cossio/fcbcb486ec71a4e6df9819f15c320b97/raw/5f6628110cae19be846f5827fa9c349f145ddbf6.tar.gz"
+
+[Transition_Paths_Eugenio_Repo_20240704]
+git-tree-sha1 = "0175daff5c7312a38f9e129bf8a29fb446fc827a"
+lazy = true
+
+    [[Transition_Paths_Eugenio_Repo_20240704.download]]
+    sha256 = "0fcf763227124e4b889ba433666301187afcdd7a9b4c2c537602efe16a9e75fe"
+    url = "https://gist.github.com/cossio/dcc5bc0e6e6d4ac8e25fc0691616375e/raw/0175daff5c7312a38f9e129bf8a29fb446fc827a.tar.gz"
+
+[Response_Data_1to4_20240708]
+git-tree-sha1 = "b56b24fee34fef02d277122c4f80431949598a15"
+lazy = true
+
+    [[Response_Data_1to4_20240708.download]]
+    sha256 = "d3bd80137cda85bb57538cc59c620d8a1b37327def375283b14ded2614fa94b7"
+    url = "https://gist.github.com/cossio/460f8b421a62af2486af254b81d8bf24/raw/b56b24fee34fef02d277122c4f80431949598a15.tar.gz"
+
+[Response_Data_All_20240708]
+git-tree-sha1 = "ca67b2a5918766c572661b9ed014e9ee83b90796"
+lazy = true
+
+    [[Response_Data_All_20240708.download]]
+    sha256 = "00fed87778851c2ec82b5c52dc0538a108b66dfd23288828b5a30b4f7466af72"
+    url = "https://gist.github.com/cossio/49fd4baa89269eee5c606d14694f30d9/raw/ca67b2a5918766c572661b9ed014e9ee83b90796.tar.gz"
+
+[2024-12-13_Sequences]
+git-tree-sha1 = "b48cf5d637a1926860da0e837d9a8988886280fd"
+lazy = true
+
+    [[2024-12-13_Sequences.download]]
+    sha256 = "e01c31debe668fead3dab89615d987e0c22ac3977ed614a9f8288785ab4ec0d1"
+    url = "https://gist.github.com/cossio/2f7864fadc56da532e20e3e313106de6/raw/b48cf5d637a1926860da0e837d9a8988886280fd.tar.gz"
+
+[2025-05-31_New_tested_sequences]
+git-tree-sha1 = "6bc2b522d81682462aee14a572a76a32c94b41ce"
+lazy = true
+
+    [[2025-05-31_New_tested_sequences.download]]
+    sha256 = "b248aec4db09f8fd6bf53a4d848595bd160981a94385e5e23c215d0896d78962"
+    url = "https://gist.github.com/jfdcd/b7cfef58b60a456d123c812aa6896331/raw/6bc2b522d81682462aee14a572a76a32c94b41ce.tar.gz"
