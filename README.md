@@ -6,4 +6,5 @@ This repository hosts the Julia code to reproduce Figures 2-5 (and some of the S
 
 ## Scripts and data used to perform ASR reconstruction on WW domains
 
+For the ASR reconstruction, please refer to the following repository:
 https://github.com/Pigui1/WW_domain_ASR/tree/main
