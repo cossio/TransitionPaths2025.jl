@@ -30,25 +30,37 @@ const PANEL_TEXT_LAST = colorant"#008000"
     alignment_panel_fills(column)
 
 Fill colour of every cell of one alignment column, following the rule used in
-Fig. 2B/3B/4B: a column where nothing changes is grey; otherwise a residue
-equal to the one of the first (resp. last) sequence takes the first (resp.
-last) colour, a residue repeating the one above keeps its colour, and any new
-residue takes the next intermediate colour.
+Fig. 2B/3B/4B. A column where nothing changes is grey. Otherwise the cells
+that still carry the residue of the first sequence take the first colour, the
+cells that have already settled on the residue of the last sequence take the
+last colour, and everything in between takes intermediate colours, a new one
+each time the residue changes.
+
+Note that "settled" matters: a residue that reaches the final one, leaves it
+again and only later comes back is an intermediate, not an endpoint. This is
+the case of site 12 in Fig. 4B, where the column goes `L → N → R → N`: the
+first `N` is an intermediate (it is left again for `R`), and only the second
+one is the final residue.
 """
 function alignment_panel_fills(column::AbstractVector{Char})
+    m = length(column)
     if allequal(column)
-        return fill(RGBf(PANEL_FILL_INVARIANT), length(column))
+        return fill(RGBf(PANEL_FILL_INVARIANT), m)
     end
 
-    fills = Vector{RGBf}(undef, length(column))
+    # rows that have not mutated yet, and rows already fixed on the final residue
+    initial = something(findfirst(!=(first(column)), column), m + 1) - 1
+    final = something(findlast(!=(last(column)), column), 0) + 1
+
+    fills = Vector{RGBf}(undef, m)
     intermediates = 0
     for (i, aa) = enumerate(column)
-        if aa == first(column)
+        if i ≤ initial
             fills[i] = PANEL_FILL_FIRST
-        elseif aa == last(column)
+        elseif i ≥ final
             fills[i] = PANEL_FILL_LAST
         elseif i > 1 && aa == column[i - 1]
-            fills[i] = fills[i - 1]
+            fills[i] = fills[i - 1]   # same residue as the row above: same colour
         else
             intermediates += 1
             fills[i] = PANEL_FILL_INTERMEDIATE[mod1(intermediates, length(PANEL_FILL_INTERMEDIATE))]
@@ -59,6 +71,25 @@ end
 
 # "38" -> "₃₈", used to label the weight strips
 _subscript(n::Integer) = map(c -> Char(0x2080 + (c - '0')), collect(string(n))) |> String
+
+"""
+Hidden units of the global RBM that carry the specificity signal, in the order
+in which the paper refers to them: unit 38 is `#1` (the ``I_1`` axis) and unit
+36 is `#2` (the ``I_2`` axis).
+"""
+const PAPER_HIDDEN_UNITS = (38, 36)
+
+"""
+    paper_hidden_unit_label(unit)
+
+Label of the `|w|²` strip of hidden `unit`, using the numbering of the paper
+(`|w₁|²` for unit 38, `|w₂|²` for unit 36) rather than the index the unit has
+in the RBM.
+"""
+function paper_hidden_unit_label(unit::Integer)
+    i = findfirst(==(unit), PAPER_HIDDEN_UNITS)
+    return isnothing(i) ? "|w$(_subscript(unit))|²" : "|w$(_subscript(i))|²"
+end
 
 """
     weight_strip_values(unit; rbm = Eugenio_RBM_20230419(:global))
@@ -83,7 +114,8 @@ Keyword arguments:
     `Index` column. Use [`path_index`](@ref) to compute it.
   * `weight_units`: hidden units whose `|w|²` profile is drawn underneath, or
     `nothing` for no strips. Defaults to the two specificity-related units.
-  * `strip_labels`: labels of those strips; defaults to `|w²₃₈|`, `|w²₃₆|`.
+  * `strip_labels`: labels of those strips; defaults to the paper's numbering
+    of the hidden units, `|w₁|²` for unit 38 and `|w₂|²` for unit 36.
   * `rbm`: RBM providing the weights.
   * `cell`, `fontsize`: size of a residue cell in points, and text size.
 """
@@ -112,7 +144,7 @@ function alignment_panel(
 
     units = isnothing(weight_units) ? () : Tuple(weight_units)
     strips = [weight_strip_values(u; rbm = something(rbm, Eugenio_RBM_20230419(:global))) for u = units]
-    strip_names = isnothing(strip_labels) ? ["|w²$(_subscript(u))|" for u = units] : strip_labels
+    strip_names = isnothing(strip_labels) ? [paper_hidden_unit_label(u) for u = units] : strip_labels
 
     # Layout, in cell units. Row i covers y ∈ [i-1, i]; site j covers x ∈ [j-1, j].
     # The label columns live at negative x, the strips below the last row.
