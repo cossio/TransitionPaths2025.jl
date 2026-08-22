@@ -1,6 +1,7 @@
 module TransitionPaths2025
 
 import CairoMakie
+import ColorSchemes
 import CSV
 import DCAUtils
 import FASTX
@@ -55,5 +56,6 @@ include("paths_20240703.jl")
 
 include("contacts.jl")
 include("path_aligned_plots.jl")
+include("alignment_panels.jl")
 
 end # module
