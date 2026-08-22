@@ -1,0 +1,8 @@
+# matplotlib >= 3.11 links its ft2font extension against libraqm/libharfbuzz,
+# which requires harfbuzz >= 14. When running under Julia, an older
+# libharfbuzz.so.0 from HarfBuzz_jll (loaded via CairoMakie) is already in the
+# process, so libraqm binds to it and fails with
+# `undefined symbol: hb_ft_font_get_ft_face`. matplotlib 3.10 links only
+# FreeType, avoiding the clash.
+[deps]
+matplotlib-base = "<3.11"
