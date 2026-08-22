@@ -3,6 +3,14 @@ using Test: @test
 
 const TP = TransitionPaths2025
 
+# the fills are the ones of the hand-made panels (checked cell by cell against them)
+rgb255(c) = round.(Int, 255 .* (Float64(c.r), Float64(c.g), Float64(c.b)))
+@test rgb255(TP.PANEL_FILL_INVARIANT) == (217, 217, 217)          # D9D9D9
+@test rgb255(TP.PANEL_FILL_FIRST) == (255, 199, 206)              # FFC7CE
+@test rgb255(TP.PANEL_FILL_LAST) == (198, 239, 206)               # C6EFCE
+@test rgb255(TP.PANEL_FILL_INTERMEDIATE[1]) == (189, 215, 238)    # BDD7EE
+@test rgb255(TP.PANEL_FILL_INTERMEDIATE[2]) == (255, 230, 153)    # FFE699
+
 # a column that never changes is fully grey
 @test all(==(TP.PANEL_FILL_INVARIANT), TP.alignment_panel_fills(collect("AAAA")))
 

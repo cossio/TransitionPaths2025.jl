@@ -20,7 +20,7 @@ const PANEL_FILL_INVARIANT = colorant"#D9D9D9"   # residue conserved along the p
 const PANEL_FILL_FIRST = colorant"#FFC7CE"       # residue as in the first sequence
 const PANEL_FILL_LAST = colorant"#C6EFCE"        # residue as in the last sequence
 const PANEL_FILL_INTERMEDIATE = (                # neither endpoint, in order of appearance
-    colorant"#BDD7ED", colorant"#FFEB84", colorant"#D9C2E9", colorant"#F8CBAD"
+    colorant"#BDD7EE", colorant"#FFE699", colorant"#D9C2E9", colorant"#F8CBAD"
 )
 
 const PANEL_TEXT_FIRST = colorant"#FF0000"
