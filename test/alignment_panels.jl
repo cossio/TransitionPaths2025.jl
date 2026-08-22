@@ -14,6 +14,7 @@ rgb255(c) = round.(Int, 255 .* (Float64(c.r), Float64(c.g), Float64(c.b)))
 @test rgb255(TP.PANEL_TEXT_FIRST) == (156, 0, 6)                  # 9C0006
 @test rgb255(TP.PANEL_TEXT_LAST) == (0, 97, 0)                    # 006100
 @test rgb255(TP.PANEL_TEXT_OTHER) == (0, 0, 0)
+@test rgb255(TP.PANEL_DOT) == (238, 34, 12)                       # EE220C
 
 # a letter takes the colour of the class of its cell, in every row
 @test TP.alignment_panel_text_color(TP.RGBf(TP.PANEL_FILL_FIRST)) == TP.PANEL_TEXT_FIRST

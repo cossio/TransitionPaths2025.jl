@@ -23,6 +23,8 @@ const PANEL_FILL_INTERMEDIATE = (                # neither endpoint, in order of
     colorant"#BDD7EE", colorant"#FFE699", colorant"#D9C2E9", colorant"#F8CBAD"
 )
 
+const PANEL_DOT = colorant"#EE220C"          # dot marking a probed sequence
+
 const PANEL_TEXT_FIRST = colorant"#9C0006"   # residue of the first sequence
 const PANEL_TEXT_LAST = colorant"#006100"    # residue of the last sequence
 const PANEL_TEXT_OTHER = colorant"#000000"   # conserved, or an intermediate residue
@@ -131,6 +133,8 @@ Keyword arguments:
     `nothing` for no strips. Defaults to the two specificity-related units.
   * `strip_labels`: labels of those strips; defaults to the paper's numbering
     of the hidden units, `|w₁|²` for unit 38 and `|w₂|²` for unit 36.
+  * `row_dots`: draw the red dot that marks each probed sequence, left of its
+    `Seq#` label, as in the panels of the paper.
   * `rbm`: RBM providing the weights.
   * `cell`, `fontsize`: size of a residue cell in points, and text size.
 """
@@ -140,6 +144,7 @@ function alignment_panel(
     index::Union{Nothing,AbstractVector} = nothing,
     weight_units = (38, 36),
     strip_labels::Union{Nothing,AbstractVector} = nothing,
+    row_dots::Bool = true,
     rbm = nothing,
     cell::Real = 20,
     fontsize::Real = 11,
@@ -164,7 +169,11 @@ function alignment_panel(
     # The label columns live at negative x, the strips below the last row.
     x_label = isnothing(labels) ? 0.0 : -2.7
     x_index = isnothing(index) ? 0.0 : -0.9
-    x_left = min(isnothing(labels) ? 0.0 : x_label - 1.3, isnothing(index) ? 0.0 : x_index - 0.7)
+    x_dot = x_label - 1.05            # dot marking each probed sequence
+    x_left = min(
+        isnothing(labels) ? 0.0 : (row_dots ? x_dot - 0.45 : x_label - 1.3),
+        isnothing(index) ? 0.0 : x_index - 0.7
+    )
     strip_h = 0.55                    # height of one |w|² strip
     strip_gap = 0.25
     y_strip0 = m + 0.5                # first strip starts here
@@ -213,6 +222,12 @@ function alignment_panel(
         Makie.text!(ax, "Seq#"; position = (x_label, -0.35), align = (:center, :center), fontsize = header_fontsize)
         for i = 1:m
             Makie.text!(ax, string(labels[i]); position = (x_label, i - 0.5), align = (:center, :center), fontsize)
+        end
+        if row_dots
+            Makie.scatter!(
+                ax, fill(x_dot, m), (1:m) .- 0.5;
+                color = PANEL_DOT, markersize = 0.2cell, strokewidth = 0
+            )
         end
     end
     if !isnothing(index)
