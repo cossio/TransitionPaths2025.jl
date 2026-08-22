@@ -135,6 +135,7 @@ Keyword arguments:
     of the hidden units, `|w₁|²` for unit 38 and `|w₂|²` for unit 36.
   * `row_dots`: draw the red dot that marks each probed sequence, left of its
     `Seq#` label, as in the panels of the paper.
+  * `dot_size`: diameter of that dot, as a fraction of the height of a row.
   * `rbm`: RBM providing the weights.
   * `cell`, `fontsize`: size of a residue cell in points, and text size.
 """
@@ -145,6 +146,7 @@ function alignment_panel(
     weight_units = (38, 36),
     strip_labels::Union{Nothing,AbstractVector} = nothing,
     row_dots::Bool = true,
+    dot_size::Real = 0.28,
     rbm = nothing,
     cell::Real = 20,
     fontsize::Real = 11,
@@ -226,7 +228,7 @@ function alignment_panel(
         if row_dots
             Makie.scatter!(
                 ax, fill(x_dot, m), (1:m) .- 0.5;
-                color = PANEL_DOT, markersize = 0.2cell, strokewidth = 0
+                color = PANEL_DOT, markersize = dot_size * cell, strokewidth = 0
             )
         end
     end
