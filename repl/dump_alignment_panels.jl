@@ -4,9 +4,9 @@
 #     julia --project=. repl/dump_alignment_panels.jl > panels.tsv
 #
 # One line per row of each panel:
-#     panel <TAB> Seq# <TAB> Index <TAB> letter:fill × 31
+#     panel <TAB> Seq# <TAB> Index <TAB> letter:fill:textcolour × 31
 # where `letter` is the residue actually drawn (empty when the panel leaves the
-# cell blank) and `fill` is the cell colour as a hex string.
+# cell blank), and `fill` / `textcolour` are hex strings.
 
 import TransitionPaths2025 as TP
 
@@ -21,7 +21,9 @@ function dump_panel(name, seq_ids, path)
         cells = String[]
         for j = 1:n
             drawn = (i == 1 || i == m || chars[i, j] ≠ chars[i - 1, j]) ? string(chars[i, j]) : ""
-            push!(cells, drawn * ":" * uppercase(hex(fills[j][i])))
+            fill = fills[j][i]
+            text = isempty(drawn) ? "" : uppercase(hex(TP.alignment_panel_text_color(fill)))
+            push!(cells, join((drawn, uppercase(hex(fill)), text), ":"))
         end
         println(name, "\t", seq_ids[i], "\t", index[i], "\t", join(cells, "\t"))
     end

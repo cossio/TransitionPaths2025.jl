@@ -11,6 +11,16 @@ rgb255(c) = round.(Int, 255 .* (Float64(c.r), Float64(c.g), Float64(c.b)))
 @test rgb255(TP.PANEL_FILL_INTERMEDIATE[1]) == (189, 215, 238)    # BDD7EE
 @test rgb255(TP.PANEL_FILL_INTERMEDIATE[2]) == (255, 230, 153)    # FFE699
 
+@test rgb255(TP.PANEL_TEXT_FIRST) == (156, 0, 6)                  # 9C0006
+@test rgb255(TP.PANEL_TEXT_LAST) == (0, 97, 0)                    # 006100
+@test rgb255(TP.PANEL_TEXT_OTHER) == (0, 0, 0)
+
+# a letter takes the colour of the class of its cell, in every row
+@test TP.alignment_panel_text_color(TP.RGBf(TP.PANEL_FILL_FIRST)) == TP.PANEL_TEXT_FIRST
+@test TP.alignment_panel_text_color(TP.RGBf(TP.PANEL_FILL_LAST)) == TP.PANEL_TEXT_LAST
+@test TP.alignment_panel_text_color(TP.RGBf(TP.PANEL_FILL_INVARIANT)) == TP.PANEL_TEXT_OTHER
+@test TP.alignment_panel_text_color(TP.RGBf(TP.PANEL_FILL_INTERMEDIATE[1])) == TP.PANEL_TEXT_OTHER
+
 # a column that never changes is fully grey
 @test all(==(TP.PANEL_FILL_INVARIANT), TP.alignment_panel_fills(collect("AAAA")))
 

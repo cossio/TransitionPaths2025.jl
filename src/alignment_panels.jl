@@ -23,8 +23,23 @@ const PANEL_FILL_INTERMEDIATE = (                # neither endpoint, in order of
     colorant"#BDD7EE", colorant"#FFE699", colorant"#D9C2E9", colorant"#F8CBAD"
 )
 
-const PANEL_TEXT_FIRST = colorant"#FF0000"
-const PANEL_TEXT_LAST = colorant"#008000"
+const PANEL_TEXT_FIRST = colorant"#9C0006"   # residue of the first sequence
+const PANEL_TEXT_LAST = colorant"#006100"    # residue of the last sequence
+const PANEL_TEXT_OTHER = colorant"#000000"   # conserved, or an intermediate residue
+
+"""
+    alignment_panel_text_color(fill)
+
+Colour of a residue, given the colour of its cell: residues of the two
+endpoints are written in dark red and dark green respectively, everything else
+in black. This applies to the intermediate rows too, where a residue that has
+already reached its final value is written in green.
+"""
+function alignment_panel_text_color(fill)
+    fill == RGBf(PANEL_FILL_FIRST) && return PANEL_TEXT_FIRST
+    fill == RGBf(PANEL_FILL_LAST) && return PANEL_TEXT_LAST
+    return PANEL_TEXT_OTHER
+end
 
 """
     alignment_panel_fills(column)
@@ -140,7 +155,6 @@ function alignment_panel(
 
     col_fills = [alignment_panel_fills(chars[:, j]) for j = 1:n]
     fills = [col_fills[j][i] for i = 1:m, j = 1:n]
-    variable = [!allequal(chars[:, j]) for j = 1:n]
 
     units = isnothing(weight_units) ? () : Tuple(weight_units)
     strips = [weight_strip_values(u; rbm = something(rbm, Eugenio_RBM_20230419(:global))) for u = units]
@@ -184,18 +198,13 @@ function alignment_panel(
 
     # residue letters: endpoints in full, intermediates only where they mutate
     for j = 1:n, i = 1:m
-        if i == 1
-            color = variable[j] ? PANEL_TEXT_FIRST : :black
-        elseif i == m
-            color = variable[j] ? PANEL_TEXT_LAST : :black
-        elseif chars[i, j] == chars[i - 1, j]
-            continue
-        else
-            color = :black
+        if 1 < i < m && chars[i, j] == chars[i - 1, j]
+            continue    # no mutation here: leave the cell blank
         end
         Makie.text!(
             ax, string(chars[i, j]); position = (j - 0.5, i - 0.5),
-            align = (:center, :center), fontsize, color
+            align = (:center, :center), fontsize,
+            color = alignment_panel_text_color(fills[i, j])
         )
     end
 
@@ -280,7 +289,10 @@ end
 # Sequences probed along each path, in path order, as shown in the panels.
 const FIG2B_SEQ_IDS = ["Seq02", "Seq36", "Seq37", "Seq38", "Seq39", "Seq40", "Seq41", "Seq42"]
 const FIG3B_SEQ_IDS = ["Seq02", "Seq49", "Seq50", "Seq51", "Seq47", "Seq52", "Seq53", "Seq54", "Seq35", "Seq48", "Seq27"]
-const FIG4B_SEQ_IDS = ["Seq02", "Seq59", "Seq49", "Seq60", "Seq61", "Seq84", "Seq85", "Seq86", "Seq87", "Seq62", "Seq63", "Seq64"]  # Seq84-87 only in the 2025-05-31 batch
+# Seq84-Seq87 exist only in the 2025-05-31 batch. The last sequence is named
+# Seq14 after the supplementary tables of the paper (the batch table of the
+# spreadsheet calls the same molecule, WW84, Seq64).
+const FIG4B_SEQ_IDS = ["Seq02", "Seq59", "Seq49", "Seq60", "Seq61", "Seq84", "Seq85", "Seq86", "Seq87", "Seq62", "Seq63", "Seq14"]
 
 """
     path_alignment_panel(seq_ids, path; sort_by_path = false, kwargs...)
