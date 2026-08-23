@@ -4,9 +4,6 @@ All notable changes to this project will be documented in this file. The format 
 
 ## Unreleased
 
-- Declare the test environment as a Pkg `[workspace]` member, so test deps resolve in a single shared manifest.
-- Require Julia 1.12 (needed for `[workspace]` support); CI now tests on 1.12.
-
 ## v0.1.0
 
 - Init package.
