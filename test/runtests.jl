@@ -10,3 +10,4 @@ module pfam_tests include("pfam.jl") end
 module hamming_tests include("hamming.jl") end
 module hu2004_tests include("hu2004.jl") end
 module exp2307_tests include("experiments/202307.jl") end
+module alignment_panels_tests include("alignment_panels.jl") end
