@@ -15,13 +15,6 @@ updates:
   # Julia packages: all bumps grouped into a single PR, merged manually after
   # review. Kept separate from Actions by construction: a group cannot span
   # ecosystems.
-  #
-  # Only the root directory is listed: the root Project.toml declares a
-  # [workspace] including test/, so Dependabot discovers test/Project.toml
-  # from here and updates its existing compat entries without synthesizing
-  # compat for deps that are bounded in the root Project.toml. Listing
-  # "/test" as its own directory would instead treat it as a standalone
-  # project and add compat entries for every dep.
   - package-ecosystem: "julia"
     directory: "/"
     schedule:
