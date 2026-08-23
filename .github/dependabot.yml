@@ -16,9 +16,7 @@ updates:
   # review. Kept separate from Actions by construction: a group cannot span
   # ecosystems.
   - package-ecosystem: "julia"
-    directories:
-      - "/"
-      - "/test"
+    directory: "/"
     schedule:
       interval: "monthly"
     groups:
