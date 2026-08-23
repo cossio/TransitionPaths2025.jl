@@ -12,3 +12,8 @@ TransitionPaths2025 = "0f790cd9-61a5-4f14-9f08-ff72cf036816"
 
 [compat]
 Aqua = "0.8"
+BioSequences = "3.5.1"
+FASTX = "2.1.7"
+HDF5 = "0.17.3"
+Pfam = "2.2.0"
+RestrictedBoltzmannMachines = "7.1.0"
