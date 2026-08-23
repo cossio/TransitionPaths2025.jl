@@ -13,10 +13,6 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # '1' = latest stable 1.x. Kept version-agnostic on purpose: the job
-        # name (which embeds the version) is a required status check in the
-        # main ruleset, so naming a specific minor here would strand the
-        # ruleset on a stale check name at every bump.
         version:
           - '1'
         os:
